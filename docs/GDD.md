@@ -238,6 +238,27 @@ As lições abaixo são **rascunhos**. Cada uma precisa ser conferida com o fasc
 
 \* `CANAL_OFICIAL` é **rara** na loja, mas entra na mão inicial do nível 1 para ensinar o conceito.
 
+### 6.1 Cartas acrescentadas (Matriz BR-Fraude)
+
+Cada carta aponta para a mitigação correspondente da Matriz BR-Fraude (`matriz`). Lições conferidas nos fascículos indicados.
+
+| id | Nome na carta | contra | Força | Raridade | Mitigação | Fascículo-base |
+|---|---|---|---|---|---|---|
+| `COMPARO_PRECOS` | Comparo o preço em outros sites | RECOMPENSA, LINK | 2 | comum | M18 | F_COMERCIO |
+| `REPUTACAO_VENDEDOR` | Vejo a reputação do vendedor | RECOMPENSA, AUTORIDADE | 2 | incomum | M18 | F_COMERCIO |
+| `CONFIRO_NO_EXTRATO` | Confiro no extrato se o Pix caiu | PIX, URGENCIA | 2 | comum | M06 | F_EVITE_FRAUDES |
+| `CONFIRO_QR` | Confiro o QR Code e quem recebe | PIX, LINK | 2 | incomum | M14 | F_EVITE_FRAUDES |
+| `SO_ACEITO_CONHECIDOS` | Só aceito quem eu conheço | CURIOSIDADE, AFETO | 2 | comum | M18 | F_REDES_SOCIAIS |
+| `CHECO_OUTRAS_FONTES` | Checo em outras fontes | AUTORIDADE, RECOMPENSA, CURIOSIDADE | 1 | incomum | M18 | F_REDES_SOCIAIS |
+| `DUAS_ETAPAS` | Minha conta tem verificação em duas etapas | SENHA, LINK | 2 | incomum | M02 | F_REDES_SOCIAIS |
+| `AMOR_NAO_COBRA` | Quem gosta de mim não pede Pix | AFETO, PIX | 2 | comum | M01 | F_EVITE_FRAUDES |
+| `ANTIVIRUS` | Passo o antivírus antes | APP_ANEXO, LINK | 2 | comum | M15 | F_CODIGOS |
+| `FECHO_O_ALERTA` | Alerta de vírus na tela? Fecho e não ligo | MEDO, APP_ANEXO | 2 | incomum | M15 | F_CODIGOS |
+| `TENHO_BACKUP` | Tenho backup dos meus arquivos | MEDO, PIX | 2 | incomum | M21 | F_CODIGOS |
+| `CONFERIR_DDA` | Pago boleto pelo DDA | PIX | 2 | incomum | M08 | F_BANCO |
+
+Lições que deixaram de ter `verificar` em 15/10/2026 (respaldo nos fascículos Golpes: Evite Fraudes, Códigos Maliciosos, Comércio e Redes Sociais): `CONFERIR_LINK, CONFERIR_RECEBEDOR, NAO_ABRO_ANEXO, PAGAR_NA_PLATAFORMA, PERFIL_SUSPEITO, BLOQUEAR_DENUNCIAR, ARM_SO_OLHAR`. Só `ARM_CADEADO` continua pendente.
+
 **Cobertura mínima garantida:** no catálogo completo, cada uma das 12 tags tem pelo menos 2 contras fora de armadilha. Dentro de cada nível, o validador exige pelo menos 1 contra por tag usada (§13).
 
 ---
@@ -252,6 +273,8 @@ Armadilhas são cartas que **parecem boas** e aparecem na loja sem marcação es
 | `ARM_CADEADO` | Tem cadeado, então é seguro | 3 | O cadeado indica conexão cifrada, não que o site seja legítimo. |
 | `ARM_SO_OLHAR` | Clico só pra ver o que é | 3 | Abrir o link já pode expor você ou confirmar seu número. |
 | `ARM_RESPONDO` | Respondo pedindo mais detalhes | 3 | Manter a conversa dá ao golpista mais chances de convencer. |
+| `ARM_COMPROVANTE` | Recebi o comprovante, já posso enviar | 3 | Comprovante pode ser falso ou de Pix só agendado; quem confirma é o extrato. |
+| `ARM_PATROCINADO` | Primeiro resultado da busca é o oficial | 3 | Golpistas pagam anúncios para aparecer no topo; patrocinado não é oficial. |
 
 ---
 
@@ -283,9 +306,9 @@ Todos os 19 fascículos têm destino no jogo: **10 viram nível** (o nível 9 ju
 |---|---|---|---|---|---|---|---|
 | 1 | [Golpes: Não se Deixe Enganar](https://cartilha.cert.br/fasciculos/golpes/fasciculo-golpes.pdf) | Golpes do dia a dia | **Sim** | 1–2 (chefe 3) | Não | roteiro | Tutorial |
 | 2 | [Banco via Internet](https://cartilha.cert.br/fasciculos/banco-via-internet/fasciculo-banco-via-internet.pdf) | Falsa central, boleto falso, Pix | Não | 2–3 | Não | aleatoria | Desconfiômetro, raras |
-| 3 | [Comércio via Internet](https://cartilha.cert.br/fasciculos/comercio-via-internet/fasciculo-comercio-via-internet.pdf) | Loja e vendedor falsos | Não | 2–3 | Não | aleatoria | Armadilhas na loja |
-| 4 | [Redes Sociais](https://cartilha.cert.br/fasciculos/redes-sociais/fasciculo-redes-sociais.pdf) | Perfil falso, golpe do amor, sorteio | Não | 2–4 | Sim | adaptativa | |
-| 5 | [Códigos Maliciosos](https://cartilha.cert.br/fasciculos/codigos-maliciosos/fasciculo-codigos-maliciosos.pdf) | Anexo, app falso, *ransomware* | Não | 3–4 | Sim | adaptativa | |
+| 3 ✔ | [Comércio via Internet](https://cartilha.cert.br/fasciculos/comercio-via-internet/fasciculo-comercio-via-internet.pdf) | Loja e vendedor falsos | Não | 2–3 | Não | aleatoria | Armadilhas na loja |
+| 4 ✔ | [Redes Sociais](https://cartilha.cert.br/fasciculos/redes-sociais/fasciculo-redes-sociais.pdf) | Perfil falso, golpe do amor, sorteio | Não | 2–4 | Sim | adaptativa | |
+| 5 ✔ | [Códigos Maliciosos](https://cartilha.cert.br/fasciculos/codigos-maliciosos/fasciculo-codigos-maliciosos.pdf) | Anexo, app falso, *ransomware* | Não | 3–4 | Sim | adaptativa | |
 | 6 | [Autenticação](https://cartilha.cert.br/fasciculos/autenticacao/fasciculo-autenticacao.pdf) | Roubo de conta, código de verificação | Não | 3–4 | Sim | adaptativa | Desmascarar |
 | 7 | [Trabalho Remoto](https://cartilha.cert.br/fasciculos/trabalho-remoto/fasciculo-trabalho-remoto.pdf) | Falso suporte de TI, fraude do chefe | Não | 3–5 | Sim | adaptativa | Desmascarar |
 | 8 | [Inteligência Artificial](https://cartilha.cert.br/fasciculos/ia/fasciculo-ia.pdf) | Voz e vídeo falsos, IA como isca | Não | 4–5 | Sim | adaptativa | Desmascarar |
@@ -295,6 +318,8 @@ Todos os 19 fascículos têm destino no jogo: **10 viram nível** (o nível 9 ju
 **Viram proteções (§8):** [Backup](https://cartilha.cert.br/fasciculos/backup/fasciculo-backup.pdf), [Computadores](https://cartilha.cert.br/fasciculos/computadores/fasciculo-computadores.pdf), [Celulares e Tablets](https://cartilha.cert.br/fasciculos/celulares-e-tablets/fasciculo-celulares-e-tablets.pdf), [Furto de Celular](https://cartilha.cert.br/fasciculos/furto-de-celular/fasciculo-furto-de-celular.pdf), [Redes](https://cartilha.cert.br/fasciculos/redes/fasciculo-redes.pdf), [Privacidade](https://cartilha.cert.br/fasciculos/privacidade/fasciculo-privacidade.pdf), [Proteção de Dados](https://cartilha.cert.br/fasciculos/protecao-de-dados/fasciculo-protecao-de-dados.pdf).
 
 **Vira mecânica (§4.10):** [Golpes: Caiu? Veja o que Fazer](https://cartilha.cert.br/fasciculos/golpes-o-que-fazer/fasciculo-golpes-o-que-fazer.pdf).
+
+> ✔ = implementado. Os níveis 3–5 usam os golpes da **Matriz BR-Fraude** (v2), baseada no MITRE F3; cada cenário guarda os códigos `BR-GP###` e cada carta, a mitigação `M##`. O Desmascarar continua desligado (fase 3).
 
 > A lista de fascículos foi conferida em 15/10/2026 em [cartilha.cert.br/fasciculos](https://cartilha.cert.br/fasciculos/). Antes de criar um nível, confira se surgiu fascículo novo ou se o PDF foi atualizado.
 
@@ -394,6 +419,66 @@ Fonte das recomendações: `docs/fontes/banco-via-internet.md`. Regras do §9: t
 | 2.5 ★ | Atendimento pelo perfil oficial (chefe) | Rede social | Perfil falso de atendimento | AUTORIDADE p3 | URGENCIA p3 / MEDO p3 | DADOS p4 / PIX p4 |
 
 > **Balanceamento (15/10/2026):** quatro escaladas desceram de p3 para p2 (`A2_1_2a, A2_3_2b, A2_4_2a, A2_4_2b`). O bot aleatório passou de 9,7% para 24,6% (alvo 20–40%). O bot ótimo vence 100% (alvo 85–95%); como ele enxerga as tags ocultas, esse número é um teto, e humanos devem ficar abaixo.
+
+### 10.4 Nível 3 — "Comércio via Internet" (implementado)
+
+Regras (§9): tags ocultas, pressão 2–3 (chefe até 4), sem combos, IA aleatoria, armadilhas na loja.
+
+**Pool:** `PAUSA, BOM_DEMAIS, PESQUISAR, COMPARO_PRECOS, REPUTACAO_VENDEDOR, PAGAR_NA_PLATAFORMA, CONFERIR_RECEBEDOR, CONFIRO_NO_EXTRATO, CONFIRO_QR, CANAL_OFICIAL, NAO_CLICO, CONFERIR_LINK, LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, DADOS_MINIMOS, ARM_COMPROVANTE, ARM_PATROCINADO, ARM_RESPONDO`
+
+**Mão inicial:** `BOM_DEMAIS, PAUSA, PAGAR_NA_PLATAFORMA, CONFERIR_RECEBEDOR, CONFIRO_NO_EXTRATO, REPUTACAO_VENDEDOR, CANAL_OFICIAL, COMPARO_PRECOS`
+
+**Recompensas:** `P_LIMITES, P_DADOS_MINIMOS, P_REDE_SEGURA`
+
+| # | Título | Canal | Máscara (fictícia) | Matriz | Abordagem | Escalada | Pedido |
+|---|---|---|---|---|---|---|---|
+| 3.1 | Queima de estoque | Rede social | Loja Passo Certo (perfil novo) | BR-GP018 | RECOMPENSA p2 | URGENCIA p2 / AUTORIDADE p2 | PIX p3 |
+| 3.2 | A plataforma está com falha | Mensagem | "Vendedor" de bicicleta usada | BR-GP020, BR-GP023 | AUTORIDADE p2 | URGENCIA p2 / RECOMPENSA p2 | PIX p3 |
+| 3.3 | Já paguei, olha o comprovante | Mensagem | "Comprador" do seu celular usado | BR-GP021, BR-GP006 | RECOMPENSA p2 | URGENCIA p2 | PIX p3 / PIX p3 |
+| 3.4 | Casa pé na areia | Rede social | Anfitriã Temporada Sol (perfil em rede social) | BR-GP024 | RECOMPENSA p2 | URGENCIA p3 / AUTORIDADE p2 | PIX p3 |
+| 3.5 ★ | Leilão de carros recuperados | Site | Leiloeira Martelo Digital | BR-GP019 | AUTORIDADE p3 | URGENCIA p3 / RECOMPENSA p3 | PIX p4 / DADOS p4 |
+
+> **Balanceamento (15/10/2026):** ótimo 100%, guloso 53%, aleatório 20,2% (alvo 20–40%). Sem ajustes.
+
+### 10.5 Nível 4 — "Redes Sociais" (implementado)
+
+Regras (§9): tags ocultas, pressão 2–4 (chefe até 5), **com combos**, IA adaptativa, armadilhas na loja.
+
+**Pool:** `PAUSA, CANAL_OFICIAL, LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, PERFIL_SUSPEITO, SO_ACEITO_CONHECIDOS, CHECO_OUTRAS_FONTES, AMOR_NAO_COBRA, VOZ_NAO_PROVA, CODIGO_E_MEU, DESLIGAR_LIGAR, DUAS_ETAPAS, NAO_CLICO, CONFERIR_LINK, DADOS_MINIMOS, SENHA_NINGUEM, PAGAR_NA_PLATAFORMA, BLOQUEAR_DENUNCIAR, ARM_SO_OLHAR, ARM_RESPONDO`
+
+**Mão inicial:** `LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, CODIGO_E_MEU, DESLIGAR_LIGAR, AMOR_NAO_COBRA, SO_ACEITO_CONHECIDOS, DADOS_MINIMOS, PAUSA`
+
+**Recompensas:** `P_PERFIL_FECHADO, P_2FA, P_GERENCIADOR`
+
+| # | Título | Canal | Máscara (fictícia) | Matriz | Abordagem | Escalada | Pedido |
+|---|---|---|---|---|---|---|---|
+| 4.1 | Vota em mim? | Mensagem | Conta invadida da sua amiga Bia | BR-GP013, BR-GP012 | AFETO p2 | URGENCIA+AFETO p3 / CURIOSIDADE+AFETO p3 | LINK+CODIGO p3 / LINK+SENHA p3 |
+| 4.2 | Perfil novo, pedido antigo | Rede social | Perfil clonado do seu tio Marcos | BR-GP014 | AFETO+CURIOSIDADE p2 / AFETO p2 | RECOMPENSA+URGENCIA p3 | PIX+AFETO p3 |
+| 4.3 | Amor à distância | Rede social | "Engenheiro em plataforma de petróleo" | BR-GP016 | AFETO p2 | AFETO+MEDO p3 / AFETO+AUTORIDADE p3 | PIX+AFETO p3 |
+| 4.4 | Benefício para todo mundo | Mensagem | Corrente no grupo da família | BR-GP051 | RECOMPENSA+AUTORIDADE p3 | CURIOSIDADE+AFETO p3 / URGENCIA p3 | LINK+DADOS p3 |
+| 4.5 ★ | Sua conta vai ser desativada | SMS | Falso suporte do app de mensagens | BR-GP012 | AUTORIDADE+MEDO p4 | URGENCIA+MEDO p4 / AUTORIDADE+URGENCIA p3 | CODIGO+AUTORIDADE p5 |
+
+> **Balanceamento (15/10/2026):** os pedidos dos casos 4.1–4.4 desceram de p4 para p3 e a escalada `A4_5_2b` de p4 para p3 (só caía com carta rara de uso único). Aleatório: 4,3% → 10,4% (alvo 10–25%). Ótimo: 100% (teto, vê as tags).
+
+### 10.6 Nível 5 — "Códigos Maliciosos" (implementado)
+
+Regras (§9): tags ocultas, pressão 3–4 (chefe até 5), **com combos**, IA adaptativa, armadilhas na loja.
+
+**Pool:** `LOJA_OFICIAL, NAO_ABRO_ANEXO, ANTIVIRUS, FECHO_O_ALERTA, TENHO_BACKUP, DUAS_ETAPAS, NAO_CLICO, CONFERIR_LINK, PAUSA, CANAL_OFICIAL, CODIGO_E_MEU, DESLIGAR_LIGAR, SENHA_NINGUEM, PESQUISAR, SEGUNDA_OPINIAO, ARM_SO_OLHAR, ARM_LIGO_NUMERO_MSG`
+
+**Mão inicial:** `LOJA_OFICIAL, NAO_ABRO_ANEXO, ANTIVIRUS, FECHO_O_ALERTA, DUAS_ETAPAS, PAUSA, CANAL_OFICIAL, TENHO_BACKUP`
+
+**Recompensas:** `P_BACKUP, P_ATUALIZADO, P_REDE_SEGURA`
+
+| # | Título | Canal | Máscara (fictícia) | Matriz | Abordagem | Escalada | Pedido |
+|---|---|---|---|---|---|---|---|
+| 5.1 | Nota fiscal em anexo | E-mail | "Setor Fiscal" da Loja MegaCasa | BR-GP044 | AUTORIDADE+CURIOSIDADE p3 | CURIOSIDADE+MEDO p3 / MEDO+URGENCIA p3 | APP_ANEXO+CURIOSIDADE p3 |
+| 5.2 | Seu computador está infectado! | Site | Falso "Suporte Técnico Certificado" | BR-GP045 | MEDO p3 | AUTORIDADE+URGENCIA p3 / MEDO+URGENCIA p3 | APP_ANEXO+AUTORIDADE p3 |
+| 5.3 | Modo Segurança | Ligação | Falsa central do Banco Horizonte | BR-GP003, BR-GP043 | AUTORIDADE+MEDO p3 | URGENCIA+AUTORIDADE p3 / MEDO+URGENCIA p3 | APP_ANEXO+CODIGO p3 / APP_ANEXO+AUTORIDADE p3 |
+| 5.4 | Caixa postal cheia | E-mail | "Equipe de Contas" do seu provedor de e-mail | BR-GP044 | AUTORIDADE+MEDO p3 | MEDO+URGENCIA p3 | LINK+SENHA p3 / LINK+APP_ANEXO p3 |
+| 5.5 ★ | Fotos da confraternização | E-mail | Conta invadida de um colega de trabalho | BR-GP031 | CURIOSIDADE+AFETO p3 | APP_ANEXO+LINK p3 | PIX+MEDO p5 |
+
+> **Balanceamento (15/10/2026):** pedidos e escaladas de p4 para p3; `ARM_CADEADO` saiu do pool (lição ainda com `verificar`); `A5_1_1`, `A5_4_1` e `A5_1_3` viraram combos. Aleatório: 0,9% → 11,7% (alvo 10–25%). Ótimo: 100% (teto).
 
 ---
 
@@ -636,7 +721,8 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
   - O contra perfeito traz *flash* e um leve tremor.
   - A derrota traz um *glitch* na tela do celular.
   - A máscara racha ao perder.
-  - Os sons são opcionais (fase 3).
+  - **Trilha "Terminal Noturno"** (implementada): música generativa sintetizada com Web Audio (`src/ui/musica/`), 92 BPM, ciclo de ~20 min em 28 seções (intro → subida → clímax → ponte → segundo clímax → volta) que recomeça com outra semente, sem fim. Liga no primeiro clique/tecla; botão ♪ fixo no canto, tecla `M` e opção em Ajustes. Pausa com a aba escondida.
+  - Efeitos sonoros: ainda não (fase 3).
 
 ---
 

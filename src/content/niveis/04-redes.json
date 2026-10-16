@@ -1,0 +1,516 @@
+{
+  "id": "N4_REDES",
+  "ordem": 4,
+  "titulo": "Redes Sociais",
+  "fontes": [
+    "F_REDES_SOCIAIS",
+    "F_EVITE_FRAUDES"
+  ],
+  "regras": {
+    "tagsVisiveis": false,
+    "pressaoMin": 2,
+    "pressaoMax": 4,
+    "combos": true,
+    "ia": "adaptativa",
+    "desmascarar": false,
+    "armadilhasNaLoja": true,
+    "rarasNaLoja": true
+  },
+  "pool": [
+    "PAUSA",
+    "CANAL_OFICIAL",
+    "LIGO_PRA_PESSOA",
+    "SEGUNDA_OPINIAO",
+    "PERFIL_SUSPEITO",
+    "SO_ACEITO_CONHECIDOS",
+    "CHECO_OUTRAS_FONTES",
+    "AMOR_NAO_COBRA",
+    "VOZ_NAO_PROVA",
+    "CODIGO_E_MEU",
+    "DESLIGAR_LIGAR",
+    "DUAS_ETAPAS",
+    "NAO_CLICO",
+    "CONFERIR_LINK",
+    "DADOS_MINIMOS",
+    "SENHA_NINGUEM",
+    "PAGAR_NA_PLATAFORMA",
+    "BLOQUEAR_DENUNCIAR",
+    "ARM_SO_OLHAR",
+    "ARM_RESPONDO"
+  ],
+  "maoInicial": [
+    "LIGO_PRA_PESSOA",
+    "SEGUNDA_OPINIAO",
+    "CODIGO_E_MEU",
+    "DESLIGAR_LIGAR",
+    "AMOR_NAO_COBRA",
+    "SO_ACEITO_CONHECIDOS",
+    "DADOS_MINIMOS",
+    "PAUSA"
+  ],
+  "recompensas": [
+    "P_PERFIL_FECHADO",
+    "P_2FA",
+    "P_GERENCIADOR"
+  ],
+  "cenarios": [
+    {
+      "id": "C4_1",
+      "titulo": "Vota em mim?",
+      "canal": "MENSAGEM",
+      "persona": "Conta invadida da sua amiga Bia",
+      "contexto": "Sábado à noite. A Bia, amiga da escola, manda mensagem no seu app de conversas.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A4_1_1",
+              "mensagem": "Amigaaa!! Tô participando de um concurso de fotos e tô quase ganhando, vota em mim? 🙏✨",
+              "tags": [
+                "AFETO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Tô participando de um concurso",
+                "vota em mim?"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A4_1_2a",
+              "mensagem": "A votação fecha em 10 min e só falta o seu voto, por favorzinho 😭",
+              "tags": [
+                "URGENCIA",
+                "AFETO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "fecha em 10 min",
+                "só falta o seu voto"
+              ]
+            },
+            {
+              "id": "A4_1_2b",
+              "mensagem": "Olha quem tá em segundo lugar 👀 você não vai acreditar kkk",
+              "tags": [
+                "CURIOSIDADE",
+                "AFETO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "você não vai acreditar"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A4_1_3a",
+              "mensagem": "Entra em votacao-premiada.example e me manda o código de 6 dígitos que chegar por SMS pra confirmar o voto!",
+              "tags": [
+                "LINK",
+                "CODIGO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "votacao-premiada.example",
+                "me manda o código de 6 dígitos"
+              ]
+            },
+            {
+              "id": "A4_1_3b",
+              "mensagem": "Faz login com seu usuário e senha nesse link que o voto conta em dobro: votacao-premiada.example/login",
+              "tags": [
+                "LINK",
+                "SENHA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "usuário e senha nesse link",
+                "votacao-premiada.example/login"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você ligou para a Bia: ela tinha perdido a conta na noite anterior. Você avisou os amigos em comum.",
+      "desfechoDerrota": "Com o código, a Máscara tomou a sua conta também e começou a pedir dinheiro aos seus contatos.",
+      "raioX": {
+        "oQueEra": "Sequestro de conta em cadeia: uma conta invadida pede voto, link e código de verificação para invadir a próxima.",
+        "comoAgir": [
+          "Desconfie de mensagens com link, mesmo de pessoas conhecidas: a conta pode ter sido invadida.",
+          "Confirme com a pessoa por outro meio, como uma ligação.",
+          "Nunca passe códigos de verificação; use senha forte e ative a verificação em duas etapas."
+        ]
+      },
+      "fonte": "F_REDES_SOCIAIS",
+      "matriz": [
+        "BR-GP013",
+        "BR-GP012"
+      ]
+    },
+    {
+      "id": "C4_2",
+      "titulo": "Perfil novo, pedido antigo",
+      "canal": "REDE_SOCIAL",
+      "persona": "Perfil clonado do seu tio Marcos",
+      "contexto": "Chega um pedido de amizade do seu tio. Mas vocês já eram amigos na rede...",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A4_2_1a",
+              "mensagem": "Oi! Esse é meu perfil novo, o outro deu problema e perdi tudo. Me aceita aí 😊",
+              "tags": [
+                "AFETO",
+                "CURIOSIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Esse é meu perfil novo",
+                "o outro deu problema"
+              ]
+            },
+            {
+              "id": "A4_2_1b",
+              "mensagem": "Fala, sobrinho(a)! Perfil novo aqui, salva esse. Depois te conto o que aconteceu com o outro.",
+              "tags": [
+                "AFETO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Perfil novo aqui",
+                "Depois te conto"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A4_2_2",
+              "mensagem": "Um amigo meu vai mudar e tá vendendo uns móveis a preço de banana. Só hoje, quer ver?",
+              "tags": [
+                "RECOMPENSA",
+                "URGENCIA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "preço de banana",
+                "Só hoje"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A4_2_3",
+              "mensagem": "Faz o Pix direto pra ele que eu garanto, é gente boa. Chave: (00) 90000-0000",
+              "tags": [
+                "PIX",
+                "AFETO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "Faz o Pix direto pra ele",
+                "eu garanto"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você mandou mensagem para o perfil antigo do tio Marcos: ele nem sabia do clone e denunciou a conta falsa.",
+      "desfechoDerrota": "O \"amigo\" sumiu com o dinheiro. O perfil clonado continuou fazendo vítimas na família.",
+      "raioX": {
+        "oQueEra": "Perfil clonado: usam fotos e nome de alguém conhecido, criam um perfil \"novo\" e oferecem negócios ou pedem dinheiro.",
+        "comoAgir": [
+          "Verifique a identidade da pessoa antes de aceitar; observe a data de criação e o histórico do perfil.",
+          "Desconfie de qualquer pedido de dinheiro e confirme pelo contato de sempre.",
+          "Denuncie o perfil falso e avise a pessoa que foi clonada."
+        ]
+      },
+      "fonte": "F_EVITE_FRAUDES",
+      "matriz": [
+        "BR-GP014"
+      ]
+    },
+    {
+      "id": "C4_3",
+      "titulo": "Amor à distância",
+      "canal": "REDE_SOCIAL",
+      "persona": "\"Engenheiro em plataforma de petróleo\"",
+      "contexto": "Há três semanas você conversa todo dia com alguém que conheceu numa rede social.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A4_3_1",
+              "mensagem": "Bom dia, meu amor ☀️ Sonhei de novo com o dia em que a gente vai se conhecer.",
+              "tags": [
+                "AFETO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "meu amor",
+                "o dia em que a gente vai se conhecer"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A4_3_2a",
+              "mensagem": "Seu presente ficou preso na alfândega 😢 Se a taxa não for paga hoje, eles devolvem e eu perco tudo.",
+              "tags": [
+                "AFETO",
+                "MEDO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "ficou preso na alfândega",
+                "eu perco tudo"
+              ]
+            },
+            {
+              "id": "A4_3_2b",
+              "mensagem": "Não posso fazer chamada de vídeo daqui da plataforma, a internet é péssima. Confia em mim? ❤️",
+              "tags": [
+                "AFETO",
+                "AUTORIDADE"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "Não posso fazer chamada de vídeo",
+                "Confia em mim?"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A4_3_3",
+              "mensagem": "Faz um Pix de R$ 1.800 pro despachante? Assim que eu chegar te devolvo em dobro, prometo.",
+              "tags": [
+                "PIX",
+                "AFETO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "Faz um Pix de R$ 1.800 pro despachante",
+                "te devolvo em dobro"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você contou a história para uma amiga e pesquisou as fotos do perfil: eram de outra pessoa. Você bloqueou e denunciou.",
+      "desfechoDerrota": "Depois do primeiro Pix vieram outras \"taxas\". O amor à distância nunca apareceu.",
+      "raioX": {
+        "oQueEra": "Golpe do amor: semanas de conversa para criar laço, desculpas para nunca aparecer em vídeo e, por fim, um pedido de dinheiro com urgência.",
+        "comoAgir": [
+          "Desconfie de qualquer pedido de dinheiro, mesmo de quem diz gostar de você.",
+          "Desconfie de contatos desconhecidos que dizem ser próximos; converse com outras pessoas sobre a história.",
+          "Bloqueie e denuncie perfis falsos."
+        ]
+      },
+      "fonte": "F_GOLPES",
+      "matriz": [
+        "BR-GP016"
+      ]
+    },
+    {
+      "id": "C4_4",
+      "titulo": "Benefício para todo mundo",
+      "canal": "MENSAGEM",
+      "persona": "Corrente no grupo da família",
+      "contexto": "No grupo da família, alguém encaminha uma mensagem \"muito importante\".",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A4_4_1",
+              "mensagem": "URGENTE ‼️ O Programa Renda Nacional vai pagar R$ 600 pra quem se cadastrar até sexta!",
+              "tags": [
+                "RECOMPENSA",
+                "AUTORIDADE"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "URGENTE ‼️",
+                "vai pagar R$ 600"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A4_4_2a",
+              "mensagem": "Minha vizinha já recebeu, olha o print 👀 Não é fake não, saiu até no jornal!",
+              "tags": [
+                "CURIOSIDADE",
+                "AFETO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "olha o print",
+                "Não é fake não"
+              ]
+            },
+            {
+              "id": "A4_4_2b",
+              "mensagem": "As vagas são limitadas e o cadastro fecha hoje às 23h!",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "vagas são limitadas",
+                "fecha hoje às 23h"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A4_4_3",
+              "mensagem": "Cadastre-se em rendanacional-cadastro.example com CPF, foto do documento e uma selfie.",
+              "tags": [
+                "LINK",
+                "DADOS"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "rendanacional-cadastro.example",
+                "CPF, foto do documento e uma selfie"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você procurou o programa em outras fontes: não existia. Você avisou o grupo da família antes que alguém se cadastrasse.",
+      "desfechoDerrota": "Com documento e selfie, a Máscara abriu contas e fez empréstimos no seu nome.",
+      "raioX": {
+        "oQueEra": "Boato usado como isca: um falso benefício circula em grupos e leva a um site que coleta dados pessoais.",
+        "comoAgir": [
+          "Nem tudo que circula nas redes é verdade: busque a informação em outras fontes antes de acreditar.",
+          "Tenha cuidado ao clicar em links, mesmo vindos de pessoas conhecidas.",
+          "Benefícios e pendências se resolvem só nos canais oficiais."
+        ]
+      },
+      "fonte": "F_REDES_SOCIAIS",
+      "matriz": [
+        "BR-GP051"
+      ]
+    },
+    {
+      "id": "C4_5",
+      "titulo": "Sua conta vai ser desativada",
+      "canal": "SMS",
+      "persona": "Falso suporte do app de mensagens",
+      "contexto": "Chega um SMS e, em seguida, uma mensagem no seu app de conversas de um perfil com o logo do próprio app.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A4_5_1",
+              "mensagem": "Suporte Oficial do app: detectamos acesso à sua conta em outro aparelho. Ela será desativada.",
+              "tags": [
+                "AUTORIDADE",
+                "MEDO"
+              ],
+              "pressao": 4,
+              "sinais": [
+                "Suporte Oficial do app",
+                "Ela será desativada"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A4_5_2a",
+              "mensagem": "Você tem 5 minutos para confirmar que é o dono. Depois disso não será possível recuperar.",
+              "tags": [
+                "URGENCIA",
+                "MEDO"
+              ],
+              "pressao": 4,
+              "sinais": [
+                "Você tem 5 minutos",
+                "não será possível recuperar"
+              ]
+            },
+            {
+              "id": "A4_5_2b",
+              "mensagem": "Este é um atendimento oficial e protocolado. Não compartilhe esta conversa com ninguém.",
+              "tags": [
+                "AUTORIDADE",
+                "URGENCIA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "atendimento oficial e protocolado",
+                "Não compartilhe esta conversa"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A4_5_3",
+              "mensagem": "Responda aqui com o código de 6 dígitos que enviamos por SMS para validarmos sua identidade.",
+              "tags": [
+                "CODIGO",
+                "AUTORIDADE"
+              ],
+              "pressao": 5,
+              "sinais": [
+                "Responda aqui com o código de 6 dígitos"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você não respondeu e abriu as configurações do app: nenhum aparelho estranho. O \"suporte\" era a Máscara.",
+      "desfechoDerrota": "O código era o de registro da sua conta. A Máscara clonou seu app e pediu Pix para todos os seus contatos.",
+      "raioX": {
+        "oQueEra": "Clonagem de conta pelo código de verificação: um falso suporte usa medo e pressa para obter o código que registra a sua conta em outro aparelho.",
+        "comoAgir": [
+          "Não passe códigos de verificação para ninguém, nem para quem diz ser do suporte.",
+          "Ative a verificação em duas etapas e alertas de acesso nas suas contas.",
+          "Se uma conta for invadida, troque a senha, siga a recuperação de acesso e avise seus contatos."
+        ]
+      },
+      "fonte": "F_REDES_SOCIAIS",
+      "matriz": [
+        "BR-GP012"
+      ]
+    }
+  ]
+}

@@ -12,6 +12,7 @@ import { telaLoja } from './screens/loja';
 import { painelAjustes, painelComoJogar, painelCreditos, telaMapa, telaMenu } from './screens/menu';
 import { telaMesa } from './screens/mesa';
 import { telaIntro, telaRaioX } from './screens/raiox';
+import { desligarMusica, ligarMusica, musicaTocando } from './musica/musica';
 
 const conteudo = carregarConteudo();
 const ctx: Ctx = { conteudo, config };
@@ -41,7 +42,38 @@ function aplicarAjustes() {
   const html = document.documentElement;
   html.classList.toggle('reduz-movimento', ajustes.animacoesReduzidas);
   html.classList.toggle('texto-grande', ajustes.texto === 'grande');
+  sincronizarMusica();
 }
+
+// ---------- trilha sonora ----------
+let houveGesto = false;
+const btnMusica = h('button', { type: 'button', class: 'btn-musica' });
+btnMusica.addEventListener('click', () => {
+  app.salvarAjustes({ ...ajustes, som: !musicaTocando() });
+});
+document.body.append(btnMusica);
+
+function sincronizarMusica() {
+  if (ajustes.som && houveGesto) ligarMusica();
+  if (!ajustes.som) desligarMusica();
+  const ligada = ajustes.som;
+  btnMusica.textContent = '♪';
+  btnMusica.setAttribute('aria-pressed', String(ligada));
+  btnMusica.setAttribute('aria-label', ligada ? 'Música ligada. Clique para desligar.' : 'Música desligada. Clique para ligar.');
+  btnMusica.title = ligada ? 'Desligar música (M)' : 'Ligar música (M)';
+  btnMusica.classList.toggle('desligada', !ligada);
+}
+
+// Navegadores só liberam áudio depois de um gesto da pessoa.
+function primeiroGesto(e: Event) {
+  if (e.target === btnMusica) return;
+  houveGesto = true;
+  sincronizarMusica();
+  window.removeEventListener('pointerdown', primeiroGesto, true);
+  window.removeEventListener('keydown', primeiroGesto, true);
+}
+window.addEventListener('pointerdown', primeiroGesto, true);
+window.addEventListener('keydown', primeiroGesto, true);
 
 function anunciar(msg: string) {
   vivo.textContent = '';
@@ -71,7 +103,7 @@ const app: App = {
   },
   render: () => render(),
   abrirPainel(p) { painel = p; render(); },
-  salvarAjustes(a) { ajustes = a; aplicarAjustes(); gravarStorage(serializarSave(estado, ajustes)); render(); },
+  salvarAjustes(a) { houveGesto = true; ajustes = a; aplicarAjustes(); gravarStorage(serializarSave(estado, ajustes)); render(); },
   anunciar,
   novaSeed() {
     const b = new Uint32Array(1);
@@ -148,6 +180,11 @@ document.addEventListener('keydown', (e) => {
     if (painel) { app.abrirPainel(null); e.preventDefault(); return; }
     if (estado.fase === 'MAPA') app.dispatch({ tipo: 'ABRIR_MENU' });
     else if (estado.fase !== 'MENU') app.dispatch({ tipo: 'ABRIR_MAPA' });
+    e.preventDefault();
+    return;
+  }
+  if (e.key.toLowerCase() === 'm' && !(e.target instanceof HTMLInputElement)) {
+    app.salvarAjustes({ ...ajustes, som: !ajustes.som });
     e.preventDefault();
     return;
   }

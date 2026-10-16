@@ -316,3 +316,24 @@ button.carta:disabled { cursor: default; }
 }
 html.reduz-movimento *, html.reduz-movimento *::before, html.reduz-movimento *::after { animation: none !important; transition: none !important; }
 html.reduz-movimento body::after { display: none; }
+
+/* ---------- botão de música (fixo, fora da tela do jogo) ---------- */
+.btn-musica {
+  position: fixed; right: 12px; bottom: 12px; z-index: 40;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid var(--borda); box-shadow: var(--sombra);
+  background: var(--raro); color: #160d2e; font: 700 1.25rem/1 var(--fonte-texto);
+  cursor: pointer; display: grid; place-items: center;
+}
+.btn-musica.desligada { background: var(--painel-2); color: var(--texto-suave); }
+.btn-musica:hover { transform: translate(-1px, -1px); }
+.matriz { font-family: ui-monospace, Consolas, monospace; }
+
+
+.btn-musica.desligada::after { content: ''; position: absolute; width: 26px; height: 3px; background: var(--ameaca); transform: rotate(-45deg); border-radius: 2px; }
+/* No celular a mão de cartas ocupa o rodapé: o botão de música sobe para o canto superior. */
+@media (max-width: 759px) {
+  .btn-musica { top: 12px; bottom: auto; right: 12px; width: 40px; height: 40px; font-size: 1.1rem; }
+  .mesa-topo, .barra, .loja > .titulo, .raiox > .mini:first-child, .fim > .mini:first-child { padding-right: 52px; }
+  .mao { padding-bottom: 6px; }
+}

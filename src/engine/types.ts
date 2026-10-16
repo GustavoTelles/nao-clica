@@ -19,6 +19,8 @@ export interface CartaDefesa {
   raridade: Raridade;
   licao: string; fonte: string; verificar?: boolean;
   usoUnicoPorNivel?: boolean; armadilha?: boolean; mito?: string;
+  /** Mitigação correspondente na Matriz BR-Fraude (ex.: "M14"). */
+  matriz?: string;
 }
 
 export interface CartaAmeaca {
@@ -38,6 +40,8 @@ export interface Cenario {
   raioX: { oQueEra: string; comoAgir: string[]; verificar?: boolean };
   contencao?: { opcoes: [string, string, string]; correta: 0 | 1 | 2; explicacao: string };
   fonte: string;
+  /** Golpes da Matriz BR-Fraude que o cenário representa (ex.: ["BR-GP018"]). */
+  matriz?: string[];
 }
 
 export interface RegrasNivel {

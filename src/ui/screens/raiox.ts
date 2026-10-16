@@ -61,6 +61,7 @@ export function telaRaioX(app: App): Tela {
       h('section', { class: 'bloco' }, h('h2', {}, 'O que era'), h('p', {}, c.raioX.oQueEra)),
       h('section', { class: 'bloco' }, h('h2', {}, 'Como agir na vida real'), h('ul', { class: 'acoes' }, c.raioX.comoAgir.map((x) => h('li', {}, x)))),
       c.raioX.verificar ? h('p', { class: 'mini aviso' }, 'Conteúdo em revisão.') : null,
+      c.matriz?.length ? h('p', { class: 'mini matriz' }, 'Matriz BR-Fraude: ', c.matriz.join(' · ')) : null,
       linkFasciculo(app, c.fonte),
       botao('Continuar ⏎', continuar, { class: 'btn primario', 'data-foco': '' })),
     teclas: (e) => (e.key === 'Enter' && !(e.target instanceof HTMLAnchorElement) ? (continuar(), true) : false),

@@ -15,17 +15,24 @@ Fascículos usados até agora:
 |---|---|---|
 | 1 | Golpes: Não se Deixe Enganar | https://cartilha.cert.br/fasciculos/golpes/fasciculo-golpes.pdf |
 | 2 | Banco via Internet | https://cartilha.cert.br/fasciculos/banco-via-internet/fasciculo-banco-via-internet.pdf |
+| 3 | Comércio via Internet + Golpes: Evite Fraudes | https://cartilha.cert.br/fasciculos/comercio-via-internet/fasciculo-comercio-via-internet.pdf |
+| 4 | Redes Sociais + Golpes: Evite Fraudes | https://cartilha.cert.br/fasciculos/redes-sociais/fasciculo-redes-sociais.pdf |
+| 5 | Códigos Maliciosos | https://cartilha.cert.br/fasciculos/codigos-maliciosos/fasciculo-codigos-maliciosos.pdf |
 
 ## Tipografia
 
 - **Silkscreen**, de Jason Kottke — SIL Open Font License 1.1. Empacotada localmente via `@fontsource/silkscreen` (nenhuma fonte é carregada de terceiros em tempo de execução).
 - Texto corrido: fonte do sistema.
 
+## Matriz BR-Fraude
+
+Os casos e as cartas seguem a **Matriz BR-Fraude** (v2, 15/10/2026), mapa de 52 golpes brasileiros com táticas, técnicas e mitigações, baseado no **MITRE Fight Fraud Framework (F3) v1.2** — https://ctid.mitre.org/fraud. Cada cenário guarda os códigos dos golpes correspondentes (`matriz: ["BR-GP018"]`) e cada carta, a mitigação (`matriz: "M14"`).
+
 ## Arte e som
 
 - Máscara, ícone e interface: desenhados em SVG/CSS para este projeto.
 - Ícones de tática: emojis do sistema, sempre acompanhados de rótulo em texto (provisórios, GDD §5).
-- Sons: ainda não há (fase 3).
+- Trilha sonora "Terminal Noturno": composição generativa própria (`src/ui/musica/`), sintetizada em tempo real com a Web Audio API. Nenhum arquivo de áudio de terceiros.
 
 ## Inspiração de mecânica
 

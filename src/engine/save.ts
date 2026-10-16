@@ -5,7 +5,8 @@ export const CHAVE_SAVE = 'naoclica.save.v1';
 export const VERSAO_SAVE = 1;
 
 export interface Ajustes { animacoesReduzidas: boolean; som: boolean; texto: 'normal' | 'grande' }
-export const AJUSTES_PADRAO: Ajustes = { animacoesReduzidas: false, som: false, texto: 'normal' };
+/** `som` liga a trilha sonora; ela só começa depois do primeiro clique ou tecla (regra dos navegadores). */
+export const AJUSTES_PADRAO: Ajustes = { animacoesReduzidas: false, som: true, texto: 'normal' };
 
 export interface Save { versao: number; estado: Estado; ajustes: Ajustes }
 

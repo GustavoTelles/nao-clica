@@ -1,55 +1,481 @@
 [
-  { "id": "PAUSA", "nome": "Respira: nada é tão urgente", "contra": ["URGENCIA", "MEDO"], "forca": 2, "raridade": "comum",
-    "licao": "Pressa é ferramenta do golpista: pare e pense antes de agir.", "fonte": "F_GOLPES" },
-  { "id": "CANAL_OFICIAL", "nome": "Confirmo pelo canal oficial", "contra": ["AUTORIDADE", "MEDO", "LINK"], "forca": 2, "raridade": "rara",
-    "licao": "Procure a empresa por conta própria: app oficial, endereço digitado por você ou contato informado no site oficial.", "fonte": "F_GOLPES" },
-  { "id": "BOM_DEMAIS", "nome": "Bom demais pra ser verdade?", "contra": ["RECOMPENSA"], "forca": 3, "raridade": "comum",
-    "licao": "Vantagem exagerada ou prêmio que você não pediu é isca.", "fonte": "F_GOLPES" },
-  { "id": "CONFERIR_LINK", "nome": "Confiro o endereço antes", "contra": ["LINK", "CURIOSIDADE"], "forca": 2, "raridade": "comum",
-    "licao": "Olhe o endereço com atenção; na dúvida, não abra e procure o serviço por conta própria.", "fonte": "F_GOLPES", "verificar": true },
-  { "id": "NAO_CLICO", "nome": "Não clico: digito eu mesmo", "contra": ["LINK"], "forca": 3, "raridade": "comum",
-    "licao": "Entre em serviços digitando o endereço no navegador ou pelo app oficial, nunca pelo link recebido.", "fonte": "F_BANCO" },
-  { "id": "LIGO_PRA_PESSOA", "nome": "Ligo no número que eu já tinha", "contra": ["AFETO", "AUTORIDADE"], "forca": 2, "raridade": "incomum",
-    "licao": "Confirme a história com a pessoa ou empresa por um contato que você já conhecia, nunca pelo que veio na mensagem.", "fonte": "F_GOLPES" },
-  { "id": "CONFERIR_RECEBEDOR", "nome": "Confiro quem recebe o Pix", "contra": ["PIX"], "forca": 3, "raridade": "comum",
-    "licao": "Antes de confirmar um pagamento, confira o nome e a instituição de quem vai receber.", "fonte": "F_EVITE_FRAUDES", "verificar": true },
-  { "id": "PESQUISAR", "nome": "Pesquiso \"nome + golpe\"", "contra": ["RECOMPENSA", "CURIOSIDADE"], "forca": 2, "raridade": "comum",
-    "licao": "Busque relatos de golpes parecidos e confira a informação em mais de uma fonte confiável.", "fonte": "F_GOLPES" },
-  { "id": "SEGUNDA_OPINIAO", "nome": "Pergunto a alguém de confiança", "contra": ["URGENCIA", "AFETO", "MEDO"], "forca": 1, "raridade": "comum",
-    "licao": "Conversar com outra pessoa antes de agir quebra o isolamento que o golpe tenta criar.", "fonte": "F_GOLPES" },
-  { "id": "DADOS_MINIMOS", "nome": "Por que precisam disso?", "contra": ["DADOS"], "forca": 3, "raridade": "comum",
-    "licao": "Instituições sérias só pedem dados para confirmar sua identidade quando é você quem as procura pelo canal oficial.", "fonte": "F_BANCO" },
-  { "id": "SENHA_NINGUEM", "nome": "Senha é só minha", "contra": ["SENHA", "DADOS"], "forca": 2, "raridade": "incomum",
-    "licao": "Banco não pede senha, token nem dados do cartão por mensagem, e-mail ou ligação. Não envie senhas para ninguém.", "fonte": "F_BANCO" },
-  { "id": "CODIGO_E_MEU", "nome": "Código de verificação não se passa", "contra": ["CODIGO"], "forca": 3, "raridade": "comum",
-    "licao": "O código prova que é você. Ninguém de verdade precisa dele — quem pede quer entrar na sua conta.", "fonte": "F_BANCO" },
-  { "id": "DESLIGAR_LIGAR", "nome": "Desligo e ligo eu para a central", "contra": ["AUTORIDADE", "CODIGO", "SENHA"], "forca": 2, "raridade": "rara",
-    "licao": "Encerre o contato e, se ficar em dúvida, procure a instituição por um canal oficial.", "fonte": "F_BANCO" },
-  { "id": "LOJA_OFICIAL", "nome": "Só instalo da loja oficial", "contra": ["APP_ANEXO"], "forca": 3, "raridade": "comum",
-    "licao": "Instale apps só pela loja oficial do sistema e confira o nome do app e do desenvolvedor.", "fonte": "F_BANCO" },
-  { "id": "NAO_ABRO_ANEXO", "nome": "Anexo inesperado? Não abro", "contra": ["APP_ANEXO", "CURIOSIDADE"], "forca": 2, "raridade": "comum",
-    "licao": "Arquivo que você não esperava pode trazer código malicioso.", "fonte": "F_CODIGOS", "verificar": true },
-  { "id": "PAGAR_NA_PLATAFORMA", "nome": "Pago só dentro da plataforma", "contra": ["PIX", "RECOMPENSA"], "forca": 2, "raridade": "incomum",
-    "licao": "Negociar fora do site ou app da compra tira a proteção que a plataforma oferece.", "fonte": "F_COMERCIO", "verificar": true },
-  { "id": "PERFIL_SUSPEITO", "nome": "Confiro o perfil antes", "contra": ["AFETO", "CURIOSIDADE", "AUTORIDADE"], "forca": 1, "raridade": "incomum",
-    "licao": "Não aceite qualquer contato: perfil novo, com poucos amigos ou fotos genéricas é sinal de alerta.", "fonte": "F_REDES_SOCIAIS", "verificar": true },
-  { "id": "VOZ_NAO_PROVA", "nome": "Voz ou vídeo não é prova", "contra": ["AUTORIDADE", "AFETO"], "forca": 2, "raridade": "incomum",
-    "licao": "Áudio e vídeo podem ser imitados com IA; confirme falando com a pessoa por um contato já conhecido.", "fonte": "F_GOLPES" },
-  { "id": "BLOQUEAR_DENUNCIAR", "nome": "Bloqueio e denuncio", "contra": ["AUTORIDADE", "URGENCIA", "RECOMPENSA", "MEDO", "AFETO", "CURIOSIDADE"], "forca": 1, "raridade": "rara",
-    "licao": "Encerrar o contato e denunciar protege você e outras pessoas.", "fonte": "F_EVITE_FRAUDES", "usoUnicoPorNivel": true, "verificar": true },
-  { "id": "CONFERIR_DDA", "nome": "Pago boleto pelo DDA", "contra": ["PIX"], "forca": 2, "raridade": "incomum",
-    "licao": "Com o DDA ativo, os boletos emitidos no seu CPF chegam ao app do seu banco ligados ao emissor registrado.", "fonte": "F_BANCO" },
-
-  { "id": "ARM_LIGO_NUMERO_MSG", "nome": "Ligo pro número da mensagem pra confirmar", "contra": ["AUTORIDADE"], "forca": 3, "raridade": "comum",
-    "licao": "Use só contatos que você já tinha ou que estão no site oficial.", "fonte": "F_GOLPES", "armadilha": true,
-    "mito": "O número que veio na mensagem é do próprio golpista." },
-  { "id": "ARM_CADEADO", "nome": "Tem cadeado, então é seguro", "contra": ["LINK"], "forca": 3, "raridade": "comum",
-    "licao": "Confira o endereço e chegue ao site por conta própria.", "fonte": "F_GOLPES", "armadilha": true, "verificar": true,
-    "mito": "O cadeado só indica conexão cifrada, não que o site seja legítimo." },
-  { "id": "ARM_SO_OLHAR", "nome": "Clico só pra ver o que é", "contra": ["CURIOSIDADE"], "forca": 3, "raridade": "comum",
-    "licao": "Na dúvida, não abra.", "fonte": "F_GOLPES", "armadilha": true, "verificar": true,
-    "mito": "Abrir o link já pode expor você ou confirmar que seu número está ativo." },
-  { "id": "ARM_RESPONDO", "nome": "Respondo pedindo mais detalhes", "contra": ["URGENCIA"], "forca": 3, "raridade": "comum",
-    "licao": "Encerre o contato.", "fonte": "F_GOLPES", "armadilha": true,
-    "mito": "Manter a conversa dá ao golpista mais chances de convencer você." }
+  {
+    "id": "PAUSA",
+    "nome": "Respira: nada é tão urgente",
+    "contra": [
+      "URGENCIA",
+      "MEDO"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Pressa é ferramenta do golpista: pare e pense antes de agir.",
+    "fonte": "F_GOLPES",
+    "matriz": "M18"
+  },
+  {
+    "id": "CANAL_OFICIAL",
+    "nome": "Confirmo pelo canal oficial",
+    "contra": [
+      "AUTORIDADE",
+      "MEDO",
+      "LINK"
+    ],
+    "forca": 2,
+    "raridade": "rara",
+    "licao": "Procure a empresa por conta própria: app oficial, endereço digitado por você ou contato informado no site oficial.",
+    "fonte": "F_GOLPES",
+    "matriz": "M01"
+  },
+  {
+    "id": "BOM_DEMAIS",
+    "nome": "Bom demais pra ser verdade?",
+    "contra": [
+      "RECOMPENSA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Vantagem exagerada ou prêmio que você não pediu é isca.",
+    "fonte": "F_GOLPES",
+    "matriz": "M18"
+  },
+  {
+    "id": "CONFERIR_LINK",
+    "nome": "Confiro o endereço antes",
+    "contra": [
+      "LINK",
+      "CURIOSIDADE"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Confira o endereço (URL) antes de acessar, inclusive o de QR Codes; na dúvida, não acesse.",
+    "fonte": "F_EVITE_FRAUDES",
+    "matriz": "M16"
+  },
+  {
+    "id": "NAO_CLICO",
+    "nome": "Não clico: digito eu mesmo",
+    "contra": [
+      "LINK"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Entre em serviços digitando o endereço no navegador ou pelo app oficial, nunca pelo link recebido.",
+    "fonte": "F_BANCO",
+    "matriz": "M16"
+  },
+  {
+    "id": "LIGO_PRA_PESSOA",
+    "nome": "Ligo no número que eu já tinha",
+    "contra": [
+      "AFETO",
+      "AUTORIDADE"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Confirme a história com a pessoa ou empresa por um contato que você já conhecia, nunca pelo que veio na mensagem.",
+    "fonte": "F_GOLPES",
+    "matriz": "M01"
+  },
+  {
+    "id": "CONFERIR_RECEBEDOR",
+    "nome": "Confiro quem recebe o Pix",
+    "contra": [
+      "PIX"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Antes de confirmar um pagamento, confira o nome e o CPF/CNPJ de quem vai receber; na dúvida, não pague.",
+    "fonte": "F_EVITE_FRAUDES",
+    "matriz": "M14"
+  },
+  {
+    "id": "PESQUISAR",
+    "nome": "Pesquiso \"nome + golpe\"",
+    "contra": [
+      "RECOMPENSA",
+      "CURIOSIDADE"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Busque relatos de golpes parecidos e confira a informação em mais de uma fonte confiável.",
+    "fonte": "F_GOLPES"
+  },
+  {
+    "id": "SEGUNDA_OPINIAO",
+    "nome": "Pergunto a alguém de confiança",
+    "contra": [
+      "URGENCIA",
+      "AFETO",
+      "MEDO"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Conversar com outra pessoa antes de agir quebra o isolamento que o golpe tenta criar.",
+    "fonte": "F_GOLPES",
+    "matriz": "M18"
+  },
+  {
+    "id": "DADOS_MINIMOS",
+    "nome": "Por que precisam disso?",
+    "contra": [
+      "DADOS"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Instituições sérias só pedem dados para confirmar sua identidade quando é você quem as procura pelo canal oficial.",
+    "fonte": "F_BANCO"
+  },
+  {
+    "id": "SENHA_NINGUEM",
+    "nome": "Senha é só minha",
+    "contra": [
+      "SENHA",
+      "DADOS"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Banco não pede senha, token nem dados do cartão por mensagem, e-mail ou ligação. Não envie senhas para ninguém.",
+    "fonte": "F_BANCO",
+    "matriz": "M02"
+  },
+  {
+    "id": "CODIGO_E_MEU",
+    "nome": "Código de verificação não se passa",
+    "contra": [
+      "CODIGO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "O código prova que é você. Ninguém de verdade precisa dele — quem pede quer entrar na sua conta.",
+    "fonte": "F_BANCO",
+    "matriz": "M02"
+  },
+  {
+    "id": "DESLIGAR_LIGAR",
+    "nome": "Desligo e ligo eu para a central",
+    "contra": [
+      "AUTORIDADE",
+      "CODIGO",
+      "SENHA"
+    ],
+    "forca": 2,
+    "raridade": "rara",
+    "licao": "Encerre o contato e, se ficar em dúvida, procure a instituição por um canal oficial.",
+    "fonte": "F_BANCO",
+    "matriz": "M01"
+  },
+  {
+    "id": "LOJA_OFICIAL",
+    "nome": "Só instalo da loja oficial",
+    "contra": [
+      "APP_ANEXO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Instale apps só pela loja oficial do sistema e confira o nome do app e do desenvolvedor.",
+    "fonte": "F_BANCO",
+    "matriz": "M15"
+  },
+  {
+    "id": "NAO_ABRO_ANEXO",
+    "nome": "Anexo inesperado? Não abro",
+    "contra": [
+      "APP_ANEXO",
+      "CURIOSIDADE"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Anexo inesperado pode instalar código malicioso; cheque com antivírus e, na dúvida, não abra.",
+    "fonte": "F_CODIGOS"
+  },
+  {
+    "id": "PAGAR_NA_PLATAFORMA",
+    "nome": "Pago só dentro da plataforma",
+    "contra": [
+      "PIX",
+      "RECOMPENSA"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Faça toda a compra e venda dentro da plataforma: negociar ou pagar por fora tira a proteção que ela oferece.",
+    "fonte": "F_COMERCIO"
+  },
+  {
+    "id": "PERFIL_SUSPEITO",
+    "nome": "Confiro o perfil antes",
+    "contra": [
+      "AFETO",
+      "CURIOSIDADE",
+      "AUTORIDADE"
+    ],
+    "forca": 1,
+    "raridade": "incomum",
+    "licao": "Antes de confiar num perfil, confira se é o oficial e observe o histórico: data de criação, publicações antigas e seguidores.",
+    "fonte": "F_EVITE_FRAUDES"
+  },
+  {
+    "id": "VOZ_NAO_PROVA",
+    "nome": "Voz ou vídeo não é prova",
+    "contra": [
+      "AUTORIDADE",
+      "AFETO"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Áudio e vídeo podem ser imitados com IA; confirme falando com a pessoa por um contato já conhecido.",
+    "fonte": "F_GOLPES"
+  },
+  {
+    "id": "BLOQUEAR_DENUNCIAR",
+    "nome": "Bloqueio e denuncio",
+    "contra": [
+      "AUTORIDADE",
+      "URGENCIA",
+      "RECOMPENSA",
+      "MEDO",
+      "AFETO",
+      "CURIOSIDADE"
+    ],
+    "forca": 1,
+    "raridade": "rara",
+    "licao": "Não responda: bloqueie e denuncie. Denunciar ajuda a tirar do ar perfis e anúncios falsos.",
+    "fonte": "F_EVITE_FRAUDES",
+    "usoUnicoPorNivel": true,
+    "matriz": "M17"
+  },
+  {
+    "id": "CONFERIR_DDA",
+    "nome": "Pago boleto pelo DDA",
+    "contra": [
+      "PIX"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Com o DDA ativo, os boletos emitidos no seu CPF chegam ao app do seu banco ligados ao emissor registrado.",
+    "fonte": "F_BANCO",
+    "matriz": "M08"
+  },
+  {
+    "id": "ARM_LIGO_NUMERO_MSG",
+    "nome": "Ligo pro número da mensagem pra confirmar",
+    "contra": [
+      "AUTORIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Use só contatos que você já tinha ou que estão no site oficial.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "mito": "O número que veio na mensagem é do próprio golpista."
+  },
+  {
+    "id": "ARM_CADEADO",
+    "nome": "Tem cadeado, então é seguro",
+    "contra": [
+      "LINK"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Confira o endereço e chegue ao site por conta própria.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "verificar": true,
+    "mito": "O cadeado só indica conexão cifrada, não que o site seja legítimo."
+  },
+  {
+    "id": "ARM_SO_OLHAR",
+    "nome": "Clico só pra ver o que é",
+    "contra": [
+      "CURIOSIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Na dúvida, não abra.",
+    "fonte": "F_CODIGOS",
+    "armadilha": true,
+    "mito": "Links maliciosos levam a páginas que tentam infectar o aparelho logo ao abrir. Na dúvida, não clique."
+  },
+  {
+    "id": "ARM_RESPONDO",
+    "nome": "Respondo pedindo mais detalhes",
+    "contra": [
+      "URGENCIA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Encerre o contato.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "mito": "Manter a conversa dá ao golpista mais chances de convencer você."
+  },
+  {
+    "id": "COMPARO_PRECOS",
+    "nome": "Comparo o preço em outros sites",
+    "contra": [
+      "RECOMPENSA",
+      "LINK"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Preço muito abaixo do mercado é isca. Compare em vários sites e entre na loja digitando o endereço, sem clicar no anúncio.",
+    "fonte": "F_COMERCIO",
+    "matriz": "M18"
+  },
+  {
+    "id": "REPUTACAO_VENDEDOR",
+    "nome": "Vejo a reputação do vendedor",
+    "contra": [
+      "RECOMPENSA",
+      "AUTORIDADE"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Antes de comprar, veja a pontuação do vendedor, as avaliações e as reclamações em sites especializados.",
+    "fonte": "F_COMERCIO",
+    "matriz": "M18"
+  },
+  {
+    "id": "CONFIRO_NO_EXTRATO",
+    "nome": "Confiro no extrato se o Pix caiu",
+    "contra": [
+      "PIX",
+      "URGENCIA"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Comprovante pode ser falso: confirme no extrato. Pix \"por engano\" se devolve pela opção do app, nunca com um Pix novo.",
+    "fonte": "F_EVITE_FRAUDES",
+    "matriz": "M06"
+  },
+  {
+    "id": "CONFIRO_QR",
+    "nome": "Confiro o QR Code e quem recebe",
+    "contra": [
+      "PIX",
+      "LINK"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Antes de pagar por QR Code, confira se o valor e o nome/CNPJ de quem recebe estão certos; ignore QR Codes recebidos por mensagem.",
+    "fonte": "F_EVITE_FRAUDES",
+    "matriz": "M14"
+  },
+  {
+    "id": "SO_ACEITO_CONHECIDOS",
+    "nome": "Só aceito quem eu conheço",
+    "contra": [
+      "CURIOSIDADE",
+      "AFETO"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Seja seletivo ao aceitar contatos: verifique a identidade da pessoa antes e bloqueie contas falsas.",
+    "fonte": "F_REDES_SOCIAIS",
+    "matriz": "M18"
+  },
+  {
+    "id": "CHECO_OUTRAS_FONTES",
+    "nome": "Checo em outras fontes",
+    "contra": [
+      "AUTORIDADE",
+      "RECOMPENSA",
+      "CURIOSIDADE"
+    ],
+    "forca": 1,
+    "raridade": "incomum",
+    "licao": "Nem tudo que circula nas redes é verdade: busque a informação em outras fontes antes de acreditar ou clicar.",
+    "fonte": "F_REDES_SOCIAIS",
+    "matriz": "M18"
+  },
+  {
+    "id": "DUAS_ETAPAS",
+    "nome": "Minha conta tem verificação em duas etapas",
+    "contra": [
+      "SENHA",
+      "LINK"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Senha forte, diferente em cada serviço, e verificação em duas etapas: uma senha roubada sozinha não abre a conta.",
+    "fonte": "F_REDES_SOCIAIS",
+    "matriz": "M02"
+  },
+  {
+    "id": "AMOR_NAO_COBRA",
+    "nome": "Quem gosta de mim não pede Pix",
+    "contra": [
+      "AFETO",
+      "PIX"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Desconfie de qualquer pedido de dinheiro, mesmo de quem diz ser próximo, e confirme a história por um contato que você já conhecia.",
+    "fonte": "F_EVITE_FRAUDES",
+    "matriz": "M01"
+  },
+  {
+    "id": "ANTIVIRUS",
+    "nome": "Passo o antivírus antes",
+    "contra": [
+      "APP_ANEXO",
+      "LINK"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Mantenha um antivírus atualizado e cheque arquivos antes de abrir; na dúvida, não abra nem clique.",
+    "fonte": "F_CODIGOS",
+    "matriz": "M15"
+  },
+  {
+    "id": "FECHO_O_ALERTA",
+    "nome": "Alerta de vírus na tela? Fecho e não ligo",
+    "contra": [
+      "MEDO",
+      "APP_ANEXO"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Aviso alarmante na tela não é diagnóstico: use o antivírus que você já tem e nunca instale programa indicado por quem apareceu do nada.",
+    "fonte": "F_CODIGOS",
+    "matriz": "M15"
+  },
+  {
+    "id": "TENHO_BACKUP",
+    "nome": "Tenho backup dos meus arquivos",
+    "contra": [
+      "MEDO",
+      "PIX"
+    ],
+    "forca": 2,
+    "raridade": "incomum",
+    "licao": "Com cópias de segurança feitas regularmente, você recupera os dados perdidos por ransomware sem depender de quem os sequestrou.",
+    "fonte": "F_CODIGOS",
+    "matriz": "M21"
+  },
+  {
+    "id": "ARM_COMPROVANTE",
+    "nome": "Recebi o comprovante, já posso enviar",
+    "contra": [
+      "PIX"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Só envie o produto depois de ver o dinheiro no extrato.",
+    "fonte": "F_COMERCIO",
+    "armadilha": true,
+    "mito": "Comprovante de Pix pode ser falsificado ou ser de um Pix só agendado. Quem confirma é o extrato."
+  },
+  {
+    "id": "ARM_PATROCINADO",
+    "nome": "Primeiro resultado da busca é o oficial",
+    "contra": [
+      "LINK"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Digite o endereço do site ou use o app oficial.",
+    "fonte": "F_COMERCIO",
+    "armadilha": true,
+    "mito": "Golpistas pagam anúncios para aparecer no topo da busca. Patrocinado não quer dizer oficial."
+  }
 ]

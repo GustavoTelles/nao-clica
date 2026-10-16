@@ -1,0 +1,180 @@
+{
+  "id": "N3_COMERCIO",
+  "ordem": 3,
+  "titulo": "Comércio via Internet",
+  "fontes": ["F_COMERCIO", "F_EVITE_FRAUDES"],
+  "regras": {
+    "tagsVisiveis": false, "pressaoMin": 2, "pressaoMax": 3, "combos": false, "ia": "aleatoria",
+    "desmascarar": false, "armadilhasNaLoja": true, "rarasNaLoja": true
+  },
+  "pool": ["PAUSA", "BOM_DEMAIS", "PESQUISAR", "COMPARO_PRECOS", "REPUTACAO_VENDEDOR", "PAGAR_NA_PLATAFORMA", "CONFERIR_RECEBEDOR", "CONFIRO_NO_EXTRATO", "CONFIRO_QR", "CANAL_OFICIAL", "NAO_CLICO", "CONFERIR_LINK", "LIGO_PRA_PESSOA", "SEGUNDA_OPINIAO", "DADOS_MINIMOS", "ARM_COMPROVANTE", "ARM_PATROCINADO", "ARM_RESPONDO"],
+  "maoInicial": ["BOM_DEMAIS", "PAUSA", "PAGAR_NA_PLATAFORMA", "CONFERIR_RECEBEDOR", "CONFIRO_NO_EXTRATO", "REPUTACAO_VENDEDOR", "CANAL_OFICIAL", "COMPARO_PRECOS"],
+  "recompensas": ["P_LIMITES", "P_DADOS_MINIMOS", "P_REDE_SEGURA"],
+  "cenarios": [
+    {
+      "id": "C3_1", "titulo": "Queima de estoque", "canal": "REDE_SOCIAL", "persona": "Loja Passo Certo (perfil novo)",
+      "contexto": "Você rola o feed e aparece um anúncio patrocinado do tênis que você queria, por um preço inacreditável.",
+      "vazas": [
+        { "papel": "abordagem", "opcoes": [{ "id": "A3_1_1",
+          "mensagem": "QUEIMA DE ESTOQUE 🔥 Tênis Corredor Pro de R$ 799 por R$ 149! Frete grátis pra todo o Brasil.",
+          "tags": ["RECOMPENSA"], "pressao": 2, "sinais": ["de R$ 799 por R$ 149!"] }] },
+        { "papel": "escalada", "opcoes": [
+          { "id": "A3_1_2a",
+            "mensagem": "Restam só 7 pares! A promoção acaba à meia-noite e não volta mais.",
+            "tags": ["URGENCIA"], "pressao": 2, "sinais": ["Restam só 7 pares!", "acaba à meia-noite"] },
+          { "id": "A3_1_2b",
+            "mensagem": "Loja oficial ✔ parceira das maiores marcas. +10 mil clientes satisfeitos!",
+            "tags": ["AUTORIDADE"], "pressao": 2, "sinais": ["Loja oficial ✔", "+10 mil clientes satisfeitos!"] }
+        ] },
+        { "papel": "pedido", "opcoes": [{ "id": "A3_1_3",
+          "mensagem": "Pagamento só via Pix, com 10% de desconto extra. Chave: vendas@passocerto-outlet.example",
+          "tags": ["PIX"], "pressao": 3, "sinais": ["Pagamento só via Pix", "vendas@passocerto-outlet.example"] }] }
+      ],
+      "desfechoVitoria": "Você comparou preços e procurou a loja em sites de reclamação: dezenas de pessoas pagaram e nunca receberam. Você passou longe.",
+      "desfechoDerrota": "O Pix foi feito, o perfil sumiu no dia seguinte e o tênis nunca chegou.",
+      "raioX": {
+        "oQueEra": "Loja virtual falsa: anúncio com preço muito abaixo do mercado, pressa para comprar e pagamento só por Pix, que é difícil de reverter.",
+        "comoAgir": [
+          "Desconfie de ofertas muito abaixo do preço de mercado e compare em vários sites.",
+          "Pesquise a reputação da loja em sites de reclamação e de defesa do consumidor.",
+          "Prefira acessar o site ou app digitando o endereço, sem clicar em anúncios patrocinados."
+        ]
+      },
+      "fonte": "F_COMERCIO",
+      "matriz": ["BR-GP018"]
+    },
+    {
+      "id": "C3_2", "titulo": "A plataforma está com falha", "canal": "MENSAGEM", "persona": "\"Vendedor\" de bicicleta usada",
+      "contexto": "Você comprou uma bicicleta num site de classificados. Logo depois, um número desconhecido manda mensagem.",
+      "vazas": [
+        { "papel": "abordagem", "opcoes": [{ "id": "A3_2_1",
+          "mensagem": "Oi! Sou o vendedor da bike que você comprou na Feira Online. Peguei seu contato no pedido 😉",
+          "tags": ["AUTORIDADE"], "pressao": 2, "sinais": ["Peguei seu contato no pedido"] }] },
+        { "papel": "escalada", "opcoes": [
+          { "id": "A3_2_2a",
+            "mensagem": "A plataforma tá com falha no sistema e vai cancelar seu pedido em 1h se não resolver.",
+            "tags": ["URGENCIA"], "pressao": 2, "sinais": ["tá com falha no sistema", "cancelar seu pedido em 1h"] },
+          { "id": "A3_2_2b",
+            "mensagem": "Se pagar direto comigo eu faço R$ 100 mais barato e mando um capacete de brinde 🎁",
+            "tags": ["RECOMPENSA"], "pressao": 2, "sinais": ["pagar direto comigo", "R$ 100 mais barato"] }
+        ] },
+        { "papel": "pedido", "opcoes": [{ "id": "A3_2_3",
+          "mensagem": "Faz o Pix direto pra mim na chave (00) 90000-0000 que eu despacho hoje ainda.",
+          "tags": ["PIX"], "pressao": 3, "sinais": ["Faz o Pix direto pra mim"] }] }
+      ],
+      "desfechoVitoria": "Você abriu o pedido no próprio site: estava tudo normal. Quem mandou a mensagem não era o vendedor.",
+      "desfechoDerrota": "O Pix foi para um estranho. Como foi pago fora da plataforma, ela não tem como ajudar.",
+      "raioX": {
+        "oQueEra": "Pagamento fora da plataforma: o golpista alega falha no sistema ou oferece desconto para levar a negociação para outro canal.",
+        "comoAgir": [
+          "Faça todo o processo de compra e venda dentro da plataforma.",
+          "Desconfie de pedidos de pagamento ou negociação por fora; na dúvida, fale com a plataforma pelos canais oficiais.",
+          "Negociando fora, você perde os recursos de segurança que a plataforma oferece."
+        ]
+      },
+      "fonte": "F_COMERCIO",
+      "matriz": ["BR-GP020", "BR-GP023"]
+    },
+    {
+      "id": "C3_3", "titulo": "Já paguei, olha o comprovante", "canal": "MENSAGEM", "persona": "\"Comprador\" do seu celular usado",
+      "contexto": "Você anunciou seu celular antigo. Em cinco minutos aparece um comprador muito animado.",
+      "vazas": [
+        { "papel": "abordagem", "opcoes": [{ "id": "A3_3_1",
+          "mensagem": "Tenho interesse! Pago o valor cheio, sem pechinchar. Só preciso que seja hoje 🙏",
+          "tags": ["RECOMPENSA"], "pressao": 2, "sinais": ["Pago o valor cheio, sem pechinchar"] }] },
+        { "papel": "escalada", "opcoes": [{ "id": "A3_3_2",
+          "mensagem": "Meu motoboy já tá saindo pra buscar, ele não pode esperar muito, tá?",
+          "tags": ["URGENCIA"], "pressao": 2, "sinais": ["já tá saindo pra buscar", "não pode esperar muito"] }] },
+        { "papel": "pedido", "opcoes": [
+          { "id": "A3_3_3a",
+            "mensagem": "Pronto, fiz o Pix! Segue o comprovante 📎. Pode entregar o aparelho pro motoboy.",
+            "tags": ["PIX"], "pressao": 3, "sinais": ["Segue o comprovante", "Pode entregar o aparelho"] },
+          { "id": "A3_3_3b",
+            "mensagem": "Ops, mandei R$ 300 a mais sem querer 😅 Devolve a diferença nessa outra chave: (00) 90000-0000?",
+            "tags": ["PIX"], "pressao": 3, "sinais": ["mandei R$ 300 a mais sem querer", "nessa outra chave"] }
+        ] }
+      ],
+      "desfechoVitoria": "Você abriu o extrato: nenhum Pix tinha caído. O \"comprador\" sumiu antes de o motoboy chegar.",
+      "desfechoDerrota": "O comprovante era falso. O celular foi embora com o motoboy e o dinheiro nunca entrou.",
+      "raioX": {
+        "oQueEra": "Falso comprador: comprovante de Pix falso (ou Pix só agendado) e pressa para você entregar o produto ou \"devolver\" um valor.",
+        "comoAgir": [
+          "Comprovante pode ser falso: só entregue o produto depois de ver o dinheiro no extrato.",
+          "Recebeu Pix \"por engano\"? Confirme no extrato e devolva só pela opção de devolução do app, nunca com um Pix novo.",
+          "Desconfie de quem tem muita pressa e não negocia nada."
+        ]
+      },
+      "fonte": "F_EVITE_FRAUDES",
+      "matriz": ["BR-GP021", "BR-GP006"]
+    },
+    {
+      "id": "C3_4", "titulo": "Casa pé na areia", "canal": "REDE_SOCIAL", "persona": "Anfitriã Temporada Sol (perfil em rede social)",
+      "contexto": "Você procura uma casa para o réveillon e encontra uma oferta num grupo de viagens.",
+      "vazas": [
+        { "papel": "abordagem", "opcoes": [{ "id": "A3_4_1",
+          "mensagem": "Casa pé na areia pra 8 pessoas, piscina e churrasqueira. Réveillon por R$ 250 a diária! 🏖️",
+          "tags": ["RECOMPENSA"], "pressao": 2, "sinais": ["Réveillon por R$ 250 a diária!"] }] },
+        { "papel": "escalada", "opcoes": [
+          { "id": "A3_4_2a",
+            "mensagem": "Tenho mais 3 famílias interessadas. Quem pagar o sinal primeiro fica com a casa.",
+            "tags": ["URGENCIA"], "pressao": 3, "sinais": ["Tenho mais 3 famílias interessadas", "Quem pagar o sinal primeiro"] },
+          { "id": "A3_4_2b",
+            "mensagem": "Sou corretora há 15 anos, pode confiar! Te mando as fotos da casa e do meu documento.",
+            "tags": ["AUTORIDADE"], "pressao": 2, "sinais": ["pode confiar!", "fotos da casa e do meu documento"] }
+        ] },
+        { "papel": "pedido", "opcoes": [{ "id": "A3_4_3",
+          "mensagem": "Pra reservar, sinal de 50% no Pix. A chave tá no nome da minha cunhada: reservas@temporadasol.example",
+          "tags": ["PIX"], "pressao": 3, "sinais": ["sinal de 50% no Pix", "no nome da minha cunhada"] }] }
+      ],
+      "desfechoVitoria": "Você pesquisou o endereço e achou a mesma casa anunciada por outra pessoa, com fotos idênticas. Era golpe.",
+      "desfechoDerrota": "No dia 31, a família chegou ao endereço e a casa já estava ocupada pelos verdadeiros donos.",
+      "raioX": {
+        "oQueEra": "Falso aluguel de temporada: fotos copiadas, preço baixo para a data, pressa para pagar o sinal e conta em nome de terceiro.",
+        "comoAgir": [
+          "Desconfie de preços muito abaixo do normal para a época.",
+          "Pesquise a reputação do anunciante e prefira plataformas e pessoas com boas referências.",
+          "Antes de transferir, confira os dados de quem vai receber; conta em nome de outra pessoa é sinal de alerta."
+        ]
+      },
+      "fonte": "F_EVITE_FRAUDES",
+      "matriz": ["BR-GP024"]
+    },
+    {
+      "id": "C3_5", "titulo": "Leilão de carros recuperados", "canal": "SITE", "persona": "Leiloeira Martelo Digital",
+      "contexto": "Um site de leilão aparece na busca com carros seminovos pela metade do preço da tabela.",
+      "vazas": [
+        { "papel": "abordagem", "opcoes": [{ "id": "A3_5_1",
+          "mensagem": "Leilão oficial de veículos recuperados do Banco Horizonte. Lances a partir de 40% da tabela.",
+          "tags": ["AUTORIDADE"], "pressao": 3, "sinais": ["Leilão oficial", "Lances a partir de 40% da tabela"] }] },
+        { "papel": "escalada", "opcoes": [
+          { "id": "A3_5_2a",
+            "mensagem": "Parabéns, seu lance foi o vencedor! O lote encerra em 40 minutos se a caução não for paga.",
+            "tags": ["URGENCIA"], "pressao": 3, "sinais": ["encerra em 40 minutos", "se a caução não for paga"] },
+          { "id": "A3_5_2b",
+            "mensagem": "Parabéns! Você arrematou um sedã 2023 por R$ 31 mil, metade do valor de mercado.",
+            "tags": ["RECOMPENSA"], "pressao": 3, "sinais": ["metade do valor de mercado"] }
+        ] },
+        { "papel": "pedido", "opcoes": [
+          { "id": "A3_5_3a",
+            "mensagem": "Pague a caução de 30% via Pix para R. Lima Intermediações. Após o pagamento, enviaremos a nota.",
+            "tags": ["PIX"], "pressao": 4, "sinais": ["caução de 30% via Pix", "R. Lima Intermediações"] },
+          { "id": "A3_5_3b",
+            "mensagem": "Para emitir o termo de arremate, envie CPF, foto da CNH frente e verso e comprovante de renda.",
+            "tags": ["DADOS"], "pressao": 4, "sinais": ["foto da CNH frente e verso", "comprovante de renda"] }
+        ] }
+      ],
+      "desfechoVitoria": "Você procurou o banco pelo canal oficial: ele não tinha leilão nenhum. O site falso foi denunciado.",
+      "desfechoDerrota": "A caução foi para uma conta de passagem. O carro nunca existiu.",
+      "raioX": {
+        "oQueEra": "Falso leilão: site que imita leiloeiro ou banco, preços de metade da tabela, prazo curto e pagamento para recebedor que não é a empresa.",
+        "comoAgir": [
+          "Confirme o leilão pelos canais oficiais da instituição citada, buscados por você.",
+          "Desconfie de preço muito abaixo do mercado e de prazos apertados.",
+          "Antes de pagar, confira se o nome/CNPJ de quem recebe é mesmo da empresa."
+        ]
+      },
+      "fonte": "F_COMERCIO",
+      "matriz": ["BR-GP019"]
+    }
+  ]
+}

@@ -17,6 +17,7 @@ export const CartaDefesaSchema = z.object({
   raridade: z.enum(['comum', 'incomum', 'rara']),
   licao: z.string(), fonte: z.string(), verificar: z.boolean().optional(),
   usoUnicoPorNivel: z.boolean().optional(), armadilha: z.boolean().optional(), mito: z.string().optional(),
+  matriz: z.string().regex(/^M\d{2}$/).optional(),
 });
 
 export const CartaAmeacaSchema = z.object({
@@ -40,6 +41,7 @@ export const CenarioSchema = z.object({
     correta: z.union([z.literal(0), z.literal(1), z.literal(2)]), explicacao: z.string(),
   }).optional(),
   fonte: z.string(),
+  matriz: z.array(z.string().regex(/^BR-GP\d{3}$/)).optional(),
 });
 
 export const NivelSchema = z.object({

@@ -112,7 +112,10 @@
           "Na dúvida, pare e pense antes de agir."
         ]
       },
-      "fonte": "F_GOLPES"
+      "fonte": "F_GOLPES",
+      "matriz": [
+        "BR-GP028"
+      ]
     },
     {
       "id": "C1_2",
@@ -182,7 +185,10 @@
           "Converse com outra pessoa antes de transferir."
         ]
       },
-      "fonte": "F_GOLPES"
+      "fonte": "F_GOLPES",
+      "matriz": [
+        "BR-GP011"
+      ]
     },
     {
       "id": "C1_3",
@@ -253,7 +259,10 @@
           "Não pague taxas por links recebidos em mensagens."
         ]
       },
-      "fonte": "F_GOLPES"
+      "fonte": "F_GOLPES",
+      "matriz": [
+        "BR-GP037"
+      ]
     },
     {
       "id": "C1_4",
@@ -322,7 +331,10 @@
           "Não envie documento, CPF ou selfie para quem procurou você."
         ]
       },
-      "fonte": "F_GOLPES"
+      "fonte": "F_GOLPES",
+      "matriz": [
+        "BR-GP026"
+      ]
     },
     {
       "id": "C1_5",
@@ -392,7 +404,10 @@
           "Na dúvida, contate o banco pelos canais oficiais."
         ]
       },
-      "fonte": "F_BANCO"
+      "fonte": "F_BANCO",
+      "matriz": [
+        "BR-GP044"
+      ]
     }
   ]
 }

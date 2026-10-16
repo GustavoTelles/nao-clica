@@ -139,7 +139,10 @@
           "Nunca repita em voz alta nem digite códigos ou senhas a pedido de quem ligou."
         ]
       },
-      "fonte": "F_BANCO"
+      "fonte": "F_BANCO",
+      "matriz": [
+        "BR-GP001"
+      ]
     },
     {
       "id": "C2_2",
@@ -220,7 +223,10 @@
           "Confira no site oficial quais são os canais e promoções verdadeiros."
         ]
       },
-      "fonte": "F_BANCO"
+      "fonte": "F_BANCO",
+      "matriz": [
+        "BR-GP044"
+      ]
     },
     {
       "id": "C2_3",
@@ -300,7 +306,10 @@
           "Mantenha apps e sistema atualizados pela própria loja, com atualização automática."
         ]
       },
-      "fonte": "F_BANCO"
+      "fonte": "F_BANCO",
+      "matriz": [
+        "BR-GP043"
+      ]
     },
     {
       "id": "C2_4",
@@ -382,7 +391,10 @@
           "Desconfie de vantagem boa demais e de ameaça com prazo curto."
         ]
       },
-      "fonte": "F_BANCO"
+      "fonte": "F_BANCO",
+      "matriz": [
+        "BR-GP004"
+      ]
     },
     {
       "id": "C2_5",
@@ -477,7 +489,11 @@
           "Não publique dados financeiros nem fotos de cartões em redes sociais."
         ]
       },
-      "fonte": "F_BANCO"
+      "fonte": "F_BANCO",
+      "matriz": [
+        "BR-GP001",
+        "BR-GP014"
+      ]
     }
   ]
 }

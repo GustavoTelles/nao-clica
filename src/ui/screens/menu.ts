@@ -82,7 +82,7 @@ export function painelComoJogar(app: App): HTMLElement {
     h('h2', { class: 'subtitulo' }, 'Táticas'),
     h('ul', { class: 'tags-legenda' }, app.ctx.conteudo.tags.map((t) => h('li', {}, h('strong', {}, rotuloTag(app, t.id)), ` — ${t.ideia}`))),
     h('h2', { class: 'subtitulo' }, 'Teclado'),
-    h('p', {}, '1–8 escolhe a carta · Enter joga/continua · D usa o Desconfiômetro · Esc volta.'));
+    h('p', {}, '1–8 escolhe a carta · Enter joga/continua · D usa o Desconfiômetro · M liga/desliga a música · Esc volta.'));
 }
 
 export function painelCreditos(app: App): HTMLElement {
@@ -98,9 +98,15 @@ export function painelCreditos(app: App): HTMLElement {
     h('p', {}, 'Todas as marcas, pessoas, endereços e telefones dos casos são fictícios (domínios .example, DDD 00).'),
     h('h2', { class: 'subtitulo' }, 'Fascículos oficiais'),
     h('ul', { class: 'fontes' }, fontes.map((f) => h('li', {}, h('a', { href: f.url, target: '_blank', rel: 'noopener noreferrer' }, f.titulo)))),
+    h('h2', { class: 'subtitulo' }, 'Matriz BR-Fraude'),
+    h('p', {}, 'Os casos e as cartas dos níveis seguem a Matriz BR-Fraude (v2, out/2026), um mapa de 52 golpes brasileiros, técnicas e mitigações baseado no ',
+      h('a', { href: 'https://ctid.mitre.org/fraud', target: '_blank', rel: 'noopener noreferrer' }, 'MITRE Fight Fraud Framework (F3)'),
+      '. O Raio-X de cada caso mostra os códigos do golpe na Matriz (ex.: BR-GP018).'),
+    h('h2', { class: 'subtitulo' }, 'Trilha sonora'),
+    h('p', {}, '"Terminal Noturno": música generativa composta para o jogo e sintetizada ao vivo no navegador. Cada ciclo dura cerca de 20 minutos e recomeça variado, sem fim.'),
     h('h2', { class: 'subtitulo' }, 'Tipografia e mecânica'),
     h('p', {}, 'Fonte de títulos: Silkscreen, de Jason Kottke (SIL Open Font License 1.1). Texto: fonte do sistema.'),
-    h('p', {}, 'Mecânica inspirada em jogos de cartas roguelike e no truco. Ilustrações e sons próprios.'));
+    h('p', {}, 'Mecânica inspirada em jogos de cartas roguelike e no truco. Ilustrações e música próprias.'));
 }
 
 export function painelAjustes(app: App): HTMLElement {
@@ -113,7 +119,7 @@ export function painelAjustes(app: App): HTMLElement {
     h('h1', { class: 'titulo' }, 'Ajustes'),
     opcao('Animações reduzidas', a.animacoesReduzidas, (v) => app.salvarAjustes({ ...a, animacoesReduzidas: v })),
     opcao('Texto grande', a.texto === 'grande', (v) => app.salvarAjustes({ ...a, texto: v ? 'grande' : 'normal' })),
-    opcao('Som (em breve)', false, () => undefined, true),
+    opcao('Música (trilha "Terminal Noturno")', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
     h('p', { class: 'mini' }, 'O progresso fica salvo só neste navegador. Nada é enviado para a internet.'),
     botao('Apagar progresso', () => {
       if (confirm('Apagar todo o progresso salvo neste navegador?')) app.resetar();
