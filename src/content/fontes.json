@@ -1,0 +1,21 @@
+[
+  { "id": "F_GOLPES", "titulo": "Golpes: Não se Deixe Enganar", "url": "https://cartilha.cert.br/fasciculos/golpes/fasciculo-golpes.pdf" },
+  { "id": "F_BANCO", "titulo": "Banco via Internet", "url": "https://cartilha.cert.br/fasciculos/banco-via-internet/fasciculo-banco-via-internet.pdf" },
+  { "id": "F_COMERCIO", "titulo": "Comércio via Internet", "url": "https://cartilha.cert.br/fasciculos/comercio-via-internet/fasciculo-comercio-via-internet.pdf" },
+  { "id": "F_REDES_SOCIAIS", "titulo": "Redes Sociais", "url": "https://cartilha.cert.br/fasciculos/redes-sociais/fasciculo-redes-sociais.pdf" },
+  { "id": "F_CODIGOS", "titulo": "Códigos Maliciosos", "url": "https://cartilha.cert.br/fasciculos/codigos-maliciosos/fasciculo-codigos-maliciosos.pdf" },
+  { "id": "F_AUTENTICACAO", "titulo": "Autenticação", "url": "https://cartilha.cert.br/fasciculos/autenticacao/fasciculo-autenticacao.pdf" },
+  { "id": "F_TRABALHO_REMOTO", "titulo": "Trabalho Remoto", "url": "https://cartilha.cert.br/fasciculos/trabalho-remoto/fasciculo-trabalho-remoto.pdf" },
+  { "id": "F_IA", "titulo": "Inteligência Artificial", "url": "https://cartilha.cert.br/fasciculos/ia/fasciculo-ia.pdf" },
+  { "id": "F_EVITE_FRAUDES", "titulo": "Golpes: Evite Fraudes", "url": "https://cartilha.cert.br/fasciculos/golpes-evite-fraudes/fasciculo-golpes-evite-fraudes.pdf" },
+  { "id": "F_VAZAMENTO", "titulo": "Vazamento de Dados", "url": "https://cartilha.cert.br/fasciculos/vazamento-de-dados/fasciculo-vazamento-de-dados.pdf" },
+  { "id": "F_BOATOS", "titulo": "Boatos", "url": "https://cartilha.cert.br/fasciculos/boatos/fasciculo-boatos.pdf" },
+  { "id": "F_BACKUP", "titulo": "Backup", "url": "https://cartilha.cert.br/fasciculos/backup/fasciculo-backup.pdf" },
+  { "id": "F_COMPUTADORES", "titulo": "Computadores", "url": "https://cartilha.cert.br/fasciculos/computadores/fasciculo-computadores.pdf" },
+  { "id": "F_CELULARES", "titulo": "Celulares e Tablets", "url": "https://cartilha.cert.br/fasciculos/celulares-e-tablets/fasciculo-celulares-e-tablets.pdf" },
+  { "id": "F_FURTO", "titulo": "Furto de Celular", "url": "https://cartilha.cert.br/fasciculos/furto-de-celular/fasciculo-furto-de-celular.pdf" },
+  { "id": "F_REDES", "titulo": "Redes", "url": "https://cartilha.cert.br/fasciculos/redes/fasciculo-redes.pdf" },
+  { "id": "F_PRIVACIDADE", "titulo": "Privacidade", "url": "https://cartilha.cert.br/fasciculos/privacidade/fasciculo-privacidade.pdf" },
+  { "id": "F_PROTECAO_DADOS", "titulo": "Proteção de Dados", "url": "https://cartilha.cert.br/fasciculos/protecao-de-dados/fasciculo-protecao-de-dados.pdf" },
+  { "id": "F_CAIU", "titulo": "Golpes: Caiu? Veja o que Fazer", "url": "https://cartilha.cert.br/fasciculos/golpes-o-que-fazer/fasciculo-golpes-o-que-fazer.pdf" }
+]

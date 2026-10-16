@@ -1,0 +1,14 @@
+[
+  { "id": "AUTORIDADE", "tipo": "gatilho", "icone": "🎩", "rotulo": "Autoridade", "ideia": "Diz ser banco, órgão, empresa, chefe ou suporte." },
+  { "id": "URGENCIA", "tipo": "gatilho", "icone": "⏰", "rotulo": "Urgência", "ideia": "Impõe prazo ou \"agora ou nunca\" e tira o tempo de pensar." },
+  { "id": "RECOMPENSA", "tipo": "gatilho", "icone": "🎁", "rotulo": "Recompensa", "ideia": "Prêmio, oferta, dinheiro fácil, vaga dos sonhos." },
+  { "id": "MEDO", "tipo": "gatilho", "icone": "⚠️", "rotulo": "Medo", "ideia": "Bloqueio, multa, processo, conta invadida." },
+  { "id": "AFETO", "tipo": "gatilho", "icone": "❤️", "rotulo": "Afeto", "ideia": "Parente, amigo ou par romântico em apuros." },
+  { "id": "CURIOSIDADE", "tipo": "gatilho", "icone": "👀", "rotulo": "Curiosidade", "ideia": "Encomenda, foto sua, \"olha isso\"." },
+  { "id": "LINK", "tipo": "pedido", "icone": "🔗", "rotulo": "Link", "ideia": "Clicar ou abrir um endereço." },
+  { "id": "CODIGO", "tipo": "pedido", "icone": "🔢", "rotulo": "Código", "ideia": "Código de verificação (SMS, app)." },
+  { "id": "PIX", "tipo": "pedido", "icone": "💸", "rotulo": "Pix/pagamento", "ideia": "Transferir ou pagar." },
+  { "id": "APP_ANEXO", "tipo": "pedido", "icone": "📎", "rotulo": "App/anexo", "ideia": "Instalar um app ou abrir um arquivo." },
+  { "id": "SENHA", "tipo": "pedido", "icone": "🔑", "rotulo": "Senha", "ideia": "Informar senha." },
+  { "id": "DADOS", "tipo": "pedido", "icone": "🪪", "rotulo": "Dados", "ideia": "CPF, documento, selfie, dados do cartão." }
+]

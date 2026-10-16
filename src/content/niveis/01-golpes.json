@@ -1,0 +1,398 @@
+{
+  "id": "N1_GOLPES",
+  "ordem": 1,
+  "titulo": "Golpes do dia a dia",
+  "fontes": [
+    "F_GOLPES"
+  ],
+  "regras": {
+    "tagsVisiveis": true,
+    "pressaoMin": 1,
+    "pressaoMax": 2,
+    "combos": false,
+    "ia": "roteiro",
+    "desmascarar": false,
+    "armadilhasNaLoja": false,
+    "rarasNaLoja": false
+  },
+  "pool": [
+    "PAUSA",
+    "CANAL_OFICIAL",
+    "BOM_DEMAIS",
+    "CONFERIR_LINK",
+    "NAO_CLICO",
+    "LIGO_PRA_PESSOA",
+    "CONFERIR_RECEBEDOR",
+    "PESQUISAR",
+    "SEGUNDA_OPINIAO",
+    "DADOS_MINIMOS",
+    "SENHA_NINGUEM"
+  ],
+  "maoInicial": [
+    "PAUSA",
+    "CANAL_OFICIAL",
+    "BOM_DEMAIS",
+    "CONFERIR_LINK",
+    "LIGO_PRA_PESSOA",
+    "CONFERIR_RECEBEDOR",
+    "SEGUNDA_OPINIAO",
+    "PESQUISAR"
+  ],
+  "recompensas": [
+    "P_PERFIL_FECHADO",
+    "P_LIMITES",
+    "P_GERENCIADOR"
+  ],
+  "cenarios": [
+    {
+      "id": "C1_1",
+      "titulo": "Você foi sorteado!",
+      "canal": "SMS",
+      "persona": "Central de Prêmios MegaSorte",
+      "contexto": "Terça, 9h12. Chega um SMS de um número que você não conhece.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A1_1_1",
+              "mensagem": "PARABÉNS! Seu número foi sorteado na promoção de aniversário MegaSorte. Você ganhou um vale de R$ 5.000!",
+              "tags": [
+                "RECOMPENSA"
+              ],
+              "pressao": 1,
+              "sinais": [
+                "PARABÉNS!",
+                "Você ganhou um vale de R$ 5.000"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A1_1_2",
+              "mensagem": "Atenção: o prêmio expira HOJE às 18h. Depois disso ele passa para o próximo sorteado.",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "expira HOJE às 18h",
+                "passa para o próximo sorteado"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A1_1_3",
+              "mensagem": "Para resgatar, confirme seus dados em megasorte-premios.example/resgate",
+              "tags": [
+                "LINK"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "megasorte-premios.example/resgate"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "A Máscara fica sem resposta e some. Prêmio que você não pediu costuma ser isca.",
+      "desfechoDerrota": "Você abriu o link e preencheu o formulário. Seus dados agora estão com a Máscara.",
+      "raioX": {
+        "oQueEra": "Golpe do falso prêmio: promessa de ganho, prazo curto e um link para \"confirmar dados\".",
+        "comoAgir": [
+          "Desconfie de prêmio de promoção da qual você não participou.",
+          "Não faça o que a mensagem pede; se quiser checar, procure a empresa pelos canais oficiais.",
+          "Na dúvida, pare e pense antes de agir."
+        ]
+      },
+      "fonte": "F_GOLPES"
+    },
+    {
+      "id": "C1_2",
+      "titulo": "Oi, troquei de número",
+      "canal": "MENSAGEM",
+      "persona": "\"Sobrinha\"",
+      "contexto": "Sábado, 10h05. Uma mensagem chega de um número desconhecido com a foto de perfil da sua sobrinha.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A1_2_1",
+              "mensagem": "Oi, tudo bem? É sua sobrinha! Troquei de número, salva esse aqui 😘",
+              "tags": [
+                "AFETO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Troquei de número, salva esse aqui"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A1_2_2",
+              "mensagem": "Tô numa enrascada, preciso pagar um boleto até meio-dia e o app do meu banco travou 😩",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "preciso pagar um boleto até meio-dia",
+                "o app do meu banco travou"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A1_2_3",
+              "mensagem": "Consegue fazer um Pix pra mim? Devolvo amanhã. A chave tá no nome de uma amiga: (00) 90000-0000",
+              "tags": [
+                "PIX"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Devolvo amanhã",
+                "A chave tá no nome de uma amiga"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você ligou para o número antigo da sua sobrinha. Ela estava tranquila em casa — e a Máscara sumiu.",
+      "desfechoDerrota": "O Pix caiu na conta da \"amiga\". O dinheiro foi para a Máscara.",
+      "raioX": {
+        "oQueEra": "Golpe do falso parente: alguém usa a foto e o jeito de falar de um conhecido, cria urgência e pede dinheiro para outra pessoa.",
+        "comoAgir": [
+          "Confirme a história falando com a pessoa por um contato que você já tinha.",
+          "Desconfie de pressa e de pedido de dinheiro para conta de terceiros.",
+          "Converse com outra pessoa antes de transferir."
+        ]
+      },
+      "fonte": "F_GOLPES"
+    },
+    {
+      "id": "C1_3",
+      "titulo": "Sua encomenda está retida",
+      "canal": "SMS",
+      "persona": "Transportadora Rápido Já",
+      "contexto": "Quarta, 14h30. Você está esperando uma compra e chega este SMS.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A1_3_1",
+              "mensagem": "Rápido Já: sua encomenda BR000000000 não pôde ser entregue. Veja os detalhes.",
+              "tags": [
+                "CURIOSIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "não pôde ser entregue",
+                "Veja os detalhes"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A1_3_2",
+              "mensagem": "Sem atualização em 24h, o pacote volta ao remetente e você perde a compra.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "volta ao remetente",
+                "você perde a compra"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A1_3_3",
+              "mensagem": "Pague a taxa de reentrega de R$ 3,90 em rapidoja-entregas.example/taxa",
+              "tags": [
+                "LINK"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "taxa de reentrega de R$ 3,90",
+                "rapidoja-entregas.example/taxa"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você conferiu o rastreio no site da loja onde comprou: a entrega estava normal. A Máscara desistiu.",
+      "desfechoDerrota": "Os R$ 3,90 viraram a porta de entrada: os dados do seu cartão foram junto.",
+      "raioX": {
+        "oQueEra": "Golpe da encomenda retida: usa um assunto do dia a dia e uma taxa pequena para capturar dados de pagamento.",
+        "comoAgir": [
+          "Suspeite de mensagens sobre encomenda retida ou pagamento pendente.",
+          "Consulte a entrega pelo site ou app da loja onde você comprou, acessado por conta própria.",
+          "Não pague taxas por links recebidos em mensagens."
+        ]
+      },
+      "fonte": "F_GOLPES"
+    },
+    {
+      "id": "C1_4",
+      "titulo": "Vaga dos sonhos",
+      "canal": "MENSAGEM",
+      "persona": "Recrutadora da Talento+",
+      "contexto": "Segunda, 20h. Uma \"recrutadora\" puxa conversa sem você ter se candidatado a nada.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A1_4_1",
+              "mensagem": "Olá! Vi seu perfil e temos vaga home office: R$ 300 por dia só curtindo vídeos.",
+              "tags": [
+                "RECOMPENSA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "R$ 300 por dia só curtindo vídeos"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A1_4_2",
+              "mensagem": "Sou da equipe oficial de RH da Talento+, parceira das maiores marcas do país.",
+              "tags": [
+                "AUTORIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "equipe oficial de RH",
+                "parceira das maiores marcas do país"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A1_4_3",
+              "mensagem": "Pra cadastrar, me envie foto do documento, CPF e uma selfie segurando o documento.",
+              "tags": [
+                "DADOS"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "foto do documento, CPF e uma selfie segurando o documento"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você pesquisou a \"empresa\" e achou vários relatos de golpe. A Máscara ficou sem seus documentos.",
+      "desfechoDerrota": "Com documento e selfie, a Máscara abriu contas e pediu empréstimos no seu nome.",
+      "raioX": {
+        "oQueEra": "Golpe da falsa vaga: dinheiro fácil, autoridade inventada e pedido de documentos e selfie.",
+        "comoAgir": [
+          "Desconfie de promessa de dinheiro fácil e de oportunidade que você não buscou.",
+          "Pesquise a empresa e relatos de golpes parecidos em mais de uma fonte.",
+          "Não envie documento, CPF ou selfie para quem procurou você."
+        ]
+      },
+      "fonte": "F_GOLPES"
+    },
+    {
+      "id": "C1_5",
+      "titulo": "Acesso suspenso",
+      "canal": "EMAIL",
+      "persona": "Central de Segurança do Banco Horizonte",
+      "contexto": "Sexta, 23h50. Um e-mail com cara de comunicado oficial chega na sua caixa de entrada.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A1_5_1",
+              "mensagem": "Banco Horizonte: detectamos acesso suspeito. Sua conta foi suspensa preventivamente.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "detectamos acesso suspeito",
+                "Sua conta foi suspensa"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A1_5_2",
+              "mensagem": "Este é um comunicado oficial da Central de Segurança. Protocolo nº 000000.",
+              "tags": [
+                "AUTORIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "comunicado oficial",
+                "Protocolo nº 000000"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A1_5_3",
+              "mensagem": "Para reativar, responda este e-mail com agência, conta e senha.",
+              "tags": [
+                "SENHA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "responda este e-mail com agência, conta e senha"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você abriu o app oficial: nenhuma suspensão. A máscara da \"Central de Segurança\" rachou.",
+      "desfechoDerrota": "Com agência, conta e senha, a Máscara entrou na sua conta antes de você acordar.",
+      "raioX": {
+        "oQueEra": "Falso comunicado do banco: medo de bloqueio, aparência oficial e pedido de senha por e-mail.",
+        "comoAgir": [
+          "Banco não pede senha por e-mail, mensagem ou ligação.",
+          "Confira a situação da conta pelo app oficial ou pelo endereço digitado por você.",
+          "Na dúvida, contate o banco pelos canais oficiais."
+        ]
+      },
+      "fonte": "F_BANCO"
+    }
+  ]
+}

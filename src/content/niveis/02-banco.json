@@ -1,0 +1,483 @@
+{
+  "id": "N2_BANCO",
+  "ordem": 2,
+  "titulo": "Banco via Internet",
+  "fontes": [
+    "F_BANCO"
+  ],
+  "regras": {
+    "tagsVisiveis": false,
+    "pressaoMin": 2,
+    "pressaoMax": 3,
+    "combos": false,
+    "ia": "aleatoria",
+    "desmascarar": false,
+    "armadilhasNaLoja": false,
+    "rarasNaLoja": true
+  },
+  "pool": [
+    "PAUSA",
+    "CANAL_OFICIAL",
+    "NAO_CLICO",
+    "CONFERIR_LINK",
+    "CODIGO_E_MEU",
+    "SENHA_NINGUEM",
+    "DESLIGAR_LIGAR",
+    "LOJA_OFICIAL",
+    "NAO_ABRO_ANEXO",
+    "CONFERIR_RECEBEDOR",
+    "CONFERIR_DDA",
+    "DADOS_MINIMOS",
+    "BOM_DEMAIS",
+    "SEGUNDA_OPINIAO",
+    "PESQUISAR"
+  ],
+  "maoInicial": [
+    "CANAL_OFICIAL",
+    "PAUSA",
+    "CODIGO_E_MEU",
+    "SENHA_NINGUEM",
+    "NAO_CLICO",
+    "BOM_DEMAIS",
+    "LOJA_OFICIAL",
+    "CONFERIR_DDA"
+  ],
+  "recompensas": [
+    "P_2FA",
+    "P_ATUALIZADO",
+    "P_DADOS_MINIMOS"
+  ],
+  "cenarios": [
+    {
+      "id": "C2_1",
+      "titulo": "Ligação da central",
+      "canal": "LIGACAO",
+      "persona": "Falsa central do Banco Horizonte",
+      "contexto": "Quinta, 19h40. O celular toca e a tela mostra \"Banco Horizonte\".",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A2_1_1",
+              "mensagem": "Boa noite, aqui é da central de segurança do Banco Horizonte. Falo com o titular da conta final 4321?",
+              "tags": [
+                "AUTORIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "central de segurança do Banco Horizonte",
+                "conta final 4321"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A2_1_2a",
+              "mensagem": "Identificamos uma compra de R$ 2.890 numa loja de eletrônicos agora há pouco. Se não foi o senhor, a gente precisa bloquear já.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Identificamos uma compra de R$ 2.890",
+                "precisa bloquear já"
+              ]
+            },
+            {
+              "id": "A2_1_2b",
+              "mensagem": "O sistema registrou 3 tentativas de acesso de outro estado. Sua conta pode ser zerada ainda hoje.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "3 tentativas de acesso de outro estado",
+                "pode ser zerada ainda hoje"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A2_1_3a",
+              "mensagem": "Vou mandar um código por SMS pra cancelar. Me fala os 6 números que chegarem, tá?",
+              "tags": [
+                "CODIGO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "Me fala os 6 números que chegarem"
+              ]
+            },
+            {
+              "id": "A2_1_3b",
+              "mensagem": "Pra confirmar que é o senhor, digite a senha do cartão no teclado do telefone depois do sinal.",
+              "tags": [
+                "SENHA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "digite a senha do cartão no teclado do telefone"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você desligou e ligou para o número que está no site oficial do banco. Nenhuma compra suspeita — a Máscara ficou falando sozinha.",
+      "desfechoDerrota": "Com o código, a Máscara cadastrou o app do banco em outro celular e começou a fazer transferências.",
+      "raioX": {
+        "oQueEra": "Golpe da falsa central: alguém se passa pelo banco, inventa um problema e pede código ou senha \"para resolver\".",
+        "comoAgir": [
+          "Banco não liga pedindo senha, código de verificação, token ou dados do cartão.",
+          "Encerre a ligação e procure o banco por um canal oficial que você mesmo buscou.",
+          "Nunca repita em voz alta nem digite códigos ou senhas a pedido de quem ligou."
+        ]
+      },
+      "fonte": "F_BANCO"
+    },
+    {
+      "id": "C2_2",
+      "titulo": "Cashback no Pix",
+      "canal": "SITE",
+      "persona": "Anúncio patrocinado falso",
+      "contexto": "Você procura \"Banco Horizonte\" num buscador para pagar uma conta. O primeiro resultado é um anúncio.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A2_2_1a",
+              "mensagem": "Banco Horizonte | Entre na sua conta e ganhe cashback de 10% em todos os Pix deste mês 💰",
+              "tags": [
+                "RECOMPENSA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "ganhe cashback de 10% em todos os Pix"
+              ]
+            },
+            {
+              "id": "A2_2_1b",
+              "mensagem": "Banco Horizonte | Atendimento Oficial ✔ Canal autorizado para clientes",
+              "tags": [
+                "AUTORIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Atendimento Oficial ✔",
+                "Canal autorizado"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A2_2_2",
+              "mensagem": "Oferta só para os primeiros 500 clientes que entrarem hoje. Restam 12 vagas!",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "só para os primeiros 500 clientes",
+                "Restam 12 vagas!"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A2_2_3",
+              "mensagem": "Acesse agora pelo anúncio: horizonte-cashback.example/entrar e informe agência e conta.",
+              "tags": [
+                "LINK"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "horizonte-cashback.example/entrar"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você digitou o endereço do banco no navegador e não achou promoção nenhuma. O anúncio era isca.",
+      "desfechoDerrota": "A página era uma cópia do site do banco. O que você digitou foi direto para a Máscara.",
+      "raioX": {
+        "oQueEra": "Anúncio falso: golpistas pagam anúncios em buscadores e redes para levar você a uma cópia do site do banco.",
+        "comoAgir": [
+          "Digite o endereço do banco direto no navegador ou use o app oficial.",
+          "Salve o site verdadeiro nos favoritos e entre sempre por ali.",
+          "Confira no site oficial quais são os canais e promoções verdadeiros."
+        ]
+      },
+      "fonte": "F_BANCO"
+    },
+    {
+      "id": "C2_3",
+      "titulo": "Atualize seu módulo de segurança",
+      "canal": "SMS",
+      "persona": "Falso suporte digital do Banco Horizonte",
+      "contexto": "Domingo, 8h. Um SMS diz que o app do banco vai parar de funcionar.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A2_3_1",
+              "mensagem": "Banco Horizonte: seu app está desatualizado e será BLOQUEADO em 2h. Evite o bloqueio.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "será BLOQUEADO em 2h"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A2_3_2a",
+              "mensagem": "Aviso oficial do Setor de Segurança Digital. A nova versão protege sua conta contra fraudes.",
+              "tags": [
+                "AUTORIDADE"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Aviso oficial do Setor de Segurança Digital"
+              ]
+            },
+            {
+              "id": "A2_3_2b",
+              "mensagem": "Faltam 90 minutos. Depois disso só desbloqueia indo na agência com documentos.",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "Faltam 90 minutos"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A2_3_3",
+              "mensagem": "Instale o Horizonte Protege pelo arquivo: horizonte-protege.example/app.apk",
+              "tags": [
+                "APP_ANEXO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "Instale o Horizonte Protege pelo arquivo",
+                "horizonte-protege.example/app.apk"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você abriu a loja oficial do celular: o app do banco estava em dia. O \"módulo\" nunca existiu.",
+      "desfechoDerrota": "O app falso pediu permissões de acessibilidade e deu à Máscara controle remoto do seu celular.",
+      "raioX": {
+        "oQueEra": "App falso: o golpista convence você a instalar um aplicativo fora da loja oficial que pode controlar o celular à distância.",
+        "comoAgir": [
+          "Instale aplicativos só pela loja oficial do sistema ou do fabricante.",
+          "Antes de instalar, confira o nome do app e do desenvolvedor.",
+          "Mantenha apps e sistema atualizados pela própria loja, com atualização automática."
+        ]
+      },
+      "fonte": "F_BANCO"
+    },
+    {
+      "id": "C2_4",
+      "titulo": "Renegociação com 80% de desconto",
+      "canal": "EMAIL",
+      "persona": "Setor de Cobrança Horizonte",
+      "contexto": "Terça, 11h. Um e-mail oferece um acordo para uma dívida que você nem lembrava.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A2_4_1",
+              "mensagem": "Prezado cliente, sua dívida de R$ 1.240,00 pode ser quitada por apenas R$ 248,00. Desconto exclusivo de 80%!",
+              "tags": [
+                "RECOMPENSA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "por apenas R$ 248,00",
+                "Desconto exclusivo de 80%!"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A2_4_2a",
+              "mensagem": "Proposta válida até 23h59 de hoje. Depois do prazo, volta o valor integral.",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "válida até 23h59 de hoje"
+              ]
+            },
+            {
+              "id": "A2_4_2b",
+              "mensagem": "Sem o pagamento, seu nome será negativado amanhã e sua conta, bloqueada.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 2,
+              "sinais": [
+                "seu nome será negativado amanhã",
+                "sua conta, bloqueada"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A2_4_3",
+              "mensagem": "Pague o boleto em anexo ou faça Pix para acordos@cobranca-horizonte.example (recebedor: R. Souza Serviços).",
+              "tags": [
+                "PIX"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "acordos@cobranca-horizonte.example",
+                "recebedor: R. Souza Serviços"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você abriu o app do banco: nenhuma dívida, nenhum boleto no DDA. O \"acordo\" era só da Máscara.",
+      "desfechoDerrota": "O dinheiro foi para a conta de \"R. Souza Serviços\" e não aparece em lugar nenhum do banco.",
+      "raioX": {
+        "oQueEra": "Cobrança falsa: desconto irreal, prazo curto ou ameaça, e pagamento para um recebedor que não é o banco.",
+        "comoAgir": [
+          "Ative o DDA: os boletos emitidos no seu CPF aparecem no app do banco, ligados ao emissor registrado.",
+          "Confirme qualquer dívida ou acordo pelos canais oficiais, nunca pelos contatos do e-mail.",
+          "Desconfie de vantagem boa demais e de ameaça com prazo curto."
+        ]
+      },
+      "fonte": "F_BANCO"
+    },
+    {
+      "id": "C2_5",
+      "titulo": "Atendimento pelo perfil oficial",
+      "canal": "REDE_SOCIAL",
+      "persona": "Perfil falso de atendimento do Banco Horizonte",
+      "contexto": "Você reclamou de uma cobrança num post do Banco Horizonte. Minutos depois, chega uma mensagem direta.",
+      "vazas": [
+        {
+          "papel": "abordagem",
+          "opcoes": [
+            {
+              "id": "A2_5_1",
+              "mensagem": "Olá! Aqui é o Atendimento Horizonte ✅ Vimos sua reclamação e já abrimos o protocolo 000000 pra você.",
+              "tags": [
+                "AUTORIDADE"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "Atendimento Horizonte ✅",
+                "Vimos sua reclamação"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "escalada",
+          "opcoes": [
+            {
+              "id": "A2_5_2a",
+              "mensagem": "O estorno só pode ser liberado nos próximos 15 minutos. Depois disso o protocolo é cancelado.",
+              "tags": [
+                "URGENCIA"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "nos próximos 15 minutos",
+                "o protocolo é cancelado"
+              ]
+            },
+            {
+              "id": "A2_5_2b",
+              "mensagem": "Notamos que sua conta pode estar sendo usada por terceiros. Precisamos agir antes que zerem seu saldo.",
+              "tags": [
+                "MEDO"
+              ],
+              "pressao": 3,
+              "sinais": [
+                "sendo usada por terceiros",
+                "antes que zerem seu saldo"
+              ]
+            }
+          ]
+        },
+        {
+          "papel": "pedido",
+          "opcoes": [
+            {
+              "id": "A2_5_3a",
+              "mensagem": "Pra estornar, mande aqui: número do cartão, validade, código de segurança e uma foto sua com o documento.",
+              "tags": [
+                "DADOS"
+              ],
+              "pressao": 4,
+              "sinais": [
+                "número do cartão, validade, código de segurança",
+                "foto sua com o documento"
+              ]
+            },
+            {
+              "id": "A2_5_3b",
+              "mensagem": "Pra liberar o estorno, faça um Pix de validação de R$ 1,00 para a chave (00) 90000-0000. Ele volta junto.",
+              "tags": [
+                "PIX"
+              ],
+              "pressao": 4,
+              "sinais": [
+                "Pix de validação",
+                "Ele volta junto"
+              ]
+            }
+          ]
+        }
+      ],
+      "desfechoVitoria": "Você conferiu no site do banco quais perfis são oficiais — aquele não estava na lista. A máscara do \"Atendimento\" caiu.",
+      "desfechoDerrota": "A Máscara usou o que você mandou para compras e novas \"validações\". O protocolo nunca existiu.",
+      "raioX": {
+        "oQueEra": "Perfil falso de atendimento: golpistas acompanham reclamações públicas e abordam a pessoa fingindo ser o SAC do banco.",
+        "comoAgir": [
+          "Instituições financeiras não pedem senha, código, token ou dados do cartão por mensagem.",
+          "Confira no site oficial do banco quais são os perfis e canais verdadeiros.",
+          "Não publique dados financeiros nem fotos de cartões em redes sociais."
+        ]
+      },
+      "fonte": "F_BANCO"
+    }
+  ]
+}

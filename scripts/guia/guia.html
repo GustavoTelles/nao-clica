@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Não Clica! — Guia de como jogar</title>
+<style>
+  @font-face { font-family: 'Silkscreen'; src: url('/__fonte.woff2') format('woff2'); }
+  @page { size: A4; margin: 16mm 15mm; }
+  @page capa { margin: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root { --fundo: #10131a; --painel: #1a1f2b; --defesa: #1f9e68; --ameaca: #d6304f; --alerta: #b8860b; --texto: #1b1f2a; --suave: #5a6275; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--texto); font: 10.5pt/1.5 'Segoe UI', system-ui, Arial, sans-serif; }
+  h1, h2, h3 { font-family: 'Silkscreen', 'Consolas', monospace; font-weight: 400; line-height: 1.15; margin: 0 0 .4em; }
+  h2 { font-size: 17pt; color: var(--ameaca); border-bottom: 3px solid var(--texto); padding-bottom: 4px; margin-top: 0; }
+  h3 { font-size: 11.5pt; margin-top: 1em; }
+  p { margin: 0 0 .6em; }
+  ul, ol { margin: 0 0 .7em; padding-left: 1.2em; }
+  li { margin-bottom: .25em; }
+  .pagina { page-break-after: always; }
+  .pagina:last-child { page-break-after: auto; }
+  .capa { page: capa; background: var(--fundo); color: #e8eaf0; margin: 0; padding: 40mm 22mm; width: 210mm; height: 296mm; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+  .capa h1 { font-size: 44pt; color: #ff4d6d; text-shadow: 4px 4px 0 #000; }
+  .capa .sub { font-size: 15pt; color: #a9b0c2; }
+  .capa .tag { display: inline-block; font-family: 'Silkscreen', monospace; background: #3ddc97; color: #06210f; padding: 6px 12px; border-radius: 8px; width: max-content; }
+  .duas { display: grid; grid-template-columns: 1fr 62mm; gap: 8mm; align-items: start; }
+  .duas.inv { grid-template-columns: 62mm 1fr; }
+  .tela { width: 100%; border: 3px solid #000; border-radius: 10px; box-shadow: 4px 4px 0 #000; display: block; }
+  .legenda { font-size: 8.5pt; color: var(--suave); text-align: center; margin-top: 4px; }
+  .caixa { border: 2px solid var(--texto); border-radius: 8px; padding: 8px 12px; margin: .6em 0; background: #f5f6f9; box-shadow: 3px 3px 0 var(--texto); }
+  .caixa.verde { background: #e7f8f0; border-color: var(--defesa); box-shadow: 3px 3px 0 var(--defesa); }
+  .caixa.vermelha { background: #fdecef; border-color: var(--ameaca); box-shadow: 3px 3px 0 var(--ameaca); }
+  .caixa.amarela { background: #fff6dc; border-color: var(--alerta); box-shadow: 3px 3px 0 var(--alerta); }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: .4em 0 .8em; }
+  th, td { border: 1px solid #c7ccd8; padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: #eceff5; }
+  kbd { font-family: Consolas, monospace; border: 1px solid #888; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: #fff; font-size: 9pt; }
+  .num { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--texto); color: #fff; font-size: 9pt; font-weight: 700; margin-right: 6px; }
+  .tres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+  .rodape-cred { font-size: 9pt; color: var(--suave); }
+  a { color: #0b6e47; }
+</style>
+</head>
+<body>
+
+<section class="pagina capa">
+  <span class="tag">Guia de como jogar</span>
+  <h1>Não Clica!</h1>
+  <p class="sub">Um jogo de cartas contra os golpes digitais.<br/>Leia a mensagem, descubra a tática e responda com a defesa certa.</p>
+  <p class="sub" style="font-size:11pt">Para estudantes a partir de 12 anos, professores e equipes de conscientização.</p>
+</section>
+
+<section class="pagina">
+  <h2>1. A ideia do jogo</h2>
+  <div class="duas">
+    <div>
+      <p>Golpistas são bons em manipular: criam pressa, prometem prêmios, fingem ser o banco ou um parente. No <b>Não Clica!</b> você treina para reconhecer esses truques <b>antes</b> de cair neles.</p>
+      <ul>
+        <li><b>Você</b> tem uma mão com <b>8 cartas de defesa</b>: atitudes como "Confirmo pelo canal oficial" ou "Código de verificação não se passa".</li>
+        <li><b>A Máscara</b> é o golpista. A cada caso ela veste um disfarce diferente (banco, loja, parente…) e <b>sempre joga primeiro</b>, mandando uma mensagem.</li>
+        <li>Cada <b>caso</b> é uma conversa de golpe com até <b>3 vazas</b> (rodadas): abordagem, escalada e pedido. Quem vencer <b>2 vazas</b> leva o caso.</li>
+        <li>Cada <b>nível</b> tem 5 casos. Quem fizer <b>3 pontos</b> primeiro vence o nível.</li>
+      </ul>
+      <div class="caixa verde"><b>Objetivo:</b> não deixar a Máscara chegar ao pedido final — seja ele clicar num link, passar um código, fazer um Pix ou entregar seus dados.</div>
+      <h3>Começando</h3>
+      <p><span class="num">1</span>No menu, toque em <b>Jogar</b>.<br/>
+         <span class="num">2</span>No mapa, escolha um nível liberado (o nível 1 já começa aberto).<br/>
+         <span class="num">3</span>Leia a apresentação do caso e toque em <b>Começar</b>.</p>
+      <p>O progresso fica salvo no próprio navegador. Você pode sair a qualquer momento (botão <b>☰</b> ou <kbd>Esc</kbd>) e continuar depois.</p>
+    </div>
+    <div><img class="tela" src="/__guia/img/menu.png" alt="Menu do jogo" /><p class="legenda">Menu inicial</p>
+         <img class="tela" style="margin-top:5mm" src="/__guia/img/intro.png" alt="Apresentação do caso" /><p class="legenda">Apresentação de um caso</p></div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>2. A mesa</h2>
+  <div class="duas">
+    <div>
+      <p>Na mesa acontece a disputa. De cima para baixo:</p>
+      <ul>
+        <li><b>A Máscara e o placar.</b> As bolinhas mostram as vazas do caso (✓ sua, × da Máscara). Embaixo, o placar do nível: <i>Você × Ameaça</i>.</li>
+        <li><b>O celular</b> com a mensagem do golpista. Abaixo dela aparecem a <b>pressão</b> (força da mensagem, de 1 a 5) e as <b>táticas</b> que ela usa.</li>
+        <li><b>A sua mão</b>, em leque. Cada carta mostra a <b>força</b> (número verde, de 1 a 3) e as táticas que ela <b>anula</b>.</li>
+      </ul>
+      <h3>Como jogar uma carta</h3>
+      <p><span class="num">1</span>Leia a mensagem com atenção.<br/>
+         <span class="num">2</span>Toque numa carta: ela sobe e o painel mostra o nome, a força e o que ela anula.<br/>
+         <span class="num">3</span>Toque em <b>Jogar</b>. Para trocar de ideia, toque em outra carta.</p>
+      <div class="caixa amarela"><b>Dica:</b> não procure a carta mais forte — procure a que <b>anula a tática</b> da mensagem.</div>
+    </div>
+    <div><img class="tela" src="/__guia/img/mesa.png" alt="Mesa do jogo" /><p class="legenda">Nível 1: as táticas aparecem embaixo da mensagem</p></div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>3. Quem vence a vaza?</h2>
+  <div class="duas">
+    <div>
+      <p>Depois que você joga, o resultado aparece em letras grandes. A regra tem duas partes:</p>
+      <div class="caixa verde"><b>1. Contra perfeito vence sempre.</b> Se a sua carta anula <b>todas</b> as táticas da mensagem, você vence a vaza, não importa a pressão. Aparece <b>CONTRA PERFEITO!</b> e os sinais do golpe piscam na mensagem.</div>
+      <div class="caixa">
+        <b>2. Sem contra perfeito, vale a força.</b> Sua carta precisa ter <b>força maior</b> que a pressão da mensagem.
+        <ul style="margin-top:4px">
+          <li><b>Empate é da Máscara.</b> Força 2 contra pressão 2 perde.</li>
+          <li>Como a força máxima é 3, mensagens de <b>pressão 3 ou mais</b> só caem com o contra perfeito.</li>
+          <li>Se a mensagem tiver 2 táticas e sua carta anular só uma (<b>contra parcial</b>), você ganha +2 de força.</li>
+        </ul>
+      </div>
+      <table>
+        <tr><th>Mensagem</th><th>Sua carta</th><th>Resultado</th></tr>
+        <tr><td>🎁 Recompensa · pressão 1</td><td>"Bom demais pra ser verdade?" (anula Recompensa)</td><td>Contra perfeito ✓</td></tr>
+        <tr><td>⏰ Urgência · pressão 2</td><td>Carta de força 3 que não anula Urgência</td><td>3 &gt; 2 ✓</td></tr>
+        <tr><td>🔗 Link · pressão 2</td><td>Carta de força 2 que não anula Link</td><td>Empate: Máscara ✗</td></tr>
+        <tr><td>🔑 Senha · pressão 3</td><td>Carta de força 3 que não anula Senha</td><td>Só o contra perfeito vence ✗</td></tr>
+      </table>
+      <p>Toda vez que você perde uma vaza, o jogo mostra qual era a tática — assim você aprende o que procurar na próxima.</p>
+    </div>
+    <div><img class="tela" src="/__guia/img/resolucao.png" alt="Resultado da vaza" /><p class="legenda">Contra perfeito: vaza sua</p></div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>4. As táticas da Máscara</h2>
+  <p>Toda mensagem usa uma ou mais táticas. Existem dois tipos: os <b>gatilhos</b>, que mexem com as suas emoções, e os <b>pedidos</b>, que são o que o golpista quer de você.</p>
+  <div class="duas" style="grid-template-columns: 1fr 1fr">
+    <table>
+      <tr><th colspan="2">Gatilhos (como manipula)</th></tr>
+      <tr><td>🎩 Autoridade</td><td>Diz ser banco, órgão, empresa, chefe ou suporte.</td></tr>
+      <tr><td>⏰ Urgência</td><td>Prazo curto, "agora ou nunca".</td></tr>
+      <tr><td>🎁 Recompensa</td><td>Prêmio, oferta, dinheiro fácil, vaga dos sonhos.</td></tr>
+      <tr><td>⚠️ Medo</td><td>Bloqueio, multa, processo, conta invadida.</td></tr>
+      <tr><td>❤️ Afeto</td><td>Parente, amigo ou par romântico em apuros.</td></tr>
+      <tr><td>👀 Curiosidade</td><td>Encomenda, foto sua, "olha isso".</td></tr>
+    </table>
+    <table>
+      <tr><th colspan="2">Pedidos (o que quer)</th></tr>
+      <tr><td>🔗 Link</td><td>Clicar ou abrir um endereço.</td></tr>
+      <tr><td>🔢 Código</td><td>Código de verificação (SMS, app).</td></tr>
+      <tr><td>💸 Pix/pagamento</td><td>Transferir ou pagar.</td></tr>
+      <tr><td>📎 App/anexo</td><td>Instalar um app ou abrir um arquivo.</td></tr>
+      <tr><td>🔑 Senha</td><td>Informar a senha.</td></tr>
+      <tr><td>🪪 Dados</td><td>CPF, documento, selfie, dados do cartão.</td></tr>
+    </table>
+  </div>
+  <h3>Exemplos de leitura</h3>
+  <table>
+    <tr><th>Trecho da mensagem</th><th>Tática</th><th>Uma defesa que anula</th></tr>
+    <tr><td>"o prêmio expira HOJE às 18h"</td><td>⏰ Urgência</td><td>Respira: nada é tão urgente</td></tr>
+    <tr><td>"Sua conta foi suspensa preventivamente"</td><td>⚠️ Medo</td><td>Respira / Confirmo pelo canal oficial</td></tr>
+    <tr><td>"Me fala os 6 números que chegarem"</td><td>🔢 Código</td><td>Código de verificação não se passa</td></tr>
+    <tr><td>"Instale o app pelo arquivo .apk"</td><td>📎 App/anexo</td><td>Só instalo da loja oficial</td></tr>
+  </table>
+</section>
+
+<section class="pagina">
+  <h2>5. Táticas ocultas e o Desconfiômetro</h2>
+  <div class="duas">
+    <div>
+      <p>No <b>nível 1</b> o jogo mostra as táticas embaixo de cada mensagem, para você aprender. A partir do <b>nível 2</b> elas ficam <b>ocultas</b> ("??? táticas ocultas"): agora é com você. Leia a mensagem e descubra sozinho como a Máscara está tentando te enganar — essa é a habilidade que vale na vida real.</p>
+      <div class="caixa amarela">
+        <b>🔍 Desconfiômetro</b>
+        <ul style="margin-top:4px">
+          <li>Revela as táticas da mensagem atual.</li>
+          <li>Você começa cada nível com <b>3 cargas</b>.</li>
+          <li>Ganha <b>+1 carga</b> a cada <b>Leitura perfeita</b> (vencer um caso só com contras perfeitos).</li>
+          <li>Guarde as cargas para as mensagens em que você tiver dúvida de verdade.</li>
+        </ul>
+      </div>
+      <h3>Como ler sem o Desconfiômetro</h3>
+      <ul>
+        <li>Quem diz que é? (banco, suporte, parente → Autoridade ou Afeto)</li>
+        <li>Tem prazo ou ameaça? (Urgência ou Medo)</li>
+        <li>Promete algo bom demais? (Recompensa)</li>
+        <li>O que pede no fim? (link, código, Pix, app, senha, dados)</li>
+      </ul>
+    </div>
+    <div><img class="tela" src="/__guia/img/oculta.png" alt="Táticas ocultas" /><p class="legenda">Nível 2: táticas ocultas</p>
+         <img class="tela" style="margin-top:5mm" src="/__guia/img/desconfiometro.png" alt="Desconfiômetro usado" /><p class="legenda">Depois de usar o Desconfiômetro</p></div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>6. Raio-X do golpe</h2>
+  <div class="duas">
+    <div>
+      <p>No fim de cada caso aparece o <b>Raio-X</b>, a parte mais importante do jogo. Ele mostra:</p>
+      <ul>
+        <li><b>A conversa</b> com os <b>sinais do golpe grifados</b> em amarelo — os trechos que entregavam a Máscara.</li>
+        <li><b>O que era:</b> o nome e o funcionamento do golpe.</li>
+        <li><b>Como agir na vida real:</b> atitudes práticas para usar no dia a dia.</li>
+        <li>Um <b>link para o fascículo oficial</b> do assunto, para quem quiser se aprofundar.</li>
+      </ul>
+      <div class="caixa verde"><b>Para professores:</b> o Raio-X é um ótimo ponto de pausa para conversar com a turma. Pergunte: "alguém já recebeu uma mensagem parecida?" e "qual sinal vocês perceberam primeiro?".</div>
+      <p>Se você vencer as 2 primeiras vazas, a Máscara desiste antes do pedido final, e a terceira mensagem nem chega a aparecer.</p>
+    </div>
+    <div><img class="tela" src="/__guia/img/raiox.png" alt="Raio-X do golpe" /><p class="legenda">Raio-X com os sinais grifados</p></div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>7. A loja de defesas</h2>
+  <div class="duas">
+    <div>
+      <p>Cada carta jogada vai para o descarte e não volta. Entre um caso e outro aparece a <b>loja</b>, para você <b>repor a mão até 8 cartas</b>.</p>
+      <ul>
+        <li>A loja mostra <b>5 cartas</b> (ou 6, depois de uma Leitura perfeita). Escolha exatamente quantas faltam e toque em <b>Confirmar</b>.</li>
+        <li><b>Prévia do próximo caso:</b> o título e o canal (SMS, e-mail, ligação…) ajudam a planejar. Um caso de banco por telefone, por exemplo, deve pedir código ou senha.</li>
+        <li><b>Troca (1 vez por loja):</b> toque numa carta da sua mão e depois numa da oferta para trocá-las.</li>
+        <li>No máximo <b>2 cópias</b> da mesma carta na mão.</li>
+        <li>Cartas com borda <b>azul</b> são incomuns; com borda <b>roxa</b>, raras.</li>
+      </ul>
+      <div class="caixa amarela"><b>Estratégia:</b> mantenha uma mão variada. Ter só cartas contra links não ajuda quando a Máscara pedir um Pix.</div>
+    </div>
+    <div><img class="tela" src="/__guia/img/loja.png" alt="Loja" /><p class="legenda">Loja entre os casos</p></div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>8. Fim de nível e proteções</h2>
+  <div class="duas inv">
+    <div><img class="tela" src="/__guia/img/fim.png" alt="Fim de nível" /><p class="legenda">Nível vencido</p>
+         <img class="tela" style="margin-top:5mm" src="/__guia/img/recompensa.png" alt="Escolha de proteção" /><p class="legenda">Escolha da proteção</p></div>
+    <div>
+      <p>Quando alguém chega a 3 pontos, o nível acaba e aparece o resumo:</p>
+      <ul>
+        <li><b>Índice de Desconfiança:</b> a porcentagem de vazas que você venceu com contra perfeito. Quanto mais alto, melhor você está lendo os golpes. O melhor índice de cada nível fica salvo no mapa.</li>
+        <li><b>A tática em que você mais caiu</b>, para você ficar de olho.</li>
+      </ul>
+      <h3>Proteções</h3>
+      <p>Ao vencer um nível, você escolhe <b>1 de 3 proteções</b>. Elas são permanentes, valem em todos os níveis seguintes e representam bons hábitos de segurança:</p>
+      <table>
+        <tr><td>🛡 Perfil fechado</td><td>−1 de pressão em mensagens de Afeto e Curiosidade.</td></tr>
+        <tr><td>🛡 Limites de transação baixos</td><td>−1 de pressão em pedidos de Pix.</td></tr>
+        <tr><td>🛡 Gerenciador de senhas</td><td>+1 de força nas cartas contra Senha e Link.</td></tr>
+        <tr><td>🛡 Verificação em duas etapas</td><td>Uma vez por nível, salva uma vaza perdida contra pedido de senha.</td></tr>
+      </table>
+      <p>Você pode ter até 3 proteções. Com as 3 vagas cheias, a nova substitui uma das atuais.</p>
+      <div class="caixa vermelha"><b>Perdeu?</b> Toque em <b>Tentar de novo</b>. O nível recomeça do zero, mas as proteções já conquistadas continuam com você.</div>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <h2>9. Níveis, teclado e ajustes</h2>
+  <h3>Níveis disponíveis</h3>
+  <table>
+    <tr><th>Nível</th><th>Tema</th><th>O que muda</th></tr>
+    <tr><td>1 · Golpes do dia a dia</td><td>Falso prêmio, falso parente, encomenda retida, vaga falsa, falso e-mail do banco</td><td>Táticas visíveis; pressão baixa. Ideal para aprender.</td></tr>
+    <tr><td>2 · Banco via Internet</td><td>Falsa central, anúncio falso, app falso, cobrança falsa, perfil falso de atendimento</td><td>Táticas ocultas, Desconfiômetro e pressão maior.</td></tr>
+    <tr><td>3 a 9</td><td>Comércio, redes sociais, códigos maliciosos, autenticação, trabalho remoto, IA e fraudes</td><td>Em breve.</td></tr>
+  </table>
+  <div class="duas" style="grid-template-columns: 1fr 1fr">
+    <div>
+      <h3>Teclado</h3>
+      <table>
+        <tr><td><kbd>1</kbd>–<kbd>8</kbd></td><td>Escolhe a carta da mão (na loja, a carta da oferta)</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Joga a carta / continua</td></tr>
+        <tr><td><kbd>D</kbd></td><td>Usa o Desconfiômetro</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Pausa e volta ao mapa / fecha painéis</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Ajustes e acessibilidade</h3>
+      <ul>
+        <li><b>Animações reduzidas:</b> desliga tremores e efeitos de tela.</li>
+        <li><b>Texto grande:</b> aumenta todas as letras.</li>
+        <li>Funciona no celular e no computador, e inteiro pelo teclado.</li>
+        <li>Compatível com leitores de tela.</li>
+        <li><b>Apagar progresso</b> zera o jogo neste navegador.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="caixa"><b>Privacidade:</b> o jogo não pede cadastro nem nome e não envia nada para a internet. O progresso fica salvo só no navegador do aparelho.</div>
+</section>
+
+<section class="pagina">
+  <h2>10. Resumo rápido</h2>
+  <div class="tres">
+    <div class="caixa"><b>Leia</b><br/>Quem diz que é? Tem pressa, medo ou prêmio? O que pede no fim?</div>
+    <div class="caixa"><b>Responda</b><br/>Jogue a carta que anula a tática. Contra perfeito vence sempre.</div>
+    <div class="caixa"><b>Aprenda</b><br/>Leia o Raio-X: os sinais grifados são os mesmos dos golpes de verdade.</div>
+  </div>
+  <h3>As 5 lições que valem para a vida</h3>
+  <ol>
+    <li><b>Pressa é ferramenta do golpista.</b> Pare e pense antes de agir.</li>
+    <li><b>Procure a empresa por conta própria:</b> app oficial ou endereço digitado por você, nunca o link da mensagem.</li>
+    <li><b>Código de verificação e senha são só seus.</b> Ninguém de verdade precisa deles.</li>
+    <li><b>Confirme com a pessoa</b> por um contato que você já tinha.</li>
+    <li><b>Vantagem boa demais é isca.</b></li>
+  </ol>
+
+  <h3 style="margin-top:2em">Créditos e fontes</h3>
+  <p class="rodape-cred">O conteúdo educativo do jogo se baseia nas recomendações dos Fascículos da Cartilha de Segurança para Internet, produzidos pelo CERT.br/NIC.br (<a href="https://cartilha.cert.br/fasciculos/">cartilha.cert.br/fasciculos</a>), distribuídos sob a licença Creative Commons BY-NC-ND 4.0 (<a href="https://cartilha.cert.br/cc/">cartilha.cert.br/cc</a>). Os textos, casos e cartas do jogo e deste guia são originais. Não Clica! é um projeto independente e não é um material oficial nem endossado pelo CERT.br, NIC.br ou CGI.br. Todas as marcas, pessoas, endereços e telefones dos casos são fictícios.</p>
+</section>
+
+</body>
+</html>

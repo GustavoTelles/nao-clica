@@ -1,0 +1,57 @@
+# Um termo por linha (sem diferenciar maiúsculas). Casamento por palavra inteira.
+# Bancos e fintechs
+itaú
+itau
+bradesco
+santander
+caixa econômica
+banco do brasil
+nubank
+banco inter
+c6 bank
+mercado pago
+picpay
+pagbank
+pagseguro
+banrisul
+sicredi
+sicoob
+btg
+# Varejo e entregas
+correios
+magalu
+magazine luiza
+americanas
+amazon
+shopee
+mercado livre
+aliexpress
+shein
+casas bahia
+ifood
+# Apps e plataformas
+whatsapp
+instagram
+facebook
+telegram
+tiktok
+youtube
+gmail
+outlook
+google
+apple
+microsoft
+samsung
+linkedin
+# Órgãos públicos
+receita federal
+gov.br
+detran
+inss
+serasa
+procon
+polícia federal
+banco central
+cert.br
+nic.br
+cgi.br

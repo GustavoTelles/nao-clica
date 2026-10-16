@@ -1,0 +1,20 @@
+[
+  { "id": "P_2FA", "nome": "Verificação em duas etapas", "descricao": "1x por nível: uma vaza perdida contra carta que pede SENHA vira vitória — a senha sozinha não bastou.", "fonte": "F_AUTENTICACAO",
+    "efeito": { "tipo": "converterDerrotaVaza", "tags": ["SENHA"], "usosPorNivel": 1 } },
+  { "id": "P_GERENCIADOR", "nome": "Gerenciador de senhas", "descricao": "+1 de força nas suas cartas que anulam SENHA ou LINK (ele não preenche senha em site falso).", "fonte": "F_AUTENTICACAO",
+    "efeito": { "tipo": "forca", "contraTags": ["SENHA", "LINK"], "delta": 1 } },
+  { "id": "P_BACKUP", "nome": "Backup em dia", "descricao": "1x por nível: se você perder um cenário cujo pedido é APP/ANEXO, a ameaça não pontua — seus arquivos voltaram.", "fonte": "F_BACKUP",
+    "efeito": { "tipo": "anularPontoCenario", "pedido": "APP_ANEXO", "usosPorNivel": 1 } },
+  { "id": "P_LIMITES", "nome": "Limites de transação baixos", "descricao": "−1 de pressão em cartas que pedem Pix ou pagamento.", "fonte": "F_BANCO",
+    "efeito": { "tipo": "pressao", "tags": ["PIX"], "delta": -1 } },
+  { "id": "P_PERFIL_FECHADO", "nome": "Perfil fechado", "descricao": "−1 de pressão em cartas de AFETO ou CURIOSIDADE: o golpista sabe menos sobre você.", "fonte": "F_PRIVACIDADE",
+    "efeito": { "tipo": "pressao", "tags": ["AFETO", "CURIOSIDADE"], "delta": -1 } },
+  { "id": "P_ATUALIZADO", "nome": "Sistema e apps atualizados", "descricao": "−1 de pressão em cartas que pedem instalar app ou abrir anexo.", "fonte": "F_CELULARES",
+    "efeito": { "tipo": "pressao", "tags": ["APP_ANEXO"], "delta": -1 } },
+  { "id": "P_DADOS_MINIMOS", "nome": "Exposição mínima de dados", "descricao": "−1 de pressão em cartas que pedem DADOS.", "fonte": "F_PROTECAO_DADOS",
+    "efeito": { "tipo": "pressao", "tags": ["DADOS"], "delta": -1 } },
+  { "id": "P_REDE_SEGURA", "nome": "Rede de casa protegida", "descricao": "+1 de Desconfiômetro no início de cada nível.", "fonte": "F_REDES",
+    "efeito": { "tipo": "desconfiometro", "delta": 1 } },
+  { "id": "P_BLOQUEIO_TELA", "nome": "Bloqueio de tela + apagar remoto", "descricao": "Reservada para cenários de furto de celular.", "fonte": "F_FURTO",
+    "efeito": { "tipo": "reservado" } }
+]
