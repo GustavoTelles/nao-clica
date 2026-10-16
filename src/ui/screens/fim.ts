@@ -22,7 +22,7 @@ export function telaFimNivel(app: App): Tela {
       h('div', { class: 'indice' },
         h('span', { class: 'mini' }, 'Índice de Desconfiança'),
         h('strong', {}, `${indice}%`),
-        h('span', { class: 'mini' }, `das vazas vencidas com contra perfeito · melhor: ${estado.progresso.melhorIndice[nivel.id] ?? indice}%`)),
+        h('span', { class: 'mini' }, `das rodadas vencidas com contra perfeito · melhor: ${estado.progresso.melhorIndice[nivel.id] ?? indice}%`)),
       tag ? h('p', {}, `Você caiu mais em ${rotuloTag(app, tag)}. Fique de olho nessa tática.`) : h('p', {}, 'Você não caiu em nenhuma tática. Impecável!'),
       h('p', {}, (p.stats.armadilhas ?? 0) === 0 ? 'Você não jogou nenhuma resposta errada. 👏' : `Você jogou ${p.stats.armadilhas} resposta(s) errada(s). Releia o "O que NÃO fazer" dos Raio-X.`),
       venceu

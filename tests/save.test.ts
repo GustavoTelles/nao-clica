@@ -22,14 +22,22 @@ describe('save', () => {
   });
 });
 
-describe('migração do save v1 (com loja) para v2', () => {
-  it('mantém o progresso, descarta a partida antiga e liga a faixa nova', () => {
+describe('migração de saves antigos', () => {
+  it('v1 (com loja): mantém o progresso, descarta a partida antiga e usa a trilha principal', () => {
     const v1 = JSON.stringify({ versao: 1, estado: { fase: 'LOJA', progresso: { desbloqueados: ['N1_GOLPES', 'N2_BANCO'], protecoes: ['P_2FA'], melhorIndice: { N1_GOLPES: 70 } }, partida: { nivelId: 'N2_BANCO', loja: {} } }, ajustes: { som: true, trilha: 'gerada' } });
     const s = carregarSave(v1, ini, niveis, prots);
     expect(s.estado.progresso.desbloqueados).toEqual(['N1_GOLPES', 'N2_BANCO']);
     expect(s.estado.progresso.protecoes).toEqual(['P_2FA']);
     expect(s.estado.partida).toBeNull();
     expect(s.estado.fase).toBe('MENU');
-    expect(s.ajustes.trilha).toBe('faixa');
+    expect(s.ajustes.trilha).toBe('gerada');
+  });
+  it('v2: mantém a partida e volta para a trilha principal (No Breu)', () => {
+    const v2 = JSON.stringify({ versao: 2, estado: { fase: 'MAPA', progresso: { desbloqueados: ['N1_GOLPES'], protecoes: [], melhorIndice: {} }, partida: null }, ajustes: { som: true, trilha: 'faixa' } });
+    expect(carregarSave(v2, ini, niveis, prots).ajustes.trilha).toBe('gerada');
+  });
+  it('v3: respeita a trilha escolhida', () => {
+    const v3 = JSON.stringify({ versao: 3, estado: { fase: 'MENU', progresso: { desbloqueados: ['N1_GOLPES'], protecoes: [], melhorIndice: {} }, partida: null }, ajustes: { som: true, trilha: 'faixa' } });
+    expect(carregarSave(v3, ini, niveis, prots).ajustes.trilha).toBe('faixa');
   });
 });

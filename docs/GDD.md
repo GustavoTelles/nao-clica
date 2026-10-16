@@ -1,6 +1,6 @@
 # Não Clica! — Documento de Design do Jogo (GDD)
 
-> **Versão 0.1 · 15/10/2026 · Responsável: Gustavo Telles**
+> **Versão 0.1 · 15/10/2026 · Responsável: Gustavo Telles · Criação e idealização: Nogueira Sec**
 > Nome provisório. Este documento é a **fonte da verdade** do projeto. Se uma regra mudar no código, mude aqui também.
 
 ---
@@ -68,7 +68,7 @@ Estas eram perguntas em aberto. O jogo usa os padrões abaixo, que podem ser alt
 
 | Termo | Definição |
 |---|---|
-| **Vaza** | Uma troca: a ameaça joga 1 carta e você responde com 1. Corresponde à "rodada" da ideia original. |
+| **Vaza** | Uma troca: a ameaça joga 1 carta e você responde com 1. **Na interface aparece como "rodada"** (decisão de 16/10/2026); o código mantém o nome `vaza`. |
 | **Cenário** | Um caso de golpe com até 3 vazas, na ordem **abordagem → escalada → pedido**. Vale 1 ponto (ou 2 com Desmascarar, §4.9). |
 | **Nível** | Conjunto de 5 cenários de um mesmo fascículo. É uma disputa até 3 pontos. |
 | **Campanha** | Sequência de níveis em dificuldade crescente (§9). |
@@ -709,7 +709,7 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
 8. **Fim de nível:**
    - Na vitória: escolha da proteção, o Índice de Desconfiança e a tag em que você mais caiu.
    - Na derrota: o resumo e "Tentar de novo".
-9. **Créditos:** fascículos com links, licença CC BY-NC-ND 4.0, aviso de que o jogo não é oficial do CERT.br e licenças das fontes tipográficas e *assets*.
+9. **Créditos e fontes** (enxuto desde 16/10/2026): crédito de criação da **Nogueira Sec** com o logo, link único para a página dos fascículos (https://cartilha.cert.br/fasciculos/), licença CC BY-NC-ND 4.0, aviso de não endosso e aviso de ficção. Detalhes de Matriz, trilha e tipografia ficam em `CREDITS.md`. A tela inicial também mostra "Criado e idealizado por Nogueira Sec" com o logo.
 
 ### 15.2 Celular primeiro
 - A tela de referência é 360 × 740 px. A mão aparece em leque com sobreposição: um toque levanta a carta e mostra os detalhes, e o botão "Jogar" confirma.
@@ -724,6 +724,7 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
 
 ### 15.4 Direção visual (inspirada, não copiada)
 - **Estética:** "terminal noturno" com leve efeito CRT, cartas com borda grossa e sombra dura, *hover* com inclinação e "pulo".
+- **Cartas sem cor de raridade** (desde 16/10/2026): sem a loja, a raridade não tem efeito; o campo continua no JSON, mas não aparece.
 - **Paleta (tokens):**
   - `--fundo #10131a`
   - `--painel #1a1f2b`
@@ -738,8 +739,8 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
   - O contra perfeito traz *flash* e um leve tremor.
   - A derrota traz um *glitch* na tela do celular.
   - A máscara racha ao perder.
-  - **Trilha "No Breu"** (implementada, 16/10/2026): música generativa sintetizada com Web Audio (`src/ui/musica/`), recomposta a partir da análise da faixa "A ameaça no breu": Ré frígio dominante (Ré menor com Mi♭ e Fá#), 68 BPM, textura sustentada sem grade de bateria (drone, pad com filtro que abre nos clímax, batimento, sinos com motivo frígio, tremolo, estrondos e sopros de ruído, reverberação longa). Ciclo de ~19,8 min em 21 seções com três arcos (escuro → subida → clímax → respiro) que recomeça com outra semente, sem fim. Liga no primeiro clique/tecla; botão ♪, tecla `M` e Ajustes.
-  - **Faixa "A ameaça no breu"** (`public/audio/`, ~3 min, 4,3 MB): opção em Ajustes → Trilha, tocada em loop; só é baixada quando escolhida.
+  - **Trilha principal "No Breu"** (implementada, 16/10/2026; padrão desde o save v3): música generativa sintetizada com Web Audio (`src/ui/musica/`), recomposta a partir da análise da faixa "A ameaça no breu": Ré frígio dominante (Ré menor com Mi♭ e Fá#), 68 BPM, textura sustentada sem grade de bateria (drone, pad com filtro que abre nos clímax, batimento, sinos com motivo frígio, tremolo, estrondos e sopros de ruído, reverberação longa). Ciclo de ~19,8 min em 21 seções com três arcos (escuro → subida → clímax → respiro) que recomeça com outra semente, sem fim. Liga no primeiro clique/tecla; botão ♪, tecla `M` e Ajustes.
+  - **Faixa "A ameaça no breu"** (`public/audio/`, ~3 min, 4,3 MB): opção secundária em Ajustes → Trilha sonora, tocada em loop; só é baixada quando escolhida.
   - Efeitos sonoros: ainda não (fase 3).
 
 ---

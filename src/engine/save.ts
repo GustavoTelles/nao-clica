@@ -2,13 +2,16 @@
 import type { Estado, Progresso } from './types';
 
 export const CHAVE_SAVE = 'naoclica.save.v1';
-/** v2 (16/10/2026): sem loja; partidas salvas na v1 são descartadas, o progresso é mantido. */
-export const VERSAO_SAVE = 2;
+/**
+ * v2 (16/10/2026): sem loja; partidas salvas na v1 são descartadas, o progresso é mantido.
+ * v3 (16/10/2026): a trilha principal volta a ser a "No Breu" gerada ao vivo.
+ */
+export const VERSAO_SAVE = 3;
 
 /** `trilha`: "gerada" (No Breu, sintetizada, sem fim) ou "faixa" (A ameaça no breu, original, em loop). */
 export interface Ajustes { animacoesReduzidas: boolean; som: boolean; texto: 'normal' | 'grande'; trilha: 'gerada' | 'faixa' }
 /** `som` liga a trilha sonora; ela só começa depois do primeiro clique ou tecla (regra dos navegadores). */
-export const AJUSTES_PADRAO: Ajustes = { animacoesReduzidas: false, som: true, texto: 'normal', trilha: 'faixa' };
+export const AJUSTES_PADRAO: Ajustes = { animacoesReduzidas: false, som: true, texto: 'normal', trilha: 'gerada' };
 
 export interface Save { versao: number; estado: Estado; ajustes: Ajustes }
 
@@ -33,7 +36,7 @@ export function carregarSave(raw: string | null, inicial: Estado, idsNiveis: str
   if (!raw) return padrao;
   let dado: unknown;
   try { dado = JSON.parse(raw); } catch { return padrao; }
-  if (!ehObj(dado) || (dado.versao !== VERSAO_SAVE && dado.versao !== 1) || !ehObj(dado.estado)) return padrao;
+  if (!ehObj(dado) || ![1, 2, VERSAO_SAVE].includes(dado.versao as number) || !ehObj(dado.estado)) return padrao;
   const migrandoV1 = dado.versao === 1;
   const est = dado.estado;
   if (!progressoValido(est.progresso)) return padrao;
@@ -57,8 +60,8 @@ export function carregarSave(raw: string | null, inicial: Estado, idsNiveis: str
     animacoesReduzidas: typeof aj.animacoesReduzidas === 'boolean' ? aj.animacoesReduzidas : AJUSTES_PADRAO.animacoesReduzidas,
     som: typeof aj.som === 'boolean' ? aj.som : AJUSTES_PADRAO.som,
     texto: aj.texto === 'grande' ? 'grande' : 'normal',
-    // Na migração da v1, a faixa nova vira a trilha (pedido do responsável em 16/10/2026).
-    trilha: migrandoV1 ? 'faixa' : aj.trilha === 'gerada' ? 'gerada' : 'faixa',
+    // Saves anteriores à v3 passam para a trilha principal (No Breu); depois disso vale a escolha da pessoa.
+    trilha: dado.versao !== VERSAO_SAVE ? 'gerada' : aj.trilha === 'faixa' ? 'faixa' : 'gerada',
   };
   return { versao: VERSAO_SAVE, estado: { fase, progresso, partida, retomar }, ajustes };
 }

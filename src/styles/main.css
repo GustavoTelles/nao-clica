@@ -219,8 +219,6 @@ button.carta { cursor: pointer; transition: transform .15s cubic-bezier(.2,.8,.2
 button.carta:hover:not(:disabled) { transform: translateY(-6px) rotate(-1.5deg); }
 button.carta:disabled { cursor: default; }
 .carta.selecionada { outline: 3px solid var(--defesa); outline-offset: 2px; transform: translateY(-14px); }
-.carta.r-incomum { border-top: 6px solid #5fa8ff; }
-.carta.r-rara { border-top: 6px solid var(--raro); background: linear-gradient(160deg, #2a2343, #171b28); }
 .carta-topo { display: flex; justify-content: space-between; align-items: center; }
 .tecla { font-family: var(--fonte-titulo); font-size: .75rem; color: var(--texto-suave); border: 1px solid #3a4560; border-radius: 4px; padding: 0 5px; }
 .forca { font-family: var(--fonte-titulo); margin-left: auto; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; background: var(--defesa); color: #06210f; border: 2px solid var(--borda); }
@@ -373,3 +371,11 @@ html.reduz-movimento body::after { display: none; }
 .ajuste-trilha { border: 2px solid #3a4560; border-radius: var(--raio); padding: 6px 12px 8px; margin: 4px 0; }
 .ajuste-trilha legend { padding: 0 6px; font-weight: 700; }
 @media (min-width: 760px) { .mesa .detalhe { margin-right: 56px; } }
+
+/* ---------- crédito de criação (Nogueira Sec) ---------- */
+.assinatura { display: grid; justify-items: center; gap: 4px; margin-top: 4px; }
+.assinatura img { width: 176px; height: auto; border-radius: 12px; border: 2px solid #1f5a4a; box-shadow: 0 0 24px rgba(61, 220, 151, .18); }
+.assinatura p { margin: 0; display: grid; justify-items: center; line-height: 1.2; }
+.assinatura strong { color: var(--defesa); letter-spacing: .04em; }
+.assinatura.grande img { width: min(260px, 70vw); }
+.painel-conteudo .centro { text-align: center; }

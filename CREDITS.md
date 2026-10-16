@@ -1,5 +1,9 @@
 # Créditos e licenças
 
+## Criação
+
+**Não Clica!** foi criado e idealizado pela **Nogueira Sec** — Guardiões do Núcleo (logo em `public/img/nogueira-sec.png`).
+
 ## Conteúdo educativo
 
 As recomendações de segurança do jogo se baseiam nos **Fascículos da Cartilha de Segurança para Internet**, produzidos pelo **CERT.br/NIC.br** — https://cartilha.cert.br/fasciculos/
@@ -32,7 +36,7 @@ Os casos e as cartas seguem a **Matriz BR-Fraude** (v2, 15/10/2026), mapa de 52 
 
 - Máscara, ícone e interface: desenhados em SVG/CSS para este projeto.
 - Ícones de tática: emojis do sistema, sempre acompanhados de rótulo em texto (provisórios, GDD §5).
-- Trilha "No Breu": composição generativa própria (`src/ui/musica/`), sintetizada em tempo real com a Web Audio API, inspirada na faixa "A ameaça no breu" (análise: Ré frígio dominante, ~68 BPM, baixos Sol–Mi♭–Sib–Fá e Dó–Ré–Sol).
+- Trilha principal "No Breu": composição generativa própria (`src/ui/musica/`), sintetizada em tempo real com a Web Audio API, inspirada na faixa "A ameaça no breu" (análise: Ré frígio dominante, ~68 BPM, baixos Sol–Mi♭–Sib–Fá e Dó–Ré–Sol).
 - Faixa "A ameaça no breu" (`public/audio/a-ameaca-no-breu.mp3`, ~3 min): fornecida pelo responsável do projeto, gerada com ferramenta de IA; o arquivo traz credenciais de conteúdo C2PA assinadas pelo Google. Opcional em Ajustes → Trilha. Antes de uso comercial, confira os termos da ferramenta que a gerou.
 
 ## Inspiração de mecânica

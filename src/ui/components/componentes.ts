@@ -21,17 +21,15 @@ export function mascara(persona: string, rachada = false): HTMLElement {
 }
 
 export function cartaDefesa(app: App, d: CartaDefesa, opts: { tecla?: number; selecionada?: boolean; compacta?: boolean; onclick?: () => void; extra?: string } = {}): HTMLElement {
-  const raridade = d.raridade === 'rara' ? 'rara' : d.raridade === 'incomum' ? 'incomum' : 'comum';
   const conteudo = [
     h('div', { class: 'carta-topo' },
       opts.tecla ? h('span', { class: 'tecla', 'aria-hidden': 'true' }, rotuloTecla(opts.tecla)) : null,
       h('span', { class: 'forca', title: `Força ${d.forca}` }, h('span', { class: 'sr' }, 'Força '), String(d.forca))),
     h('div', { class: 'carta-nome' }, d.nome),
     h('ul', { class: 'contra', 'aria-label': 'Anula' }, d.contra.map((t) => h('li', {}, rotuloTag(app, t)))),
-    opts.compacta ? null : h('div', { class: 'raridade' }, raridade),
   ];
   const attrs = {
-    class: `carta defesa r-${raridade}${opts.selecionada ? ' selecionada' : ''}${opts.compacta ? ' compacta' : ''} ${opts.extra ?? ''}`,
+    class: `carta defesa${opts.selecionada ? ' selecionada' : ''}${opts.compacta ? ' compacta' : ''} ${opts.extra ?? ''}`,
     'data-id': d.id,
   };
   if (!opts.onclick) return h('div', attrs, conteudo);
@@ -63,9 +61,9 @@ export function bolinhas(p: Partida): HTMLElement {
     const v = p.vazas[i];
     const cls = v ? (v.vencedor === 'defesa' ? 'ganhou' : 'perdeu') : '';
     const txt = v ? (v.vencedor === 'defesa' ? 'você' : 'ameaça') : 'a jogar';
-    return h('li', { class: `vaza ${cls}`, title: `Vaza ${i + 1}: ${txt}` }, h('span', { class: 'sr' }, `Vaza ${i + 1}: ${txt}`));
+    return h('li', { class: `vaza ${cls}`, title: `Rodada ${i + 1}: ${txt}` }, h('span', { class: 'sr' }, `Rodada ${i + 1}: ${txt}`));
   });
-  return h('ol', { class: 'vazas', 'aria-label': 'Vazas do cenário' }, marcas);
+  return h('ol', { class: 'vazas', 'aria-label': 'Rodadas do caso' }, marcas);
 }
 
 export function placarNivel(p: Partida): HTMLElement {

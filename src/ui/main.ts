@@ -126,7 +126,7 @@ function anunciarMudanca(acao: Acao) {
   if (acao.tipo === 'AMEACA_JOGA' && p.cartaAmeaca) anunciar(`A Máscara diz: ${p.cartaAmeaca.mensagem}`);
   if (acao.tipo === 'JOGAR_CARTA') {
     const r = p.vazas[p.vazas.length - 1];
-    anunciar(`${r.vencedor === 'defesa' ? 'Você venceu a vaza' : 'A Máscara venceu a vaza'}. ${r.motivo.replace('_', ' ')}. Força ${r.forca}, pressão ${r.pressao}.`);
+    anunciar(`${r.vencedor === 'defesa' ? 'Você venceu a rodada' : 'A Máscara venceu a rodada'}. ${r.motivo.replace('_', ' ')}. Força ${r.forca}, pressão ${r.pressao}.`);
   }
   if (acao.tipo === 'USAR_DESCONFIOMETRO' && p.cartaAmeaca) anunciar(`Táticas reveladas: ${p.cartaAmeaca.tags.join(', ')}.`);
 }
@@ -151,7 +151,7 @@ function render() {
 
   telaAtual = telaDaFase();
   const conteudoPainel = painel === 'comoJogar' ? painelComoJogar(app)
-    : painel === 'creditos' ? painelCreditos(app)
+    : painel === 'creditos' ? painelCreditos()
     : painel === 'ajustes' ? painelAjustes(app) : null;
 
   raiz.replaceChildren(telaAtual.el);

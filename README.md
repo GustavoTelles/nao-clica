@@ -1,6 +1,8 @@
 # Não Clica!
 
-Jogo de cartas para navegador, de turnos, para aprender a reconhecer golpes digitais. Você tem 8 cartas de defesa; **a Máscara**, um golpista que muda de disfarce a cada caso, joga primeiro. Quem vence 2 vazas leva o caso, e quem faz 3 pontos leva o nível.
+Jogo de cartas para navegador, de turnos, para aprender a reconhecer golpes digitais. **A Máscara**, um golpista que muda de disfarce a cada caso, manda uma mensagem; você escolhe, entre todas as medidas de proteção do fascículo do nível, a melhor resposta. Quem vence 2 rodadas leva o caso, e quem faz 3 pontos leva o nível.
+
+Criado e idealizado pela **Nogueira Sec** — Guardiões do Núcleo.
 
 A fonte da verdade das regras é o [GDD](docs/GDD.md).
 

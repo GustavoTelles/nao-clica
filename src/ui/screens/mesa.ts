@@ -54,7 +54,7 @@ export function telaMesa(app: App): Tela {
   const topo = h('header', { class: 'mesa-topo' },
     mascara(cenario.persona, fase === 'RESOLUCAO' && ultima?.vencedor === 'defesa'),
     h('div', { class: 'mesa-placar' },
-      h('div', { class: 'mini' }, `Caso ${p.cenarioIdx + 1}/${nivel.cenarios.length} · vaza ${p.vazaIdx + 1}`),
+      h('div', { class: 'mini' }, `Caso ${p.cenarioIdx + 1}/${nivel.cenarios.length} · rodada ${p.vazaIdx + 1}`),
       bolinhas(p),
       placarNivel(p)),
     botaoMenuInicial(app));
@@ -115,7 +115,7 @@ export function telaMesa(app: App): Tela {
     const ganhou = ultima.vencedor === 'defesa';
     raiz.append(h('div', { class: `resolucao ${ganhou ? 'ganhou' : 'perdeu'}`, role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'res-titulo' },
       h('div', { class: 'resolucao-caixa' },
-        h('p', { class: 'mini' }, ganhou ? 'Vaza sua!' : 'Vaza da Máscara'),
+        h('p', { class: 'mini' }, ganhou ? 'Rodada sua!' : 'Rodada da Máscara'),
         h('h2', { id: 'res-titulo', class: 'motivo' }, textoMotivo(ultima, app)),
         cartaDefesa(app, d, { compacta: true }),
         d.armadilha

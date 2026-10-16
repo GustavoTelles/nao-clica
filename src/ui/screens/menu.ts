@@ -15,6 +15,13 @@ const PLANEJADOS: [number, string, string][] = [
   [9, 'Golpes: Evite Fraudes + Vazamento de Dados', 'Final'],
 ];
 
+/** Crédito de criação: Nogueira Sec, criadora e idealizadora do jogo. */
+function assinatura(grande = false): HTMLElement {
+  return h('div', { class: `assinatura${grande ? ' grande' : ''}` },
+    h('img', { src: 'img/nogueira-sec.png', alt: 'Logo da Nogueira Sec — Guardiões do Núcleo', width: grande ? 260 : 176, height: grande ? 198 : 134 }),
+    h('p', {}, h('span', { class: 'mini' }, 'Criado e idealizado por'), h('strong', {}, 'Nogueira Sec')));
+}
+
 export function apagarProgresso(app: App) {
   if (confirm('Apagar todo o progresso salvo neste navegador? Níveis liberados, proteções e partida em andamento serão perdidos.')) app.resetar();
 }
@@ -64,6 +71,7 @@ export function telaMenu(app: App): Tela {
       h('div', { class: 'menu-topo' },
         h('h1', { class: 'logo' }, 'Não Clica!'),
         h('p', { class: 'slogan' }, 'Um jogo de cartas contra os golpes digitais.'),
+        assinatura(),
         h('nav', { class: 'menu-botoes', 'aria-label': 'Menu principal' },
           emAndamento ? botao('Continuar partida', () => app.dispatch({ tipo: 'RETOMAR' }), { class: 'btn primario', 'data-foco': '' }) : null,
           botao('Jogar', () => app.dispatch({ tipo: 'ABRIR_MAPA' }), { class: `btn ${emAndamento ? '' : 'primario'}`, 'data-foco': emAndamento ? undefined : '' }),
@@ -121,8 +129,8 @@ export function painelComoJogar(app: App): HTMLElement {
     h('h1', { class: 'titulo' }, 'Como jogar'),
     h('ol', { class: 'regras' },
       h('li', {}, 'A Máscara é um golpista que muda de disfarce a cada caso. Ela ', h('b', {}, 'sempre joga primeiro'), ': manda uma mensagem.'),
-      h('li', {}, 'Você responde escolhendo 1 medida. Todas as medidas do fascículo do nível ficam disponíveis o tempo todo e não se gastam: o desafio é escolher a melhor. Quem vencer 2 vazas leva o caso.'),
-      h('li', {}, h('b', {}, 'Contra perfeito'), ': se sua carta anula todas as táticas da mensagem, você vence a vaza, não importa a pressão.'),
+      h('li', {}, 'Você responde escolhendo 1 medida. Todas as medidas do fascículo do nível ficam disponíveis o tempo todo e não se gastam: o desafio é escolher a melhor. Quem vencer 2 rodadas leva o caso.'),
+      h('li', {}, h('b', {}, 'Contra perfeito'), ': se sua carta anula todas as táticas da mensagem, você vence a rodada, não importa a pressão.'),
       h('li', {}, 'Sem contra perfeito, vale a força: sua carta precisa ter ', h('b', {}, 'força maior'), ' que a pressão da mensagem. Empate é da Máscara. Contra parcial (em mensagens com 2 táticas) soma +2.'),
       h('li', {}, h('b', {}, 'Respostas erradas'), ': cada caso mistura entre as medidas 1 ou 2 atitudes erradas (ex.: "Passo o código, é do suporte oficial"). Elas parecem fortes, mas sempre perdem, e somem quando o caso termina. O Raio-X explica por que estão erradas.'),
       h('li', {}, `Cada nível tem 5 casos. Quem fizer ${c.pontosParaVencerNivel} pontos primeiro vence.`),
@@ -134,29 +142,20 @@ export function painelComoJogar(app: App): HTMLElement {
     h('p', {}, 'Setas ou 1–9 e 0 escolhem a medida · Enter joga/continua · D usa o Desconfiômetro · M liga/desliga a música · Esc volta.'));
 }
 
-export function painelCreditos(app: App): HTMLElement {
-  const fontes = Object.values(app.ctx.conteudo.fontes);
+export function painelCreditos(): HTMLElement {
+  const link = (href: string, texto: string) => h('a', { href, target: '_blank', rel: 'noopener noreferrer' }, texto);
   return h('div', { class: 'painel-conteudo' },
     h('h1', { class: 'titulo' }, 'Créditos e fontes'),
-    h('p', {}, 'O conteúdo educativo deste jogo se baseia nas recomendações dos ',
-      h('b', {}, 'Fascículos da Cartilha de Segurança para Internet'), ', produzidos pelo CERT.br/NIC.br. ',
-      'Os textos, cenários e cartas do jogo são originais; nenhum trecho, ilustração ou diagramação dos fascículos foi reproduzido.'),
-    h('p', {}, 'Os fascículos são distribuídos sob a licença ',
-      h('a', { href: 'https://cartilha.cert.br/cc/', target: '_blank', rel: 'noopener noreferrer' }, 'Creative Commons BY-NC-ND 4.0'), '.'),
+    h('h2', { class: 'subtitulo' }, 'Criação'),
+    assinatura(true),
+    h('p', { class: 'centro' }, h('b', {}, 'Não Clica!'), ' foi criado e idealizado pela ', h('b', {}, 'Nogueira Sec'), ' — Guardiões do Núcleo.'),
+    h('h2', { class: 'subtitulo' }, 'Fontes'),
+    h('p', {}, 'O conteúdo educativo se baseia nas recomendações dos ', h('b', {}, 'Fascículos da Cartilha de Segurança para Internet'),
+      ', produzidos pelo CERT.br/NIC.br e disponíveis em ', link('https://cartilha.cert.br/fasciculos/', 'cartilha.cert.br/fasciculos'), '.'),
+    h('p', {}, 'Os textos, casos e cartas do jogo são originais; nenhum trecho, ilustração ou diagramação dos fascículos foi reproduzido. Os fascículos são distribuídos sob a licença ',
+      link('https://cartilha.cert.br/cc/', 'Creative Commons BY-NC-ND 4.0'), '.'),
     h('p', { class: 'alerta' }, 'Aviso: Não Clica! é um projeto independente e não é um material oficial nem endossado pelo CERT.br, NIC.br ou CGI.br.'),
-    h('p', {}, 'Todas as marcas, pessoas, endereços e telefones dos casos são fictícios (domínios .example, DDD 00).'),
-    h('h2', { class: 'subtitulo' }, 'Fascículos oficiais'),
-    h('ul', { class: 'fontes' }, fontes.map((f) => h('li', {}, h('a', { href: f.url, target: '_blank', rel: 'noopener noreferrer' }, f.titulo)))),
-    h('h2', { class: 'subtitulo' }, 'Matriz BR-Fraude'),
-    h('p', {}, 'Os casos e as cartas dos níveis seguem a Matriz BR-Fraude (v2, out/2026), um mapa de 52 golpes brasileiros, técnicas e mitigações baseado no ',
-      h('a', { href: 'https://ctid.mitre.org/fraud', target: '_blank', rel: 'noopener noreferrer' }, 'MITRE Fight Fraud Framework (F3)'),
-      '. O Raio-X de cada caso mostra os códigos do golpe na Matriz (ex.: BR-GP018).'),
-    h('h2', { class: 'subtitulo' }, 'Trilha sonora'),
-    h('p', {}, '"No Breu": trilha generativa composta para o jogo e sintetizada ao vivo no navegador, inspirada na faixa "A ameaça no breu" (Ré frígio dominante, ~68 BPM). Cada ciclo dura cerca de 20 minutos e recomeça variado, sem fim.'),
-    h('p', {}, '"A ameaça no breu": faixa original fornecida pelo responsável do projeto, gerada com ferramenta de IA (traz credenciais de conteúdo C2PA assinadas pelo Google). Pode ser escolhida em Ajustes.'),
-    h('h2', { class: 'subtitulo' }, 'Tipografia e mecânica'),
-    h('p', {}, 'Fonte de títulos: Silkscreen, de Jason Kottke (SIL Open Font License 1.1). Texto: fonte do sistema.'),
-    h('p', {}, 'Mecânica inspirada em jogos de cartas roguelike e no truco. Ilustrações e música próprias.'));
+    h('p', {}, 'Todas as marcas, pessoas, endereços e telefones dos casos são fictícios (domínios .example, DDD 00).'));
 }
 
 export function painelAjustes(app: App): HTMLElement {
@@ -171,8 +170,8 @@ export function painelAjustes(app: App): HTMLElement {
       h('legend', {}, 'Trilha sonora'),
       opcao('Tocar música (tecla M)', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
       ...([
-        ['faixa', '🎵 A ameaça no breu — música nova (faixa original, em loop)'],
-        ['gerada', 'No Breu — versão gerada ao vivo, inspirada nela (~20 min, sem fim)'],
+        ['gerada', '🎵 No Breu — trilha principal, gerada ao vivo (~20 min, sem fim)'],
+        ['faixa', 'A ameaça no breu — faixa original que inspirou a trilha (3 min, em loop)'],
       ] as const).map(([valor, rotulo]) => h('label', { class: 'ajuste' },
         h('input', { type: 'radio', name: 'trilha', value: valor, checked: a.trilha === valor, onchange: () => app.salvarAjustes({ ...a, trilha: valor }) }),
         ' ', rotulo))),

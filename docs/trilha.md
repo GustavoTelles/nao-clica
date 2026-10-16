@@ -4,7 +4,7 @@ O jogo tem duas trilhas, escolhidas em **Ajustes → Trilha**:
 
 | Trilha | O que é | Duração |
 |---|---|---|
-| **No Breu** (padrão) | Generativa, sintetizada ao vivo com Web Audio (`src/ui/musica/`) | ~19,8 min por ciclo, recomeça variada, sem fim |
+| **No Breu** (principal, padrão) | Generativa, sintetizada ao vivo com Web Audio (`src/ui/musica/`) | ~19,8 min por ciclo, recomeça variada, sem fim |
 | **A ameaça no breu** | Faixa original (`public/audio/a-ameaca-no-breu.mp3`, 192 kbps, 4,3 MB) | 2:59, em loop |
 
 A faixa original só é baixada quando escolhida. Ela foi fornecida pelo responsável do projeto e traz credenciais de conteúdo C2PA assinadas pelo Google (indício de geração por IA). Antes de qualquer uso comercial, confira os termos da ferramenta que a gerou.
