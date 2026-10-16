@@ -3,7 +3,7 @@ import { nivelDe } from '../../engine/reducer';
 import { contarCopias } from '../../engine/shop';
 import { NOME_CANAL, type App, type Tela } from '../app';
 import { botao, h } from '../dom';
-import { cartaDefesa } from '../components/componentes';
+import { barraJogo, cartaDefesa } from '../components/componentes';
 
 let escolhidas: string[] = [];
 let trocaSai: number | null = null;
@@ -53,6 +53,7 @@ export function telaLoja(app: App): Tela {
   const falta = loja.precisa - escolhidas.length;
   return {
     el: h('div', { class: 'tela loja' },
+      barraJogo(app, nivel.titulo),
       h('h1', { class: 'titulo' }, 'Loja de defesas'),
       prox ? h('div', { class: 'previa' }, h('span', { class: 'mini' }, 'Próximo caso: '), h('strong', {}, prox.titulo), h('span', { class: 'mini' }, ` · ${NOME_CANAL[prox.canal]}`)) : null,
       h('p', { class: 'contador', 'aria-live': 'polite' },

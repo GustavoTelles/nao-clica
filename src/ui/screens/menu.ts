@@ -2,7 +2,7 @@
 import { protecoesAtivas } from '../../engine/reducer';
 import { rotuloTag, type App, type Tela } from '../app';
 import { botao, h } from '../dom';
-import { listaProtecoes } from '../components/componentes';
+import { cartaDefesa, listaProtecoes } from '../components/componentes';
 
 /** Níveis planejados no GDD §9 que ainda não têm conteúdo. */
 const PLANEJADOS: [number, string, string][] = [
@@ -15,18 +15,65 @@ const PLANEJADOS: [number, string, string][] = [
   [9, 'Golpes: Evite Fraudes + Vazamento de Dados', 'Final'],
 ];
 
+export function apagarProgresso(app: App) {
+  if (confirm('Apagar todo o progresso salvo neste navegador? Níveis liberados, proteções e partida em andamento serão perdidos.')) app.resetar();
+}
+
+/** Resumo das regras com a "anatomia" da mensagem e da carta, mostrado na tela inicial. */
+function resumoRegras(app: App): HTMLElement {
+  const exemplo = app.ctx.conteudo.defesas.CODIGO_E_MEU;
+  const marca = (n: number, cls: string) => h('span', { class: `marca ${cls}`, 'aria-hidden': 'true' }, String(n));
+  return h('section', { class: 'resumo', 'aria-labelledby': 'resumo-titulo' },
+    h('h2', { id: 'resumo-titulo', class: 'subtitulo' }, 'Regras em 30 segundos'),
+    h('ol', { class: 'passos' },
+      h('li', {}, 'A ', h('b', {}, 'Máscara'), ' (o golpista) manda uma mensagem de golpe.'),
+      h('li', {}, 'Você responde com ', h('b', {}, '1 carta'), ' da sua mão.'),
+      h('li', {}, 'Você vence a rodada se a carta ', h('b', {}, 'anula todas as táticas'), ' da mensagem, ou se a ', h('b', {}, 'força'), ' dela for ', h('b', {}, 'maior'), ' que a pressão. Empate é da Máscara.'),
+      h('li', {}, 'Quem vence 2 rodadas leva o caso. Quem faz 3 pontos leva o nível.')),
+
+    h('div', { class: 'anatomia' },
+      h('div', { class: 'anatomia-item' },
+        h('div', { class: 'anatomia-figura' },
+          h('div', { class: 'balao mini-balao' },
+            h('p', { class: 'msg' }, 'Me fala o código que chegou por SMS?'),
+            h('div', { class: 'balao-pe' },
+              h('span', { class: 'pressao' }, 'Pressão 2'), marca(1, 'm-pressao'),
+              h('ul', { class: 'tags' }, h('li', {}, rotuloTag(app, 'CODIGO'))), marca(2, 'm-tag')))),
+        h('dl', { class: 'legenda-anatomia' },
+          h('dt', {}, marca(1, ''), ' Pressão (1 a 5)'), h('dd', {}, 'A força da mensagem. Quanto maior, mais difícil vencer.'),
+          h('dt', {}, marca(2, ''), ' Rótulo de tática'), h('dd', {}, 'O truque usado: medo, pressa, prêmio… ou o que o golpista pede (link, código, Pix). A partir do nível 2 os rótulos ficam ocultos: leia a mensagem!'))),
+      h('div', { class: 'anatomia-item' },
+        h('div', { class: 'anatomia-figura' },
+          h('div', { class: 'carta-exemplo' },
+            cartaDefesa(app, exemplo, { tecla: 1, compacta: true }),
+            marca(3, 'm-tecla'), marca(4, 'm-forca'), marca(5, 'm-contra'))),
+        h('dl', { class: 'legenda-anatomia' },
+          h('dt', {}, marca(3, ''), ' Número pequeno'), h('dd', {}, 'A posição da carta na mão: é a tecla de atalho (1 a 8).'),
+          h('dt', {}, marca(4, ''), ' Número verde'), h('dd', {}, 'A força da carta (1 a 3). Vence se for maior que a pressão.'),
+          h('dt', {}, marca(5, ''), ' Rótulos da carta'), h('dd', {}, 'As táticas que ela anula. Se anular todas as da mensagem, é contra perfeito: vence sempre.')))),
+    h('p', { class: 'mini' }, 'Dica: no fim de cada caso, o Raio-X mostra os sinais do golpe e como agir na vida real.'));
+}
+
 export function telaMenu(app: App): Tela {
   const emAndamento = !!app.estado.retomar;
+  const temProgresso = app.estado.progresso.desbloqueados.length > 1 || app.estado.progresso.protecoes.length > 0
+    || Object.keys(app.estado.progresso.melhorIndice).length > 0 || !!app.estado.partida;
   return {
     el: h('div', { class: 'tela menu' },
-      h('h1', { class: 'logo' }, 'Não Clica!'),
-      h('p', { class: 'slogan' }, 'Um jogo de cartas contra os golpes digitais.'),
-      h('nav', { class: 'menu-botoes', 'aria-label': 'Menu principal' },
-        emAndamento ? botao('Continuar partida', () => app.dispatch({ tipo: 'RETOMAR' }), { class: 'btn primario', 'data-foco': '' }) : null,
-        botao('Jogar', () => app.dispatch({ tipo: 'ABRIR_MAPA' }), { class: `btn ${emAndamento ? '' : 'primario'}`, 'data-foco': emAndamento ? undefined : '' }),
-        botao('Como jogar', () => app.abrirPainel('comoJogar')),
-        botao('Créditos e fontes', () => app.abrirPainel('creditos')),
-        botao('Ajustes', () => app.abrirPainel('ajustes')))),
+      h('div', { class: 'menu-topo' },
+        h('h1', { class: 'logo' }, 'Não Clica!'),
+        h('p', { class: 'slogan' }, 'Um jogo de cartas contra os golpes digitais.'),
+        h('nav', { class: 'menu-botoes', 'aria-label': 'Menu principal' },
+          emAndamento ? botao('Continuar partida', () => app.dispatch({ tipo: 'RETOMAR' }), { class: 'btn primario', 'data-foco': '' }) : null,
+          botao('Jogar', () => app.dispatch({ tipo: 'ABRIR_MAPA' }), { class: `btn ${emAndamento ? '' : 'primario'}`, 'data-foco': emAndamento ? undefined : '' }),
+          botao('Como jogar', () => app.abrirPainel('comoJogar')),
+          botao('Créditos e fontes', () => app.abrirPainel('creditos')),
+          botao('Ajustes', () => app.abrirPainel('ajustes')),
+          botao('Apagar progresso', () => apagarProgresso(app), {
+            class: 'btn perigo-leve', disabled: !temProgresso,
+            title: temProgresso ? 'Apaga níveis liberados, proteções e a partida em andamento' : 'Ainda não há progresso salvo',
+          }))),
+      resumoRegras(app)),
   };
 }
 
@@ -121,7 +168,5 @@ export function painelAjustes(app: App): HTMLElement {
     opcao('Texto grande', a.texto === 'grande', (v) => app.salvarAjustes({ ...a, texto: v ? 'grande' : 'normal' })),
     opcao('Música (trilha "Terminal Noturno")', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
     h('p', { class: 'mini' }, 'O progresso fica salvo só neste navegador. Nada é enviado para a internet.'),
-    botao('Apagar progresso', () => {
-      if (confirm('Apagar todo o progresso salvo neste navegador?')) app.resetar();
-    }, { class: 'btn perigo' }));
+    botao('Apagar progresso', () => apagarProgresso(app), { class: 'btn perigo' }));
 }

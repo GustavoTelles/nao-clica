@@ -30,7 +30,9 @@ export function telaFimNivel(app: App): Tela {
       h('div', { class: 'acoes-linha' },
         temRecompensa ? botao('Escolher proteção ⏎', () => app.dispatch({ tipo: 'CONTINUAR' }), { class: 'btn primario', 'data-foco': '' }) : null,
         !venceu ? botao('Tentar de novo', () => app.dispatch({ tipo: 'INICIAR_NIVEL', nivelId: nivel.id, seed: app.novaSeed() }), { class: 'btn primario', 'data-foco': '' }) : null,
-        botao('Mapa', () => app.dispatch({ tipo: 'VOLTAR_MAPA' }), { class: 'btn', 'data-foco': temRecompensa || !venceu ? undefined : '' }))),
+        botao('Mapa', () => app.dispatch({ tipo: 'VOLTAR_MAPA' }), { class: 'btn', 'data-foco': temRecompensa || !venceu ? undefined : '' }),
+        // Com proteção a escolher, não oferece sair: a escolha se perderia.
+        temRecompensa ? null : botao('Menu inicial', () => app.dispatch({ tipo: 'ABRIR_MENU' }), { class: 'btn' }))),
   };
 }
 

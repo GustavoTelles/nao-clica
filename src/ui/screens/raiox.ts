@@ -3,7 +3,7 @@ import { nivelDe } from '../../engine/reducer';
 import type { CartaAmeaca } from '../../engine/types';
 import { NOME_CANAL, rotuloTag, type App, type Tela } from '../app';
 import { botao, destacar, h } from '../dom';
-import { mascara, placarNivel } from '../components/componentes';
+import { barraJogo, mascara, placarNivel } from '../components/componentes';
 
 /** Link para o fascículo oficial do caso. O crédito por extenso fica só em Créditos e fontes. */
 export function linkFasciculo(app: App, fonteId: string): HTMLElement {
@@ -20,7 +20,7 @@ export function telaIntro(app: App): Tela {
   const iniciar = () => app.dispatch({ tipo: 'INICIAR_CENARIO' });
   return {
     el: h('div', { class: 'tela intro' },
-      h('p', { class: 'mini' }, `${nivel.titulo} · Caso ${p.cenarioIdx + 1} de ${nivel.cenarios.length}`),
+      barraJogo(app, `${nivel.titulo} · Caso ${p.cenarioIdx + 1} de ${nivel.cenarios.length}`),
       placarNivel(p),
       h('h1', { class: 'titulo' }, chefe ? '★ ' : '', c.titulo),
       mascara(c.persona),
@@ -46,7 +46,7 @@ export function telaRaioX(app: App): Tela {
 
   return {
     el: h('div', { class: 'tela raiox' },
-      h('p', { class: 'mini' }, 'Raio-X do golpe'),
+      barraJogo(app, 'Raio-X do golpe'),
       h('h1', { class: `titulo ${ganhou ? 'ok' : 'ruim'}` }, ganhou ? (res.leituraPerfeita ? 'Leitura perfeita!' : 'Você escapou!') : 'Você caiu…'),
       h('p', { class: 'desfecho' }, ganhou ? c.desfechoVitoria : c.desfechoDerrota),
       res.anulado ? h('p', { class: 'alerta' }, `🛡 ${app.ctx.conteudo.protecoes[res.anulado].nome}: a Máscara não pontua.`) : null,

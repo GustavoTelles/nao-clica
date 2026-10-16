@@ -72,7 +72,12 @@ a:hover { color: #7ff0bf; }
 .btn.icone { min-width: 44px; padding: 8px; font-size: 1.2rem; }
 
 /* ---------- menu ---------- */
-.menu { display: grid; place-items: center; text-align: center; min-height: calc(100dvh - 48px); align-content: center; gap: 8px; }
+.menu { display: grid; gap: 24px; justify-items: center; padding-top: 24px; }
+.menu-topo { display: grid; place-items: center; text-align: center; gap: 8px; width: 100%; }
+@media (min-width: 900px) {
+  .menu { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); align-items: start; gap: 40px; padding-top: 48px; }
+  .menu-topo { position: sticky; top: 48px; }
+}
 .logo {
   font-family: var(--fonte-titulo); font-weight: 400;
   font-size: clamp(2.4rem, 13vw, 4.5rem); color: var(--ameaca);
@@ -337,3 +342,35 @@ html.reduz-movimento body::after { display: none; }
   .mesa-topo, .barra, .loja > .titulo, .raiox > .mini:first-child, .fim > .mini:first-child { padding-right: 52px; }
   .mao { padding-bottom: 6px; }
 }
+
+/* ---------- resumo das regras na tela inicial ---------- */
+.resumo { width: 100%; max-width: 680px; background: var(--painel); border: 3px solid var(--borda); border-radius: 14px; box-shadow: var(--sombra); padding: 16px; display: grid; gap: 12px; }
+.resumo .subtitulo { margin: 0; color: var(--alerta); }
+.passos { margin: 0; padding-left: 1.3rem; display: grid; gap: 6px; }
+.anatomia { display: grid; gap: 14px; }
+@media (min-width: 560px) { .anatomia-item { display: grid; grid-template-columns: 190px 1fr; gap: 14px; align-items: center; } }
+.anatomia-item { background: var(--painel-2); border-radius: 10px; padding: 12px; display: grid; gap: 10px; }
+.anatomia-figura { display: grid; place-items: center; }
+.mini-balao { max-width: 190px; position: relative; }
+.mini-balao .msg { font-size: .9rem; margin-bottom: 8px; }
+.carta-exemplo { position: relative; width: 140px; }
+.carta-exemplo .carta { width: 140px; }
+.marca { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--alerta); color: #231a00; font: 700 .72rem/1 var(--fonte-texto); border: 2px solid var(--borda); flex: none; }
+.anatomia-figura .marca { position: absolute; box-shadow: 1px 1px 0 var(--borda); }
+.m-pressao { left: 6px; bottom: -10px; }
+.m-tag { right: 6px; bottom: -10px; }
+.m-tecla { left: -10px; top: -8px; }
+.m-forca { right: -10px; top: -8px; }
+.m-contra { left: -10px; bottom: 18px; }
+.legenda-anatomia { margin: 0; display: grid; gap: 2px; }
+.legenda-anatomia dt { font-weight: 700; display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.legenda-anatomia dt:first-child { margin-top: 0; }
+.legenda-anatomia dd { margin: 0 0 0 26px; color: var(--texto-suave); font-size: .92rem; }
+.btn.perigo-leve { background: transparent; color: var(--ameaca); border-color: var(--ameaca); box-shadow: none; }
+.btn.perigo-leve:disabled { color: var(--texto-suave); border-color: #3a4560; }
+
+/* ---------- botão de voltar ao menu durante o jogo ---------- */
+.barra-jogo { display: flex; align-items: center; gap: 10px; width: 100%; }
+.intro .barra-jogo { justify-content: flex-start; text-align: left; }
+.btn-menu-inicial { min-height: 40px; padding: 6px 12px; font-size: .9rem; }
+@media (max-width: 759px) { .barra-jogo { padding-right: 52px; } }

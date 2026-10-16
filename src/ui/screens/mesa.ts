@@ -2,7 +2,7 @@
 import { nivelDe, protecoesAtivas } from '../../engine/reducer';
 import { rotuloTag, textoMotivo, type App, type Tela } from '../app';
 import { animar, botao, h, movimentoReduzido } from '../dom';
-import { bolinhas, cartaDefesa, celular, listaProtecoes, mascara, placarNivel } from '../components/componentes';
+import { bolinhas, botaoMenuInicial, cartaDefesa, celular, listaProtecoes, mascara, placarNivel } from '../components/componentes';
 
 let selecionada: number | null = null;
 let chaveVaza = '';
@@ -46,7 +46,7 @@ export function telaMesa(app: App): Tela {
       h('div', { class: 'mini' }, `Caso ${p.cenarioIdx + 1}/${nivel.cenarios.length} · vaza ${p.vazaIdx + 1}`),
       bolinhas(p),
       placarNivel(p)),
-    botao('☰', () => app.dispatch({ tipo: 'ABRIR_MAPA' }), { class: 'btn icone', 'aria-label': 'Pausar e ir ao mapa (Esc)', title: 'Pausar e ir ao mapa (Esc)' }));
+    botaoMenuInicial(app));
 
   // ----- centro -----
   const ocultas = !p.tagsReveladas;

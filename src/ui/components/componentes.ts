@@ -89,3 +89,18 @@ export function cartaProtecao(p: Protecao, opts: { selecionada?: boolean; onclic
     h('div', { class: 'carta-nome' }, '🛡 ', p.nome),
     h('p', { class: 'desc' }, p.descricao));
 }
+
+/** Volta à tela inicial pausando a partida (lá aparece "Continuar partida"). */
+export function botaoMenuInicial(app: App): HTMLButtonElement {
+  const b = h('button', {
+    type: 'button', class: 'btn btn-menu-inicial',
+    'aria-label': 'Voltar ao menu inicial (a partida fica pausada)', title: 'Voltar ao menu inicial — a partida fica pausada',
+  }, h('span', { 'aria-hidden': 'true' }, '⌂ '), 'Menu');
+  b.addEventListener('click', () => app.dispatch({ tipo: 'ABRIR_MENU' }));
+  return b;
+}
+
+/** Barra fina no topo das telas de jogo (intro, Raio-X, loja). */
+export function barraJogo(app: App, titulo: string): HTMLElement {
+  return h('div', { class: 'barra-jogo' }, botaoMenuInicial(app), h('span', { class: 'mini' }, titulo));
+}

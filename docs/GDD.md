@@ -676,7 +676,8 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
 ## 15. UI/UX
 
 ### 15.1 Telas
-1. **Menu:** Jogar, Como jogar, Créditos e fontes, Ajustes (som, animações reduzidas, tamanho do texto).
+1. **Menu:** Continuar partida (se houver), Jogar, Como jogar, Créditos e fontes, Ajustes (música, animações reduzidas, tamanho do texto) e **Apagar progresso** (com confirmação; desativado sem progresso salvo). Ao lado (abaixo, no celular), o bloco **Regras em 30 segundos**: 4 passos e a anatomia da mensagem (pressão, rótulo de tática) e da carta (número pequeno = tecla/posição, número verde = força, rótulos = táticas anuladas), com marcadores numerados.
+   - Nas telas de jogo (intro, mesa, Raio-X, loja, fim de nível sem proteção pendente) há o botão **⌂ Menu**, que pausa a partida (`ABRIR_MENU`) e volta à tela inicial.
 2. **Mapa:** níveis com cadeado, fascículo-base e melhor Índice de Desconfiança.
 3. **Intro do cenário:** máscara, canal, contexto e a frase "a Máscara começa".
 4. **Mesa:**
