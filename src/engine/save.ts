@@ -4,9 +4,10 @@ import type { Estado, Progresso } from './types';
 export const CHAVE_SAVE = 'naoclica.save.v1';
 export const VERSAO_SAVE = 1;
 
-export interface Ajustes { animacoesReduzidas: boolean; som: boolean; texto: 'normal' | 'grande' }
+/** `trilha`: "gerada" (No Breu, sintetizada, sem fim) ou "faixa" (A ameaça no breu, original, em loop). */
+export interface Ajustes { animacoesReduzidas: boolean; som: boolean; texto: 'normal' | 'grande'; trilha: 'gerada' | 'faixa' }
 /** `som` liga a trilha sonora; ela só começa depois do primeiro clique ou tecla (regra dos navegadores). */
-export const AJUSTES_PADRAO: Ajustes = { animacoesReduzidas: false, som: true, texto: 'normal' };
+export const AJUSTES_PADRAO: Ajustes = { animacoesReduzidas: false, som: true, texto: 'normal', trilha: 'gerada' };
 
 export interface Save { versao: number; estado: Estado; ajustes: Ajustes }
 
@@ -54,6 +55,7 @@ export function carregarSave(raw: string | null, inicial: Estado, idsNiveis: str
     animacoesReduzidas: typeof aj.animacoesReduzidas === 'boolean' ? aj.animacoesReduzidas : AJUSTES_PADRAO.animacoesReduzidas,
     som: typeof aj.som === 'boolean' ? aj.som : AJUSTES_PADRAO.som,
     texto: aj.texto === 'grande' ? 'grande' : 'normal',
+    trilha: aj.trilha === 'faixa' ? 'faixa' : 'gerada',
   };
   return { versao: VERSAO_SAVE, estado: { fase, progresso, partida, retomar }, ajustes };
 }

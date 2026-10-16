@@ -152,7 +152,8 @@ export function painelCreditos(app: App): HTMLElement {
       h('a', { href: 'https://ctid.mitre.org/fraud', target: '_blank', rel: 'noopener noreferrer' }, 'MITRE Fight Fraud Framework (F3)'),
       '. O Raio-X de cada caso mostra os códigos do golpe na Matriz (ex.: BR-GP018).'),
     h('h2', { class: 'subtitulo' }, 'Trilha sonora'),
-    h('p', {}, '"Terminal Noturno": música generativa composta para o jogo e sintetizada ao vivo no navegador. Cada ciclo dura cerca de 20 minutos e recomeça variado, sem fim.'),
+    h('p', {}, '"No Breu": trilha generativa composta para o jogo e sintetizada ao vivo no navegador, inspirada na faixa "A ameaça no breu" (Ré frígio dominante, ~68 BPM). Cada ciclo dura cerca de 20 minutos e recomeça variado, sem fim.'),
+    h('p', {}, '"A ameaça no breu": faixa original fornecida pelo responsável do projeto, gerada com ferramenta de IA (traz credenciais de conteúdo C2PA assinadas pelo Google). Pode ser escolhida em Ajustes.'),
     h('h2', { class: 'subtitulo' }, 'Tipografia e mecânica'),
     h('p', {}, 'Fonte de títulos: Silkscreen, de Jason Kottke (SIL Open Font License 1.1). Texto: fonte do sistema.'),
     h('p', {}, 'Mecânica inspirada em jogos de cartas roguelike e no truco. Ilustrações e música próprias.'));
@@ -168,7 +169,15 @@ export function painelAjustes(app: App): HTMLElement {
     h('h1', { class: 'titulo' }, 'Ajustes'),
     opcao('Animações reduzidas', a.animacoesReduzidas, (v) => app.salvarAjustes({ ...a, animacoesReduzidas: v })),
     opcao('Texto grande', a.texto === 'grande', (v) => app.salvarAjustes({ ...a, texto: v ? 'grande' : 'normal' })),
-    opcao('Música (trilha "Terminal Noturno")', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
+    opcao('Música', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
+    h('fieldset', { class: 'ajuste-trilha' },
+      h('legend', {}, 'Trilha'),
+      ...([
+        ['gerada', 'No Breu — gerada ao vivo, ~20 min por ciclo, sem fim'],
+        ['faixa', 'A ameaça no breu — faixa original (3 min, em loop)'],
+      ] as const).map(([valor, rotulo]) => h('label', { class: 'ajuste' },
+        h('input', { type: 'radio', name: 'trilha', value: valor, checked: a.trilha === valor, onchange: () => app.salvarAjustes({ ...a, trilha: valor }) }),
+        ' ', rotulo))),
     h('p', { class: 'mini' }, 'O progresso fica salvo só neste navegador. Nada é enviado para a internet.'),
     botao('Apagar progresso', () => apagarProgresso(app), { class: 'btn perigo' }));
 }

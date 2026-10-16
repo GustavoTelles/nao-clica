@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { compasso, COMPASSOS_POR_CICLO, DURACAO_CICLO_SEG, INTENSIDADE } from '../src/ui/musica/partitura';
+import { BPM, compasso, COMPASSOS_POR_CICLO, COMPASSOS_POR_SECAO, DURACAO_CICLO_SEG, INTENSIDADE } from '../src/ui/musica/partitura';
 
-describe('partitura da trilha', () => {
-  it('um ciclo dura cerca de 20 minutos', () => {
+const PERCUSSAO = new Set(['pulso', 'estrondo', 'sopro']);
+const climax = INTENSIDADE.indexOf(5) * COMPASSOS_POR_SECAO + 8;
+
+describe('partitura "No Breu"', () => {
+  it('um ciclo dura cerca de 20 minutos, no andamento da faixa de referência', () => {
+    expect(BPM).toBe(68);
     expect(DURACAO_CICLO_SEG / 60).toBeGreaterThan(18);
     expect(DURACAO_CICLO_SEG / 60).toBeLessThan(22);
   });
@@ -17,9 +21,8 @@ describe('partitura da trilha', () => {
         expect(x.dur).toBeGreaterThan(0);
         expect(x.vel).toBeGreaterThan(0);
         expect(x.vel).toBeLessThanOrEqual(1);
-        expect(Number.isFinite(x.midi)).toBe(true);
-        if (x.inst !== 'bumbo' && x.inst !== 'chimbal' && x.inst !== 'caixa') {
-          expect(x.midi).toBeGreaterThanOrEqual(28);
+        if (!PERCUSSAO.has(x.inst)) {
+          expect(x.midi).toBeGreaterThanOrEqual(24);
           expect(x.midi).toBeLessThanOrEqual(96);
         }
       }
@@ -27,18 +30,31 @@ describe('partitura da trilha', () => {
     expect(compasso(1234)).toEqual(compasso(1234));
   });
 
-  it('a intensidade controla as camadas (intro só com pad, clímax com bateria e melodia)', () => {
+  it('todas as notas ficam em Ré frígio dominante (Ré, Mi♭, Fá, Fá#, Sol, Lá, Si♭, Dó) — exceto o V (Lá maior) da cadência final', () => {
+    const permitidas = new Set([2, 3, 5, 6, 7, 9, 10, 0]); // classes de altura
+    const fora = new Set<number>();
+    for (let n = 0; n < COMPASSOS_POR_CICLO - COMPASSOS_POR_SECAO; n++) {
+      for (const x of compasso(n)) if (!PERCUSSAO.has(x.inst) && !permitidas.has(x.midi % 12)) fora.add(x.midi % 12);
+    }
+    // Sib maior e Sol menor trazem Ré/Fá/Sib; Mi♭ maior traz Sol/Si♭; o único "estranho" admitido é o Lá (dominante) no fim.
+    expect([...fora]).toEqual([]);
+  });
+
+  it('a intensidade controla as camadas: começo só no escuro, clímax completo', () => {
     const insts = (n: number) => new Set(compasso(n).map((x) => x.inst));
-    expect([...insts(0)]).toEqual(['pad']);
-    const climax = INTENSIDADE.indexOf(5) * 16 + 9;
-    expect(insts(climax)).toEqual(new Set(['pad', 'baixo', 'arpejo', 'bumbo', 'chimbal', 'caixa', 'melodia']));
+    expect(insts(0)).toEqual(new Set(['drone', 'pad']));
+    for (const i of ['drone', 'pad', 'baixo', 'pulso', 'sino', 'tremolo']) expect(insts(climax).has(i as never)).toBe(true);
+  });
+
+  it('o brilho abre nos clímax, como na faixa de referência', () => {
+    const brilho = (n: number) => compasso(n).find((x) => x.inst === 'pad')!.brilho!;
+    expect(brilho(climax)).toBeGreaterThan(brilho(0) + 0.5);
   });
 
   it('não tem fim: continua depois do ciclo e varia na volta seguinte', () => {
-    const climax = INTENSIDADE.indexOf(5) * 16 + 9;
     expect(compasso(COMPASSOS_POR_CICLO * 50 + 3).length).toBeGreaterThan(0);
-    const mel = (n: number) => compasso(n).filter((x) => x.inst === 'melodia').map((x) => x.midi);
-    const voltas = new Set([0, 1, 2, 3].map((c) => mel(c * COMPASSOS_POR_CICLO + climax).join(',')));
+    const sinos = (n: number) => compasso(n).filter((x) => x.inst === 'sino').map((x) => x.midi).join(',');
+    const voltas = new Set([0, 1, 2, 3, 4, 5].map((c) => sinos(c * COMPASSOS_POR_CICLO + INTENSIDADE.indexOf(3) * COMPASSOS_POR_SECAO + 8)));
     expect(voltas.size).toBeGreaterThan(1);
   });
 });

@@ -741,7 +741,8 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
   - O contra perfeito traz *flash* e um leve tremor.
   - A derrota traz um *glitch* na tela do celular.
   - A máscara racha ao perder.
-  - **Trilha "Terminal Noturno"** (implementada): música generativa sintetizada com Web Audio (`src/ui/musica/`), 92 BPM, ciclo de ~20 min em 28 seções (intro → subida → clímax → ponte → segundo clímax → volta) que recomeça com outra semente, sem fim. Liga no primeiro clique/tecla; botão ♪ fixo no canto, tecla `M` e opção em Ajustes. Pausa com a aba escondida.
+  - **Trilha "No Breu"** (implementada, 16/10/2026): música generativa sintetizada com Web Audio (`src/ui/musica/`), recomposta a partir da análise da faixa "A ameaça no breu": Ré frígio dominante (Ré menor com Mi♭ e Fá#), 68 BPM, textura sustentada sem grade de bateria (drone, pad com filtro que abre nos clímax, batimento, sinos com motivo frígio, tremolo, estrondos e sopros de ruído, reverberação longa). Ciclo de ~19,8 min em 21 seções com três arcos (escuro → subida → clímax → respiro) que recomeça com outra semente, sem fim. Liga no primeiro clique/tecla; botão ♪, tecla `M` e Ajustes.
+  - **Faixa "A ameaça no breu"** (`public/audio/`, ~3 min, 4,3 MB): opção em Ajustes → Trilha, tocada em loop; só é baixada quando escolhida.
   - Efeitos sonoros: ainda não (fase 3).
 
 ---

@@ -12,7 +12,7 @@ import { telaLoja } from './screens/loja';
 import { painelAjustes, painelComoJogar, painelCreditos, telaMapa, telaMenu } from './screens/menu';
 import { telaMesa } from './screens/mesa';
 import { telaIntro, telaRaioX } from './screens/raiox';
-import { desligarMusica, ligarMusica, musicaTocando } from './musica/musica';
+import { definirTrilha, desligarMusica, ligarMusica, musicaTocando } from './musica/musica';
 
 const conteudo = carregarConteudo();
 const ctx: Ctx = { conteudo, config };
@@ -54,6 +54,7 @@ btnMusica.addEventListener('click', () => {
 document.body.append(btnMusica);
 
 function sincronizarMusica() {
+  definirTrilha(ajustes.trilha);
   if (ajustes.som && houveGesto) ligarMusica();
   if (!ajustes.som) desligarMusica();
   const ligada = ajustes.som;

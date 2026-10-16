@@ -387,3 +387,5 @@ html.reduz-movimento body::after { display: none; }
 .caiu { color: var(--ameaca); font-weight: 700; }
 .certo { color: var(--defesa); }
 .licao p { margin: 0 0 6px; }
+.ajuste-trilha { border: 2px solid #3a4560; border-radius: var(--raio); padding: 6px 12px 8px; margin: 4px 0; }
+.ajuste-trilha legend { padding: 0 6px; font-weight: 700; }
