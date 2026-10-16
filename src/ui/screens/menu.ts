@@ -27,10 +27,10 @@ function resumoRegras(app: App): HTMLElement {
     h('h2', { id: 'resumo-titulo', class: 'subtitulo' }, 'Regras em 30 segundos'),
     h('ol', { class: 'passos' },
       h('li', {}, 'A ', h('b', {}, 'Máscara'), ' (o golpista) manda uma mensagem de golpe.'),
-      h('li', {}, 'Você responde com ', h('b', {}, '1 carta'), ' da sua mão.'),
+      h('li', {}, 'Você responde escolhendo ', h('b', {}, '1 medida'), ' entre todas as do fascículo do nível. Elas ficam sempre disponíveis: pense em qual é a melhor para aquela mensagem.'),
       h('li', {}, 'Você vence a rodada se a carta ', h('b', {}, 'anula todas as táticas'), ' da mensagem, ou se a ', h('b', {}, 'força'), ' dela for ', h('b', {}, 'maior'), ' que a pressão. Empate é da Máscara.'),
       h('li', {}, 'Quem vence 2 rodadas leva o caso. Quem faz 3 pontos leva o nível.'),
-      h('li', {}, h('b', {}, 'Cuidado com as respostas erradas: '), 'a cada caso a Máscara mistura na sua mão cartas que parecem boas (força 3!), mas são atitudes erradas. Elas sempre perdem. Quanto mais o nível avança, mais delas aparecem.')),
+      h('li', {}, h('b', {}, 'Cuidado com as respostas erradas: '), 'a cada caso a Máscara mistura entre as medidas atitudes que parecem boas (força 3!), mas são erradas. Elas sempre perdem. Quanto mais o nível avança, mais delas aparecem.')),
 
     h('div', { class: 'anatomia' },
       h('div', { class: 'anatomia-item' },
@@ -49,7 +49,7 @@ function resumoRegras(app: App): HTMLElement {
             cartaDefesa(app, exemplo, { tecla: 1, compacta: true }),
             marca(3, 'm-tecla'), marca(4, 'm-forca'), marca(5, 'm-contra'))),
         h('dl', { class: 'legenda-anatomia' },
-          h('dt', {}, marca(3, ''), ' Número pequeno'), h('dd', {}, 'A posição da carta na mão: é a tecla de atalho (1 a 8).'),
+          h('dt', {}, marca(3, ''), ' Número pequeno'), h('dd', {}, 'A posição da medida na grade: é a tecla de atalho (1 a 9 e 0 para as dez primeiras; setas para as demais).'),
           h('dt', {}, marca(4, ''), ' Número verde'), h('dd', {}, 'A força da carta (1 a 3). Vence se for maior que a pressão.'),
           h('dt', {}, marca(5, ''), ' Rótulos da carta'), h('dd', {}, 'As táticas que ela anula. Se anular todas as da mensagem, é contra perfeito: vence sempre.')))),
     h('p', { class: 'mini' }, 'Dica: no fim de cada caso, o Raio-X mostra os sinais do golpe e como agir na vida real.'));
@@ -121,17 +121,17 @@ export function painelComoJogar(app: App): HTMLElement {
     h('h1', { class: 'titulo' }, 'Como jogar'),
     h('ol', { class: 'regras' },
       h('li', {}, 'A Máscara é um golpista que muda de disfarce a cada caso. Ela ', h('b', {}, 'sempre joga primeiro'), ': manda uma mensagem.'),
-      h('li', {}, `Você responde com 1 das ${c.tamanhoMao} cartas de defesa da sua mão. Quem vencer 2 vazas leva o caso.`),
+      h('li', {}, 'Você responde escolhendo 1 medida. Todas as medidas do fascículo do nível ficam disponíveis o tempo todo e não se gastam: o desafio é escolher a melhor. Quem vencer 2 vazas leva o caso.'),
       h('li', {}, h('b', {}, 'Contra perfeito'), ': se sua carta anula todas as táticas da mensagem, você vence a vaza, não importa a pressão.'),
       h('li', {}, 'Sem contra perfeito, vale a força: sua carta precisa ter ', h('b', {}, 'força maior'), ' que a pressão da mensagem. Empate é da Máscara. Contra parcial (em mensagens com 2 táticas) soma +2.'),
-      h('li', {}, h('b', {}, 'Respostas erradas'), ': cada caso mistura na sua mão 1 ou 2 cartas de atitudes erradas (ex.: "Passo o código, é do suporte oficial"). Elas parecem fortes, mas sempre perdem, e saem da mão quando o caso termina. O Raio-X explica por que estão erradas.'),
+      h('li', {}, h('b', {}, 'Respostas erradas'), ': cada caso mistura entre as medidas 1 ou 2 atitudes erradas (ex.: "Passo o código, é do suporte oficial"). Elas parecem fortes, mas sempre perdem, e somem quando o caso termina. O Raio-X explica por que estão erradas.'),
       h('li', {}, `Cada nível tem 5 casos. Quem fizer ${c.pontosParaVencerNivel} pontos primeiro vence.`),
-      h('li', {}, 'Entre os casos, a loja repõe sua mão. Ao vencer um nível, você ganha uma proteção permanente.'),
+      h('li', {}, 'Ao vencer um nível, você ganha uma proteção permanente.'),
       h('li', {}, 'A partir do nível 2 as táticas ficam ocultas: leia a mensagem! O Desconfiômetro revela as táticas (3 cargas por nível).')),
     h('h2', { class: 'subtitulo' }, 'Táticas'),
     h('ul', { class: 'tags-legenda' }, app.ctx.conteudo.tags.map((t) => h('li', {}, h('strong', {}, rotuloTag(app, t.id)), ` — ${t.ideia}`))),
     h('h2', { class: 'subtitulo' }, 'Teclado'),
-    h('p', {}, '1–9 e 0 escolhem a carta · Enter joga/continua · D usa o Desconfiômetro · M liga/desliga a música · Esc volta.'));
+    h('p', {}, 'Setas ou 1–9 e 0 escolhem a medida · Enter joga/continua · D usa o Desconfiômetro · M liga/desliga a música · Esc volta.'));
 }
 
 export function painelCreditos(app: App): HTMLElement {
@@ -167,17 +167,17 @@ export function painelAjustes(app: App): HTMLElement {
       ' ', rotulo);
   return h('div', { class: 'painel-conteudo' },
     h('h1', { class: 'titulo' }, 'Ajustes'),
-    opcao('Animações reduzidas', a.animacoesReduzidas, (v) => app.salvarAjustes({ ...a, animacoesReduzidas: v })),
-    opcao('Texto grande', a.texto === 'grande', (v) => app.salvarAjustes({ ...a, texto: v ? 'grande' : 'normal' })),
-    opcao('Música', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
     h('fieldset', { class: 'ajuste-trilha' },
-      h('legend', {}, 'Trilha'),
+      h('legend', {}, 'Trilha sonora'),
+      opcao('Tocar música (tecla M)', a.som, (v) => app.salvarAjustes({ ...a, som: v })),
       ...([
-        ['gerada', 'No Breu — gerada ao vivo, ~20 min por ciclo, sem fim'],
-        ['faixa', 'A ameaça no breu — faixa original (3 min, em loop)'],
+        ['faixa', '🎵 A ameaça no breu — música nova (faixa original, em loop)'],
+        ['gerada', 'No Breu — versão gerada ao vivo, inspirada nela (~20 min, sem fim)'],
       ] as const).map(([valor, rotulo]) => h('label', { class: 'ajuste' },
         h('input', { type: 'radio', name: 'trilha', value: valor, checked: a.trilha === valor, onchange: () => app.salvarAjustes({ ...a, trilha: valor }) }),
         ' ', rotulo))),
+    opcao('Animações reduzidas', a.animacoesReduzidas, (v) => app.salvarAjustes({ ...a, animacoesReduzidas: v })),
+    opcao('Texto grande', a.texto === 'grande', (v) => app.salvarAjustes({ ...a, texto: v ? 'grande' : 'normal' })),
     h('p', { class: 'mini' }, 'O progresso fica salvo só neste navegador. Nada é enviado para a internet.'),
     botao('Apagar progresso', () => apagarProgresso(app), { class: 'btn perigo' }));
 }

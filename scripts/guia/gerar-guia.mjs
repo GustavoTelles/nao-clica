@@ -67,7 +67,7 @@ async function headless(args) {
 
 mkdirSync(pastaImg, { recursive: true });
 const cenas = { menu: [480, 640], mapa: [480, 640], intro: [480, 600], mesa: [480, 740], resolucao: [480, 740], raiox: [480, 1100],
-  loja: [480, 900], oculta: [480, 740], desconfiometro: [480, 440], derrota: [480, 740], fim: [480, 560], recompensa: [480, 640] };
+oculta: [480, 740], desconfiometro: [480, 440], derrota: [480, 740], fim: [480, 560], recompensa: [480, 640] };
 for (const [nome, [l, a]] of Object.entries(cenas)) {
   await headless([`--window-size=${l},${a}`, '--virtual-time-budget=5000', `--screenshot=${join(pastaImg, `${nome}.png`)}`, `http://127.0.0.1:${porta}/__cena?n=${nome}`]);
   console.log(`  captura: ${nome}.png`);

@@ -11,32 +11,22 @@
     "pressaoMax": 2,
     "combos": false,
     "ia": "roteiro",
-    "desmascarar": false,
-    "armadilhasNaLoja": false,
-    "rarasNaLoja": false
+    "desmascarar": false
   },
   "pool": [
-    "PAUSA",
-    "CANAL_OFICIAL",
     "BOM_DEMAIS",
+    "SENHA_DA_FAMILIA",
+    "CANAL_OFICIAL",
     "CONFERIR_LINK",
+    "CONFERIR_RECEBEDOR",
+    "LIGO_PRA_PESSOA",
     "NAO_CLICO",
-    "LIGO_PRA_PESSOA",
-    "CONFERIR_RECEBEDOR",
+    "SEGUNDA_OPINIAO",
     "PESQUISAR",
-    "SEGUNDA_OPINIAO",
     "DADOS_MINIMOS",
-    "SENHA_NINGUEM"
-  ],
-  "maoInicial": [
     "PAUSA",
-    "CANAL_OFICIAL",
-    "BOM_DEMAIS",
-    "CONFERIR_LINK",
-    "LIGO_PRA_PESSOA",
-    "CONFERIR_RECEBEDOR",
-    "SEGUNDA_OPINIAO",
-    "PESQUISAR"
+    "SENHA_NINGUEM",
+    "VOZ_NAO_PROVA"
   ],
   "recompensas": [
     "P_PERFIL_FECHADO",

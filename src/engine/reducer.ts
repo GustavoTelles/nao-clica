@@ -2,7 +2,6 @@
 import { escolherOpcao } from './ai';
 import { inteiro } from './rng';
 import { resolverVaza } from './rules';
-import { candidatasLoja, contarCopias, gerarOferta, validarEscolha } from './shop';
 import type { Acao, Conteudo, Config, Estado, Nivel, Partida, Protecao, Tag } from './types';
 
 export interface Ctx { conteudo: Conteudo; config: Config }
@@ -42,17 +41,29 @@ export function ofertaRecompensa(estado: Estado, ctx: Ctx): string[] {
   return nivel.recompensas.filter((id) => !estado.progresso.protecoes.includes(id));
 }
 
-const erro = (estado: Estado, msg: string): Estado => ({ ...estado, erro: msg });
-
-/** Tira da mão uma cópia de cada tentação que não foi jogada. */
-export function semTentacoes(mao: string[], tentacoes: string[] = []): string[] {
-  const resto = [...mao];
-  for (const id of tentacoes) {
-    const i = resto.lastIndexOf(id);
-    if (i >= 0) resto.splice(i, 1);
-  }
-  return resto;
+/**
+ * Medidas do nível: todas as cartas de defesa do pool (GDD §4.2). Ficam disponíveis o nível inteiro e
+ * não se gastam ao serem jogadas — só as de uso único saem depois de usadas.
+ */
+export function medidasDoNivel(nivel: Nivel, conteudo: Conteudo, usadosUnicos: string[] = []): string[] {
+  return nivel.pool.filter((id) => conteudo.defesas[id] && !conteudo.defesas[id].armadilha && !usadosUnicos.includes(id));
 }
+
+/** Mão do caso: as medidas do nível + as tentações do caso, em posições sorteadas. */
+function montarMao(nivel: Nivel, cenarioIdx: number, p: Partida, ctx: Ctx): [string[], number] {
+  const { conteudo, config } = ctx;
+  const mao = medidasDoNivel(nivel, conteudo, p.usadosUnicos);
+  const tentacoes = (nivel.cenarios[cenarioIdx].tentacoes ?? []).slice(0, config.maxTentacoesPorCenario).filter((id) => conteudo.defesas[id]);
+  let rng = p.rng;
+  for (const id of tentacoes) {
+    const [pos, r] = inteiro(rng, mao.length + 1);
+    rng = r;
+    mao.splice(pos, 0, id);
+  }
+  return [mao, rng];
+}
+
+const erro = (estado: Estado, msg: string): Estado => ({ ...estado, erro: msg });
 
 export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
   const s: Estado = { ...estado, erro: undefined };
@@ -88,10 +99,10 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
       const partida: Partida = {
         nivelId: nivel.id, seed: acao.seed, rng: acao.seed | 0,
         cenarioIdx: 0, vazaIdx: 0, placar: { jogador: 0, ameaca: 0 }, vazas: [],
-        mao: [...nivel.maoInicial], descarte: [], usadosUnicos: [],
+        mao: medidasDoNivel(nivel, conteudo), jogadas: [], usadosUnicos: [],
         cartaAmeaca: null, tagsReveladas: nivel.regras.tagsVisiveis, desconfiometro: desconf,
-        usosProtecao, bonusLeituraPerfeita: false, loja: null, historico: [],
-        stats: { vazas: 0, perfeitos: 0, derrotasPorTag: {} }, resultado: null,
+        usosProtecao, historico: [],
+        stats: { vazas: 0, perfeitos: 0, derrotasPorTag: {}, armadilhas: 0 }, resultado: null,
       };
       return { ...s, fase: 'INTRO_CENARIO', partida, retomar: undefined };
     }
@@ -104,16 +115,8 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
   switch (acao.tipo) {
     case 'INICIAR_CENARIO': {
       if (s.fase !== 'INTRO_CENARIO') return erro(s, 'Fora de hora.');
-      // Tentações do caso entram em posições sorteadas da mão, para não ficarem sempre no fim.
-      const tentacoes = (cenario.tentacoes ?? []).slice(0, config.maxTentacoesPorCenario).filter((id) => conteudo.defesas[id]);
-      const mao = [...p.mao];
-      let rng = p.rng;
-      for (const id of tentacoes) {
-        const [pos, r] = inteiro(rng, mao.length + 1);
-        rng = r;
-        mao.splice(pos, 0, id);
-      }
-      return { ...s, fase: 'VEZ_AMEACA', partida: { ...p, rng, mao, tentacoes, vazaIdx: 0, vazas: [], cartaAmeaca: null } };
+      const [mao, rng] = montarMao(nivel, p.cenarioIdx, p, ctx);
+      return { ...s, fase: 'VEZ_AMEACA', partida: { ...p, rng, mao, vazaIdx: 0, vazas: [], cartaAmeaca: null } };
     }
 
     case 'AMEACA_JOGA': {
@@ -134,17 +137,13 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
 
     case 'JOGAR_CARTA': {
       if (s.fase !== 'VEZ_JOGADOR' || !p.cartaAmeaca) return erro(s, 'Fora de hora.');
-      const i = p.mao.indexOf(acao.cartaId);
-      if (i < 0) return erro(s, 'Essa carta não está na mão.');
+      if (!p.mao.includes(acao.cartaId)) return erro(s, 'Essa carta não está na mão.');
       const defesa = conteudo.defesas[acao.cartaId];
       const res = resolverVaza(p.cartaAmeaca, defesa, {
         protecoes: protecoesAtivas(s, ctx), config, usosRestantes: p.usosProtecao,
       });
-      const mao = [...p.mao];
-      mao.splice(i, 1);
-      const tentacoes = [...(p.tentacoes ?? [])];
-      const t = tentacoes.indexOf(acao.cartaId);
-      if (t >= 0) tentacoes.splice(t, 1);
+      // As medidas não se gastam; só a de uso único sai da mão depois de usada.
+      const mao = defesa.usoUnicoPorNivel ? p.mao.filter((id) => id !== defesa.id) : p.mao;
       const usosProtecao = { ...p.usosProtecao };
       if (res.protecaoUsada) usosProtecao[res.protecaoUsada] -= 1;
       const derrotasPorTag = { ...p.stats.derrotasPorTag };
@@ -152,7 +151,7 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
       return {
         ...s, fase: 'RESOLUCAO',
         partida: {
-          ...p, mao, tentacoes, descarte: [...p.descarte, acao.cartaId],
+          ...p, mao, jogadas: [...p.jogadas, acao.cartaId],
           usadosUnicos: defesa.usoUnicoPorNivel ? [...p.usadosUnicos, defesa.id] : p.usadosUnicos,
           usosProtecao, vazas: [...p.vazas, res],
           stats: {
@@ -167,31 +166,6 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
 
     case 'CONTINUAR':
       return continuar(s, p, nivel, ctx);
-
-    case 'ESCOLHER_LOJA': {
-      if (s.fase !== 'LOJA' || !p.loja) return erro(s, 'Fora de hora.');
-      const msg = validarEscolha(acao.ids, p.loja.oferta, p.loja.precisa, p.mao, config);
-      if (msg) return erro(s, msg);
-      return {
-        ...s, fase: 'INTRO_CENARIO',
-        partida: { ...p, mao: [...p.mao, ...acao.ids], loja: null, cenarioIdx: p.cenarioIdx + 1, vazaIdx: 0, vazas: [], cartaAmeaca: null },
-      };
-    }
-
-    case 'TROCAR_NA_LOJA': {
-      if (s.fase !== 'LOJA' || !p.loja) return erro(s, 'Fora de hora.');
-      if (p.loja.trocasRestantes <= 0) return erro(s, 'Você já usou a troca desta loja.');
-      const i = p.mao.indexOf(acao.sai);
-      if (i < 0 || !p.loja.oferta.includes(acao.entra)) return erro(s, 'Troca inválida.');
-      const mao = [...p.mao];
-      mao[i] = acao.entra;
-      if (contarCopias(mao, acao.entra) > config.maxCopias) return erro(s, `Máximo de ${config.maxCopias} cópias por carta.`);
-      const oferta = p.loja.oferta.filter((x) => x !== acao.entra);
-      return {
-        ...s,
-        partida: { ...p, mao, loja: { oferta, precisa: Math.min(p.loja.precisa, oferta.length), trocasRestantes: p.loja.trocasRestantes - 1 } },
-      };
-    }
 
     case 'ESCOLHER_PROTECAO': {
       if (s.fase !== 'RECOMPENSA') return erro(s, 'Fora de hora.');
@@ -243,8 +217,7 @@ function continuar(s: Estado, p: Partida, nivel: Nivel, ctx: Ctx): Estado {
     return {
       ...s, fase: 'RAIOX',
       partida: {
-        ...p, placar, usosProtecao, cartaAmeaca: null, mao: semTentacoes(p.mao, p.tentacoes), tentacoes: [],
-        bonusLeituraPerfeita: p.bonusLeituraPerfeita || leituraPerfeita,
+        ...p, placar, usosProtecao, cartaAmeaca: null,
         desconfiometro: p.desconfiometro + (leituraPerfeita ? 1 : 0),
         historico: [...p.historico, { cenarioId: cenario.id, vencedor, pontos, anulado, leituraPerfeita }],
       },
@@ -269,13 +242,10 @@ function continuar(s: Estado, p: Partida, nivel: Nivel, ctx: Ctx): Estado {
       return { ...s, fase: 'FIM_NIVEL', partida, progresso: { ...s.progresso, melhorIndice, desbloqueados } };
     }
 
-    const tamanho = p.bonusLeituraPerfeita ? config.ofertaLojaLeituraPerfeita : config.ofertaLoja;
-    const cand = candidatasLoja(nivel, conteudo.defesas, p.mao, p.usadosUnicos, config);
-    const [oferta, rng] = gerarOferta(p.rng, cand, conteudo.defesas, config, tamanho);
-    const precisa = Math.min(Math.max(0, config.tamanhoMao - p.mao.length), oferta.length);
+    // Sem loja: segue direto para o próximo caso.
     return {
-      ...s, fase: 'LOJA',
-      partida: { ...p, rng, bonusLeituraPerfeita: false, loja: { oferta, precisa, trocasRestantes: config.trocasPorLoja } },
+      ...s, fase: 'INTRO_CENARIO',
+      partida: { ...p, cenarioIdx: p.cenarioIdx + 1, vazaIdx: 0, vazas: [], cartaAmeaca: null },
     };
   }
 

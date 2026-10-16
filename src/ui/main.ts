@@ -8,7 +8,6 @@ import type { Acao, Estado } from '../engine/types';
 import type { App, Painel, Tela } from './app';
 import { botao, h } from './dom';
 import { telaFimNivel, telaRecompensa } from './screens/fim';
-import { telaLoja } from './screens/loja';
 import { painelAjustes, painelComoJogar, painelCreditos, telaMapa, telaMenu } from './screens/menu';
 import { telaMesa } from './screens/mesa';
 import { telaIntro, telaRaioX } from './screens/raiox';
@@ -139,7 +138,6 @@ function telaDaFase(): Tela {
     case 'INTRO_CENARIO': return telaIntro(app);
     case 'VEZ_AMEACA': case 'VEZ_JOGADOR': case 'RESOLUCAO': return telaMesa(app);
     case 'RAIOX': return telaRaioX(app);
-    case 'LOJA': return telaLoja(app);
     case 'FIM_NIVEL': return telaFimNivel(app);
     case 'RECOMPENSA': return telaRecompensa(app);
   }

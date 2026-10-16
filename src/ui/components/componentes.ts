@@ -103,7 +103,7 @@ export function botaoMenuInicial(app: App): HTMLButtonElement {
   return b;
 }
 
-/** Barra fina no topo das telas de jogo (intro, Raio-X, loja). */
+/** Barra fina no topo das telas de jogo (intro, Raio-X). */
 export function barraJogo(app: App, titulo: string): HTMLElement {
   return h('div', { class: 'barra-jogo' }, botaoMenuInicial(app), h('span', { class: 'mini' }, titulo));
 }

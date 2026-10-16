@@ -3,10 +3,10 @@ import { carregarConteudo, config } from '../src/content';
 import { estadoInicial, indiceDesconfianca, reducer, type Ctx } from '../src/engine/reducer';
 import { inteiro } from '../src/engine/rng';
 import { ehContraPerfeito, resolverVaza } from '../src/engine/rules';
-import type { Acao, CartaDefesa, Estado, Tag } from '../src/engine/types';
+import type { Acao, CartaDefesa, Estado } from '../src/engine/types';
 
 /** atento: joga ao acaso, mas lê o nome da carta e não cai em armadilhas (aproxima um iniciante humano). */
-export type Bot = 'otimo' | 'guloso' | 'aleatorio' | 'atento';
+export type Bot = 'otimo' | 'guloso' | 'aleatorio' | 'atento' | 'leitor';
 
 const valor = (d: CartaDefesa) => d.contra.length + d.forca;
 
@@ -15,7 +15,9 @@ function escolherCarta(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string, num
   const defs = ctx.conteudo.defesas;
   const mao = p.mao;
   if (bot === 'aleatorio') { const [i, s] = inteiro(rng, mao.length); return [mao[i], s]; }
-  if (bot === 'atento') {
+  // leitor: usa as táticas quando visíveis (nível 1, ou depois do Desconfiômetro); senão, age como o atento.
+  if (bot === 'leitor' && p.tagsReveladas) return escolherCarta('otimo', e, ctx, rng);
+  if (bot === 'atento' || bot === 'leitor') {
     const seguras = mao.filter((id) => !defs[id].armadilha);
     const opcoes = seguras.length ? seguras : mao;
     const [i, s] = inteiro(rng, opcoes.length);
@@ -30,40 +32,10 @@ function escolherCarta(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string, num
   if (perfeito) return [perfeito, rng];
   const vence = porValor.find((id) => resolverVaza(A, defs[id], { protecoes: [], config: ctx.config }).vencedor === 'defesa');
   // Sem saída: sacrifica uma tentação (ela sairia da mão no fim do caso de qualquer jeito).
-  const sacrificio = porValor.find((id) => defs[id].armadilha && p.tentacoes?.includes(id)) ?? porValor[0];
+  const sacrificio = porValor.find((id) => !defs[id].armadilha) ?? porValor[0];
   return [vence ?? sacrificio, rng];
 }
 
-function escolherLoja(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string[], number] {
-  const p = e.partida!;
-  const { oferta, precisa } = p.loja!;
-  const defs = ctx.conteudo.defesas;
-  const mao = [...p.mao];
-  const pode = (id: string) => mao.filter((x) => x === id).length < ctx.config.maxCopias;
-  let ordem = [...oferta];
-  let s = rng;
-
-  if (bot === 'aleatorio' || bot === 'atento') {
-    for (let i = ordem.length - 1; i > 0; i--) { const [j, ns] = inteiro(s, i + 1); s = ns; [ordem[i], ordem[j]] = [ordem[j], ordem[i]]; }
-  } else if (bot === 'guloso') {
-    ordem.sort((a, b) => defs[b].forca - defs[a].forca);
-  } else {
-    // ótimo: prioriza cobrir as tags do próximo caso que a mão ainda não anula.
-    const nivel = ctx.conteudo.niveis.find((n) => n.id === p.nivelId)!;
-    const prox = nivel.cenarios[p.cenarioIdx + 1];
-    const tags = new Set<Tag>(prox ? prox.vazas.flatMap((v) => v.opcoes.flatMap((o) => o.tags)) : []);
-    const coberta = (t: Tag, m: string[]) => m.some((id) => defs[id].contra.includes(t));
-    const nota = (id: string) => [...tags].filter((t) => !coberta(t, mao) && defs[id].contra.includes(t)).length * 10 + valor(defs[id]);
-    ordem = ordem.sort((a, b) => nota(b) - nota(a));
-  }
-  if (bot === 'atento' || bot === 'otimo') ordem = [...ordem.filter((id) => !defs[id].armadilha), ...ordem.filter((id) => defs[id].armadilha)];
-  const ids: string[] = [];
-  for (const id of ordem) {
-    if (ids.length === precisa) break;
-    if (pode(id)) { ids.push(id); mao.push(id); }
-  }
-  return [ids, s];
-}
 
 export interface ResultadoSim { vitorias: number; partidas: number; indiceMedio: number }
 
@@ -89,9 +61,9 @@ export function simular(nivelOrdem: number, bot: Bot, partidas: number): Resulta
       switch (e.fase) {
         case 'INTRO_CENARIO': despachar({ tipo: 'INICIAR_CENARIO' }); break;
         case 'VEZ_AMEACA': despachar({ tipo: 'AMEACA_JOGA' }); break;
-        case 'VEZ_JOGADOR': { const [id, s] = escolherCarta(bot, e, ctx, rng); rng = s; despachar({ tipo: 'JOGAR_CARTA', cartaId: id }); break; }
+        case 'VEZ_JOGADOR': {
+          if (bot === 'leitor' && !e.partida!.tagsReveladas && e.partida!.desconfiometro > 0) despachar({ tipo: 'USAR_DESCONFIOMETRO' }); const [id, s] = escolherCarta(bot, e, ctx, rng); rng = s; despachar({ tipo: 'JOGAR_CARTA', cartaId: id }); break; }
         case 'RESOLUCAO': case 'RAIOX': despachar({ tipo: 'CONTINUAR' }); break;
-        case 'LOJA': { const [ids, s] = escolherLoja(bot, e, ctx, rng); rng = s; despachar({ tipo: 'ESCOLHER_LOJA', ids }); break; }
         default: throw new Error(`Fase inesperada ${e.fase}`);
       }
     }
@@ -111,7 +83,7 @@ const partidas = Number(arg('partidas', '2000'));
 const niveis = arg('nivel', 'todos') === 'todos' ? conteudo.niveis.map((n) => n.ordem) : [Number(arg('nivel', '1'))];
 for (const n of niveis) {
   console.log(`\nNível ${n} — ${partidas} partidas por bot`);
-  for (const bot of ['otimo', 'guloso', 'aleatorio', 'atento'] as Bot[]) {
+  for (const bot of ['otimo', 'guloso', 'aleatorio', 'atento', 'leitor'] as Bot[]) {
     const r = simular(n, bot, partidas);
     console.log(`  ${bot.padEnd(10)} vitória ${(100 * r.vitorias / r.partidas).toFixed(1).padStart(5)}%   índice médio ${r.indiceMedio.toFixed(0)}%`);
   }

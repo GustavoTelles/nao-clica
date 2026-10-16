@@ -35,7 +35,7 @@ body::after {
   background: repeating-linear-gradient(to bottom, rgba(255,255,255,.025) 0 1px, transparent 1px 3px);
 }
 
-#app { max-width: 1040px; margin: 0 auto; padding: 12px 16px 24px; }
+#app { max-width: 1180px; margin: 0 auto; padding: 12px 16px 24px; }
 h1, h2, h3 { margin: 0 0 .5rem; line-height: 1.2; }
 p { margin: 0 0 .75rem; }
 a { color: var(--defesa); }
@@ -146,13 +146,17 @@ a:hover { color: #7ff0bf; }
   .mesa-placar { display: grid; justify-items: end; }
 }
 .mesa-centro { display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); }
+.mesa-esquerda { display: grid; gap: 12px; align-content: start; }
 @media (min-width: 760px) {
-  .mesa-centro { grid-template-columns: minmax(0, 1fr) 260px; align-items: start; }
+  .mesa-centro { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); align-items: start; }
+  .mesa-esquerda { position: sticky; top: 12px; }
 }
 .mesa-lateral { display: grid; gap: 10px; align-content: start; }
 /* No celular, as proteções vão para depois da mão; o Desconfiômetro fica junto da mensagem. */
 @media (max-width: 759px) {
-  .mesa-centro, .mesa-lateral { display: contents; }
+  .mesa-centro, .mesa-esquerda, .mesa-lateral { display: contents; }
+  .mesa-medidas { order: 5; }
+  .mesa .detalhe { order: 6; }
   .mesa-lateral > :not(.desconf) { order: 10; }
   .celular-tela { min-height: 130px; }
 }
@@ -198,7 +202,7 @@ mark.sinal { background: var(--alerta); color: #231a00; border-radius: 3px; padd
 }
 
 /* detalhe da carta selecionada */
-.detalhe { min-height: 56px; background: var(--painel); border: 3px solid var(--borda); border-radius: var(--raio); padding: 8px 12px; box-shadow: var(--sombra); display: flex; align-items: center; }
+.detalhe { position: sticky; bottom: 8px; z-index: 5; min-height: 56px; background: var(--painel); border: 3px solid var(--borda); border-radius: var(--raio); padding: 8px 12px; box-shadow: var(--sombra); display: flex; align-items: center; }
 .detalhe p { margin: 0; }
 .detalhe-linha { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; }
 
@@ -226,32 +230,18 @@ button.carta:disabled { cursor: default; }
 .protecao-carta { border-left: 6px solid var(--raro); min-height: 120px; }
 .protecao-carta .desc { font-size: .9rem; color: var(--texto-suave); margin: 0; }
 
-/* mão: leque com sobreposição no celular */
-.mao {
-  display: flex; justify-content: center; align-items: flex-end;
-  padding: 22px 4px 6px; min-height: 170px;
-  overflow-x: clip; overflow-clip-margin: 0; overflow-y: visible;
-}
-.mao .carta {
-  --w: 84px;
-  width: var(--w); min-height: 140px; flex: none; padding: 8px 6px;
-  /* sobreposição calculada para as n cartas caberem exatamente na largura da mão */
-  margin-left: min(0px, calc((100% - var(--n) * var(--w)) / (var(--n) - 1)));
-  transform: rotate(calc((var(--i) - (var(--n) - 1) / 2) * 2deg)) translateY(calc(var(--d, 0) * 1px));
-  transform-origin: bottom center;
-  font-size: .78rem;
-}
-.mao .carta:first-child { margin-left: 0; }
-.mao .carta .contra li { font-size: .62rem; padding: 0 4px; }
-.mao .carta.selecionada { transform: translateY(-22px); z-index: 2; }
-.mao .carta:hover:not(:disabled) { z-index: 3; }
-@media (min-width: 400px) { .mao .carta { --w: 92px; } }
-@media (min-width: 760px) {
-  .mao .carta { --w: 118px; min-height: 160px; margin-left: min(8px, calc((100% - var(--n) * var(--w)) / (var(--n) - 1))); font-size: .85rem; transform: none; }
-  .mao .carta.selecionada { transform: translateY(-16px); }
-  .mao .carta .contra li { font-size: .7rem; }
-}
-.fase-vez_ameaca .mao, .fase-resolucao .mao { opacity: .7; }
+/* medidas: grade com todas as opções do fascículo */
+.mesa-medidas { display: grid; gap: 8px; align-content: start; }
+.titulo-medidas { font-size: 1rem; margin: 0; }
+.medidas { display: grid; grid-template-columns: repeat(auto-fill, minmax(146px, 1fr)); gap: 8px; }
+.medidas .carta { min-height: 92px; padding: 8px; font-size: .84rem; gap: 4px; }
+.medidas .carta .carta-nome { line-height: 1.2; }
+.medidas .carta .contra li { font-size: .68rem; padding: 0 5px; }
+.medidas .carta .forca { width: 24px; height: 24px; font-size: .8rem; }
+.medidas .carta.selecionada { transform: none; outline: 3px solid var(--defesa); outline-offset: 1px; background: linear-gradient(160deg, #1d3a2e, #161b26); }
+button.carta.medida:hover:not(:disabled), .medidas button.carta:hover:not(:disabled) { transform: translateY(-2px); }
+.fase-vez_ameaca .medidas, .fase-resolucao .medidas { opacity: .6; }
+@media (max-width: 380px) { .medidas { grid-template-columns: 1fr 1fr; } .medidas .carta { font-size: .8rem; } }
 
 /* resolução */
 .resolucao {
@@ -271,7 +261,7 @@ button.carta:disabled { cursor: default; }
 .licao { margin: 0; }
 
 /* ---------- intro / raio-x / fim ---------- */
-.intro, .fim, .raiox, .recompensa, .loja { display: grid; gap: 10px; }
+.intro, .fim, .raiox, .recompensa { display: grid; gap: 10px; }
 .intro { justify-items: center; text-align: center; max-width: 520px; margin: 0 auto; padding-top: 24px; }
 .intro .mascara { flex-direction: column; text-align: center; }
 .intro .mascara-svg { width: 120px; height: 70px; }
@@ -288,14 +278,8 @@ button.carta:disabled { cursor: default; }
 .indice strong { font-family: var(--fonte-titulo); font-size: 2.2rem; color: var(--alerta); line-height: 1.1; }
 .acoes-linha { display: flex; flex-wrap: wrap; gap: 10px; }
 
-/* loja */
-.previa { background: var(--painel); border: 2px dashed var(--alerta); border-radius: var(--raio); padding: 8px 12px; }
-.contador { font-weight: 600; color: var(--alerta); margin: 0; }
 .grade-cartas { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
 .grade-cartas .carta { min-height: 150px; }
-.mao-loja { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
-.mao-loja .carta { min-height: 110px; font-size: .82rem; }
-.loja > .btn.primario { justify-self: start; }
 
 /* ---------- painéis ---------- */
 .painel { position: fixed; inset: 0; z-index: 30; background: rgba(6,8,12,.8); display: grid; place-items: center; padding: 16px; }
@@ -339,8 +323,7 @@ html.reduz-movimento body::after { display: none; }
 /* No celular a mão de cartas ocupa o rodapé: o botão de música sobe para o canto superior. */
 @media (max-width: 759px) {
   .btn-musica { top: 12px; bottom: auto; right: 12px; width: 40px; height: 40px; font-size: 1.1rem; }
-  .mesa-topo, .barra, .loja > .titulo, .raiox > .mini:first-child, .fim > .mini:first-child { padding-right: 52px; }
-  .mao { padding-bottom: 6px; }
+  .mesa-topo, .barra, .raiox > .mini:first-child, .fim > .mini:first-child { padding-right: 52px; }
 }
 
 /* ---------- resumo das regras na tela inicial ---------- */
@@ -389,3 +372,4 @@ html.reduz-movimento body::after { display: none; }
 .licao p { margin: 0 0 6px; }
 .ajuste-trilha { border: 2px solid #3a4560; border-radius: var(--raio); padding: 6px 12px 8px; margin: 4px 0; }
 .ajuste-trilha legend { padding: 0 6px; font-weight: 700; }
+@media (min-width: 760px) { .mesa .detalhe { margin-right: 56px; } }

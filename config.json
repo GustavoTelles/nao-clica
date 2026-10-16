@@ -1,14 +1,4 @@
 {
-  "tamanhoMao": 8,
-  "ofertaLoja": 5,
-  "ofertaLojaLeituraPerfeita": 6,
-  "trocasPorLoja": 1,
-  "maxCopias": 2,
-  "pesosRaridade": {
-    "comum": 60,
-    "incomum": 30,
-    "rara": 10
-  },
   "vazasParaVencerCenario": 2,
   "pontosParaVencerNivel": 3,
   "cenariosPorNivel": 5,

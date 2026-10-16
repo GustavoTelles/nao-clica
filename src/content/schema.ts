@@ -50,9 +50,9 @@ export const NivelSchema = z.object({
   regras: z.object({
     tagsVisiveis: z.boolean(), pressaoMin: z.number(), pressaoMax: z.number(), combos: z.boolean(),
     ia: z.enum(['roteiro', 'aleatoria', 'adaptativa']),
-    desmascarar: z.boolean(), armadilhasNaLoja: z.boolean(), rarasNaLoja: z.boolean(),
+    desmascarar: z.boolean(),
   }),
-  pool: z.array(z.string()), maoInicial: z.array(z.string()),
+  pool: z.array(z.string()),
   cenarios: z.array(CenarioSchema), recompensas: z.array(z.string()),
 });
 

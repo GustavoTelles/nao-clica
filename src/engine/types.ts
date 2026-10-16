@@ -49,13 +49,14 @@ export interface Cenario {
 export interface RegrasNivel {
   tagsVisiveis: boolean; pressaoMin: number; pressaoMax: number;
   combos: boolean; ia: ModoIA;
-  desmascarar: boolean; armadilhasNaLoja: boolean; rarasNaLoja: boolean;
+  desmascarar: boolean;
 }
 
 export interface Nivel {
   id: string; ordem: number; titulo: string; fontes: string[];
   regras: RegrasNivel;
-  pool: string[]; maoInicial: string[];
+  /** Todas as medidas (cartas de defesa) do nível: ficam disponíveis em todos os casos. */
+  pool: string[];
   cenarios: Cenario[];
   recompensas: string[];
 }
@@ -84,8 +85,6 @@ export interface Conteudo {
 }
 
 export interface Config {
-  tamanhoMao: number; ofertaLoja: number; ofertaLojaLeituraPerfeita: number; trocasPorLoja: number;
-  maxCopias: number; pesosRaridade: Record<Raridade, number>;
   vazasParaVencerCenario: number; pontosParaVencerNivel: number; cenariosPorNivel: number;
   bonusContraParcial: number; empateFavorece: 'ameaca' | 'defesa'; pressaoBonusChefe: number;
   desconfiometroInicial: number; maxProtecoes: number;
@@ -114,7 +113,7 @@ export interface ResultadoVaza {
 
 export type Fase =
   | 'MENU' | 'MAPA' | 'INTRO_CENARIO' | 'VEZ_AMEACA' | 'VEZ_JOGADOR' | 'RESOLUCAO'
-  | 'RAIOX' | 'LOJA' | 'FIM_NIVEL' | 'RECOMPENSA';
+  | 'RAIOX' | 'FIM_NIVEL' | 'RECOMPENSA';
 
 export interface ResumoCenario {
   cenarioId: string;
@@ -122,12 +121,6 @@ export interface ResumoCenario {
   pontos: number;
   anulado?: string; // id da proteção que anulou o ponto da ameaça
   leituraPerfeita: boolean;
-}
-
-export interface Loja {
-  oferta: string[];
-  precisa: number;
-  trocasRestantes: number;
 }
 
 export interface Partida {
@@ -138,17 +131,15 @@ export interface Partida {
   vazaIdx: number;
   placar: { jogador: number; ameaca: number };
   vazas: ResultadoVaza[];
+  /** Medidas do nível + tentações do caso atual (remontada a cada caso). */
   mao: string[];
-  descarte: string[];
+  /** Cartas jogadas no nível, em ordem. */
+  jogadas: string[];
   usadosUnicos: string[];
-  /** Tentações do caso atual ainda na mão (saem no fim do caso). Ausente em saves antigos. */
-  tentacoes?: string[];
   cartaAmeaca: CartaAmeaca | null;
   tagsReveladas: boolean;
   desconfiometro: number;
   usosProtecao: Record<string, number>;
-  bonusLeituraPerfeita: boolean;
-  loja: Loja | null;
   historico: ResumoCenario[];
   stats: { vazas: number; perfeitos: number; derrotasPorTag: Partial<Record<Tag, number>>; armadilhas?: number };
   resultado: 'vitoria' | 'derrota' | null;
@@ -179,7 +170,5 @@ export type Acao =
   | { tipo: 'USAR_DESCONFIOMETRO' }
   | { tipo: 'JOGAR_CARTA'; cartaId: string }
   | { tipo: 'CONTINUAR' }
-  | { tipo: 'ESCOLHER_LOJA'; ids: string[] }
-  | { tipo: 'TROCAR_NA_LOJA'; sai: string; entra: string }
   | { tipo: 'ESCOLHER_PROTECAO'; id: string; substitui?: string }
   | { tipo: 'VOLTAR_MAPA' };

@@ -789,5 +789,124 @@
     "fonte": "F_CODIGOS",
     "armadilha": true,
     "mito": "Pagar alimenta o golpe e não é a forma segura de recuperar dados: quem permite recuperá-los é o backup."
+  },
+  {
+    "id": "LIMITE_PIX_BAIXO",
+    "nome": "Meus limites de Pix são baixos",
+    "contra": [
+      "PIX"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Reduza os limites de Pix e transferências: se algo der errado, o prejuízo é menor.",
+    "fonte": "F_BANCO",
+    "matriz": "M03"
+  },
+  {
+    "id": "CARTAO_VIRTUAL",
+    "nome": "Compro online com cartão virtual",
+    "contra": [
+      "DADOS"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Use o cartão virtual em compras não presenciais: os dados mudam e não servem para fraudes depois.",
+    "fonte": "F_BANCO",
+    "matriz": "M07"
+  },
+  {
+    "id": "EMAIL_EXCLUSIVO",
+    "nome": "Tenho um e-mail só para o banco",
+    "contra": [
+      "SENHA",
+      "LINK"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Um e-mail exclusivo para instituições financeiras, sem ficar logado no celular, dificulta roubar a conta pela recuperação de senha.",
+    "fonte": "F_BANCO",
+    "matriz": "M22"
+  },
+  {
+    "id": "SENHA_DA_FAMILIA",
+    "nome": "Combinei uma senha com a família",
+    "contra": [
+      "AFETO"
+    ],
+    "forca": 2,
+    "raridade": "comum",
+    "licao": "Combine uma \"senha\" com familiares e amigos para confirmar quem está falando.",
+    "fonte": "F_GOLPES",
+    "matriz": "M01"
+  },
+  {
+    "id": "FILTRO_CHAMADAS",
+    "nome": "Não atendo número desconhecido",
+    "contra": [
+      "AUTORIDADE"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Evite atender números desconhecidos e use os filtros da operadora ou do celular.",
+    "fonte": "F_EVITE_FRAUDES",
+    "matriz": "M17"
+  },
+  {
+    "id": "CONFIRO_CONDICOES",
+    "nome": "Leio as condições da compra",
+    "contra": [
+      "RECOMPENSA"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Antes de comprar, confira frete, troca, devolução e forma de pagamento; na dúvida, fale com o vendedor pelos canais oficiais.",
+    "fonte": "F_COMERCIO"
+  },
+  {
+    "id": "PERFIL_PRIVADO",
+    "nome": "Meu perfil é privado",
+    "contra": [
+      "CURIOSIDADE",
+      "DADOS"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Deixe a conta privada e evite expor dados pessoais: o golpista sabe menos sobre você.",
+    "fonte": "F_REDES_SOCIAIS"
+  },
+  {
+    "id": "ALERTAS_DE_ACESSO",
+    "nome": "Recebo alerta de login nas minhas contas",
+    "contra": [
+      "SENHA",
+      "CODIGO"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Ative alertas de tentativas de acesso para perceber logo se alguém tenta entrar na sua conta.",
+    "fonte": "F_REDES_SOCIAIS",
+    "matriz": "M02"
+  },
+  {
+    "id": "ATUALIZO_SISTEMA",
+    "nome": "Mantenho sistema e apps atualizados",
+    "contra": [
+      "APP_ANEXO"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "Instale as atualizações (de preferência automáticas): elas fecham brechas usadas por códigos maliciosos.",
+    "fonte": "F_CODIGOS"
+  },
+  {
+    "id": "CONTA_PADRAO",
+    "nome": "Uso conta comum, não de administrador",
+    "contra": [
+      "APP_ANEXO"
+    ],
+    "forca": 1,
+    "raridade": "comum",
+    "licao": "No dia a dia, use uma conta sem privilégios de administrador: um malware só faz o que a conta permite.",
+    "fonte": "F_CODIGOS"
   }
 ]

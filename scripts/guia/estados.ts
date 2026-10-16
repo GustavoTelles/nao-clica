@@ -34,8 +34,6 @@ cenas.resolucao = e;
 e = run(e, { tipo: 'CONTINUAR' }, { tipo: 'AMEACA_JOGA' });
 e = run(e, { tipo: 'JOGAR_CARTA', cartaId: melhor(e) }, { tipo: 'CONTINUAR' });
 cenas.raiox = e;
-e = run(e, { tipo: 'CONTINUAR' });
-cenas.loja = e;
 
 // Nível 2: táticas ocultas, com e sem o Desconfiômetro.
 let n2 = estadoInicial(conteudo);
@@ -53,15 +51,6 @@ while (f.fase !== 'FIM_NIVEL') {
   if (f.fase === 'INTRO_CENARIO') f = run(f, { tipo: 'INICIAR_CENARIO' });
   else if (f.fase === 'VEZ_AMEACA') f = run(f, { tipo: 'AMEACA_JOGA' });
   else if (f.fase === 'VEZ_JOGADOR') f = run(f, { tipo: 'JOGAR_CARTA', cartaId: melhor(f) });
-  else if (f.fase === 'LOJA') {
-    const { oferta, precisa } = f.partida!.loja!;
-    const mao = [...f.partida!.mao];
-    const ids: string[] = [];
-    for (const id of oferta) {
-      if (ids.length < precisa && mao.filter((x) => x === id).length < config.maxCopias) { ids.push(id); mao.push(id); }
-    }
-    f = run(f, { tipo: 'ESCOLHER_LOJA', ids });
-  }
   else f = run(f, { tipo: 'CONTINUAR' });
 }
 cenas.fim = f;

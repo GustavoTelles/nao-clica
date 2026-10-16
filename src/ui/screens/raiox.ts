@@ -19,7 +19,7 @@ function avisoTentacoes(n: number, max: number): HTMLElement | null {
   return h('div', { class: 'aviso-tentacoes', role: 'note' },
     h('div', { class: 'pontos', 'aria-hidden': 'true' }, pontos),
     h('p', {}, h('b', {}, n === 1 ? '1 resposta errada' : `${n} respostas erradas`),
-      n === 1 ? ' entrou na sua mão neste caso.' : ' entraram na sua mão neste caso.',
+      n === 1 ? ' entrou nas opções deste caso.' : ' entraram nas opções deste caso.',
       ' Elas parecem boas, mas sempre perdem. Leia o nome de cada carta antes de jogar!'));
 }
 
@@ -75,7 +75,7 @@ export function telaRaioX(app: App): Tela {
       h('h1', { class: `titulo ${ganhou ? 'ok' : 'ruim'}` }, ganhou ? (res.leituraPerfeita ? 'Leitura perfeita!' : 'Você escapou!') : 'Você caiu…'),
       h('p', { class: 'desfecho' }, ganhou ? c.desfechoVitoria : c.desfechoDerrota),
       res.anulado ? h('p', { class: 'alerta' }, `🛡 ${app.ctx.conteudo.protecoes[res.anulado].nome}: a Máscara não pontua.`) : null,
-      res.leituraPerfeita ? h('p', { class: 'alerta' }, 'Bônus: +1 Desconfiômetro e a próxima loja mostra 6 cartas.') : null,
+      res.leituraPerfeita ? h('p', { class: 'alerta' }, 'Bônus: +1 carga de Desconfiômetro.') : null,
       placarNivel(p),
       h('section', { class: 'bloco' },
         h('h2', {}, 'A conversa, com os sinais grifados'),

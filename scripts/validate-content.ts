@@ -66,17 +66,17 @@ export function validar(c: Conteudo, cfg: Config, bloqueio: string[]): Relatorio
   for (const n of c.niveis) {
     const N = `nível ${n.id}`;
     // 2. referências
-    for (const id of [...n.pool, ...n.maoInicial]) if (!c.defesas[id]) err(`${N}: defesa inexistente ${id}`);
+    for (const id of n.pool) if (!c.defesas[id]) err(`${N}: defesa inexistente ${id}`);
     for (const id of n.recompensas) if (!c.protecoes[id]) err(`${N}: proteção inexistente ${id}`);
     for (const id of n.fontes) if (!c.fontes[id]) err(`${N}: fonte inexistente ${id}`);
     if (n.recompensas.length !== 3) err(`${N}: precisa de 3 recompensas`);
     // 3. estrutura
     if (n.cenarios.length !== cfg.cenariosPorNivel) err(`${N}: tem ${n.cenarios.length} cenários (esperado ${cfg.cenariosPorNivel})`);
-    // 4. mão inicial
-    if (n.maoInicial.length !== cfg.tamanhoMao) err(`${N}: mão inicial com ${n.maoInicial.length} cartas`);
-    for (const id of n.maoInicial) if (!n.pool.includes(id)) err(`${N}: ${id} da mão inicial fora do pool`);
-    // 11. armadilhas
-    for (const id of n.pool) if (c.defesas[id]?.armadilha && !n.regras.armadilhasNaLoja) err(`${N}: armadilha ${id} em nível sem armadilhas`);
+    // 4. medidas: o pool tem TODAS as medidas dos fascículos do nível e nenhuma armadilha (elas só entram como tentação)
+    for (const d of Object.values(c.defesas)) {
+      if (!d.armadilha && n.fontes.includes(d.fonte) && !n.pool.includes(d.id)) err(`${N}: medida ${d.id} (${d.fonte}) fora do pool`);
+    }
+    for (const id of n.pool) if (c.defesas[id]?.armadilha) err(`${N}: armadilha ${id} no pool (use como tentação)`);
 
     const poolOk = n.pool.map((id) => c.defesas[id]).filter((d) => d && !d.armadilha);
     const tagsUsadas = new Set<Tag>();
@@ -96,7 +96,6 @@ export function validar(c: Conteudo, cfg: Config, bloqueio: string[]): Relatorio
       const tent = ce.tentacoes ?? [];
       if (tent.length > cfg.maxTentacoesPorCenario) err(`${C}: ${tent.length} tentações (máx. ${cfg.maxTentacoesPorCenario})`);
       if (new Set(tent).size !== tent.length) err(`${C}: tentação repetida`);
-      if (cfg.tamanhoMao + tent.length > 10) err(`${C}: mão passaria de 10 cartas (atalhos 1–9 e 0)`);
       for (const id of tent) {
         const d = c.defesas[id];
         if (!d) err(`${C}: tentação inexistente ${id}`);

@@ -28,14 +28,25 @@ export function telaMesa(app: App): Tela {
   const jogar = () => {
     if (fase !== 'VEZ_JOGADOR' || selecionada === null) return;
     const id = p.mao[selecionada];
-    const el = document.querySelector(`.mao .carta[data-idx="${selecionada}"]`);
-    animar(el, [{ transform: 'translateY(0)' }, { transform: 'translateY(-120px) scale(.9)', opacity: 0.2 }], 220)
+    const el = document.querySelector(`.medidas .carta[data-idx="${selecionada}"]`);
+    animar(el, [{ transform: 'scale(1)' }, { transform: 'scale(.92)', opacity: 0.4 }], 180)
       .then(() => { selecionada = null; app.dispatch({ tipo: 'JOGAR_CARTA', cartaId: id }); });
   };
-  const selecionar = (i: number) => {
-    if (fase !== 'VEZ_JOGADOR' || i >= p.mao.length) return;
-    selecionada = selecionada === i ? null : i;
+  const selecionar = (i: number, alternar = true) => {
+    if (fase !== 'VEZ_JOGADOR' || i < 0 || i >= p.mao.length) return;
+    selecionada = alternar && selecionada === i ? null : i;
     app.render();
+    document.querySelector<HTMLElement>(`.medidas .carta[data-idx="${i}"]`)?.scrollIntoView({ block: 'nearest' });
+  };
+  /** Setas: ←/→ andam uma medida; ↑/↓ andam uma linha da grade. */
+  const mover = (tecla: string) => {
+    const cartas = [...document.querySelectorAll<HTMLElement>('.medidas .carta')];
+    if (cartas.length === 0) return;
+    const colunas = Math.max(1, cartas.filter((c) => c.offsetTop === cartas[0].offsetTop).length);
+    const atual = selecionada ?? -1;
+    const passo = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: colunas, ArrowUp: -colunas }[tecla] ?? 0;
+    const alvo = atual < 0 ? 0 : Math.min(cartas.length - 1, Math.max(0, atual + passo));
+    selecionar(alvo, false);
   };
   const desconfiar = () => app.dispatch({ tipo: 'USAR_DESCONFIOMETRO' });
 
@@ -60,25 +71,28 @@ export function telaMesa(app: App): Tela {
     h('h2', { class: 'mini titulo-lateral' }, 'Proteções'),
     listaProtecoes(protecoesAtivas(estado, ctx), p.usosProtecao));
 
-  const centro = h('main', { class: 'mesa-centro' },
+  const esquerda = h('div', { class: 'mesa-esquerda' },
     celular(app, cenario.canal, cenario.persona, cartaAmeaca, {
       tagsVisiveis: p.tagsReveladas || fase === 'RESOLUCAO',
       sinais: fase === 'RESOLUCAO' && ultima?.motivo === 'contra_perfeito',
     }),
     lateral);
 
-  // ----- mão -----
-  const mao = h('div', { class: 'mao', role: 'group', 'aria-label': 'Sua mão' },
-    p.mao.map((id, i) => {
-      const c = cartaDefesa(app, defs[id], {
-        tecla: i + 1, selecionada: selecionada === i, compacta: true, onclick: () => selecionar(i),
-      });
-      c.dataset.idx = String(i);
-      c.style.setProperty('--i', String(i));
-      c.style.setProperty('--n', String(p.mao.length));
-      if (fase !== 'VEZ_JOGADOR') c.setAttribute('disabled', '');
-      return c;
-    }));
+  // ----- medidas: todas as do fascículo do nível + as respostas erradas do caso -----
+  const fonte = ctx.conteudo.fontes[nivel.fontes[0]];
+  const medidas = h('section', { class: 'mesa-medidas', 'aria-labelledby': 'titulo-medidas' },
+    h('h2', { id: 'titulo-medidas', class: 'titulo-medidas' },
+      `Medidas — ${fonte.titulo}`, h('span', { class: 'mini' }, ` · ${p.mao.length} opções · escolha a melhor`)),
+    h('div', { class: 'medidas', role: 'group', 'aria-label': 'Medidas disponíveis' },
+      p.mao.map((id, i) => {
+        const c = cartaDefesa(app, defs[id], {
+          tecla: i < 10 ? i + 1 : undefined, selecionada: selecionada === i, compacta: true, onclick: () => selecionar(i),
+        });
+        c.dataset.idx = String(i);
+        if (fase !== 'VEZ_JOGADOR') c.setAttribute('disabled', '');
+        return c;
+      })));
+  const centro = h('main', { class: 'mesa-centro' }, esquerda, medidas);
 
   const sel = selecionada !== null ? defs[p.mao[selecionada]] : null;
   const detalhe = h('div', { class: 'detalhe', 'aria-live': 'polite' },
@@ -89,11 +103,11 @@ export function telaMesa(app: App): Tela {
             h('div', {}, h('strong', {}, sel.nome), h('div', { class: 'mini' }, `Força ${sel.forca} · anula ${sel.contra.join(', ').toLowerCase()}`)),
             botao('Jogar ⏎', jogar, { class: 'btn primario', 'data-foco': '' }))
         : h('p', { class: 'mini' }, ocultas
-            ? 'Leia a mensagem: qual tática ela usa? Escolha uma carta (teclas 1–9 e 0) ou use o Desconfiômetro (D). Cuidado com as respostas erradas!'
-            : 'Escolha a carta que anula as táticas da mensagem (teclas 1–9 e 0, Enter joga). Leia o nome: há respostas erradas na mão!'))
+            ? 'Leia a mensagem: qual tática ela usa? Toque na melhor medida (ou use as setas e Enter). O Desconfiômetro (D) revela as táticas. Cuidado: há respostas erradas!'
+            : 'Toque na medida que anula as táticas da mensagem (ou use as setas e Enter). Cuidado: há respostas erradas entre as opções!'))
       : null);
 
-  const raiz = h('div', { class: `tela mesa fase-${fase.toLowerCase()}` }, topo, centro, detalhe, mao);
+  const raiz = h('div', { class: `tela mesa fase-${fase.toLowerCase()}` }, topo, centro, detalhe);
 
   // ----- resolução -----
   if (fase === 'RESOLUCAO' && ultima) {
@@ -136,6 +150,7 @@ export function telaMesa(app: App): Tela {
       if (fase !== 'VEZ_JOGADOR') return false;
       if (/^[0-9]$/.test(e.key)) { selecionar(e.key === '0' ? 9 : Number(e.key) - 1); return true; }
       if (e.key === 'Enter' && selecionada !== null) { jogar(); return true; }
+      if (e.key.startsWith('Arrow')) { mover(e.key); return true; }
       if (e.key.toLowerCase() === 'd' && !nivel.regras.tagsVisiveis) { desconfiar(); return true; }
       return false;
     },

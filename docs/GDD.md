@@ -58,7 +58,7 @@ Estas eram perguntas em aberto. O jogo usa os padrões abaixo, que podem ser alt
 |---|---|---|---|
 | D1 | Placar | Cenário = **melhor de 3 vazas** (vence com 2). Nível = **5 cenários**, vence quem fizer **3 pontos** primeiro. | Exigir 3 vazas de 3 (fica muito difícil). |
 | D2 | Como uma carta vence a outra | **Contra certo + força**: a defesa vence se anular as táticas da carta da ameaça; sem anulação completa, compara força com pressão (§4.5). | Hierarquia fixa, como no truco (ensina menos). |
-| D3 | Reposição da mão | Depois de cada cenário, descarta as usadas e **repõe até 8** escolhendo numa loja de 5 cartas. | Sempre ganhar 3 cartas, com limite de 8. |
+| D3 | Reposição da mão | ~~Loja entre os casos~~ → **sem loja** (decisão do responsável em 16/10/2026): em cada caso a pessoa vê **todas as medidas do fascículo do nível** e escolhe a melhor; as medidas não se gastam. | Sempre ganhar 3 cartas, com limite de 8. |
 | D4 | O que é um nível | **1 nível = 1 fascículo-base = 5 cenários.** A campanha encadeia os níveis. | Partida mista com 5 fascículos. |
 | D5 | Público e uso | **Educacional, não comercial**, em português do Brasil, a partir de 12 anos. | Corporativo/comercial: exige autorização (§1, regra 5). |
 
@@ -93,16 +93,13 @@ Estas eram perguntas em aberto. O jogo usa os padrões abaixo, que podem ser alt
    - **Vitória:** você escolhe 1 de 3 proteções e o próximo nível é desbloqueado.
    - **Derrota:** aparece o resumo do nível e você pode tentar de novo. O nível reinicia com a mão inicial; as proteções conquistadas antes são mantidas.
 
-### 4.2 Mão, descarte e loja
-- O tamanho da mão é **8** (mais as tentações do caso, §7.1: no máximo 10 durante o caso; atalhos 1–9 e 0).
-- Cada carta jogada vai para o **descarte** e não volta naquele nível.
-- **Loja** (entre os cenários do mesmo nível):
-  - Mostra 5 cartas sorteadas do **pool** do nível. Os pesos são: comum 60, incomum 30, rara 10. Cartas raras só aparecem a partir do nível 2.
-  - Você escolhe exatamente a quantidade necessária para voltar a 8 cartas.
-  - Uma vez por loja, você pode **trocar** 1 carta da mão por 1 carta da oferta.
-  - Cada carta pode ter no máximo **2 cópias** na mão.
-  - A loja mostra a **prévia do próximo caso**: título e canal (SMS, e-mail, ligação…), sem revelar as tags. Isso permite planejar a mão.
-- **Leitura perfeita:** se você vencer um cenário só com contras perfeitos, a próxima loja oferece 6 cartas e você ganha +1 de Desconfiômetro.
+### 4.2 Medidas do fascículo (sem loja) — *regra alterada em 16/10/2026*
+- A "mão" de cada caso é o conjunto de **todas as medidas do nível** (`pool`): toda carta de defesa cujo `fonte` é um dos fascículos do nível (`nivel.fontes`), mais as cartas necessárias para vencer os casos. O validador exige que nenhuma medida do fascículo fique de fora.
+- As medidas aparecem em **ordem alfabética fixa**, para a pessoa achar cada uma no mesmo lugar em todos os casos. As **tentações** do caso (§7.1) entram em posições sorteadas.
+- **As medidas não se gastam:** jogar uma medida não a tira das opções. O desafio é escolher **a melhor** para cada mensagem. Exceção: medidas `usoUnicoPorNivel` saem depois de usadas.
+- Não há loja, descarte, cópias nem raridade de sorteio (o campo `raridade` ficou só como estilo visual).
+- **Leitura perfeita:** vencer um cenário só com contras perfeitos dá +1 de Desconfiômetro.
+- Tamanho atual: N1 13, N2 18, N3 20, N4 24, N5 17 medidas (+1–2 tentações por caso). As mitigações da Matriz BR-Fraude que citam cada fascículo e ainda não tinham carta viraram medidas: `LIMITE_PIX_BAIXO` (M03), `CARTAO_VIRTUAL` (M07), `EMAIL_EXCLUSIVO` (M22), `SENHA_DA_FAMILIA` (M01), `FILTRO_CHAMADAS`, `CONFIRO_CONDICOES`, `PERFIL_PRIVADO`, `ALERTAS_DE_ACESSO` (M02), `ATUALIZO_SISTEMA`, `CONTA_PADRAO`.
 
 ### 4.3 Cartas da ameaça
 - Cada cenário tem **3 slots**: abordagem, escalada e pedido. Cada slot tem 1 ou 2 **opções** de carta, e a IA escolhe entre elas (§4.8).
@@ -278,9 +275,9 @@ Cada cenário tem o campo `tentacoes`: 1 ou 2 armadilhas que representam **as re
 
 Catálogo de tentações (24 novas, todas com fonte; mito e lição em `defesas.json`): `ARM_SALVO_NUMERO_NOVO, ARM_PIX_PEQUENO, ARM_VAGA_VALE, ARM_SABE_MEUS_DADOS, ARM_SENHA_PRA_VALIDAR, ARM_LOGO_OFICIAL, ARM_INSTALO_INDICADO, ARM_ABRO_PRA_CONTESTAR, ARM_CONFIRMO_DADOS, ARM_SITE_BONITO, ARM_NEGOCIO_POR_FORA, ARM_DEVOLVO_NOVO_PIX, ARM_SINAL_PEQUENO, ARM_CODIGO_SUPORTE, ARM_ACEITO_PERFIL_NOVO, ARM_FOTO_DE_PERFIL, ARM_EMPRESTO_POR_AMOR, ARM_VOZ_E_PROVA, ARM_COMPARTILHO, ARM_CADASTRO_RAPIDO, ARM_LIGO_SUPORTE_TELA, ARM_NAO_DESLIGO, ARM_LOGIN_PELO_LINK, ARM_PAGO_RESGATE`. As armadilhas antigas (`ARM_SO_OLHAR, ARM_LIGO_NUMERO_MSG, ARM_PATROCINADO, ARM_COMPROVANTE`) também são usadas como tentação; `ARM_CADEADO` não, por ainda estar com `verificar`.
 
-### 7.2 Armadilhas na loja
+### 7.2 Armadilhas (catálogo)
 
-Armadilhas são cartas que **parecem boas** e aparecem na loja sem marcação especial, no máximo 1 por oferta. Elas **sempre perdem a vaza**, e o Raio-X explica o mito por trás delas. Ensinar a desconfiar de "conselhos" errados também faz parte do jogo.
+Com o fim da loja (§4.2), as armadilhas **só entram como tentações dos casos** (§7.1) — nunca no `pool`. Elas **sempre perdem a vaza**, e a resolução e o Raio-X explicam o mito por trás delas.
 
 | id | Nome na carta | Força exibida | Mito |
 |---|---|---|---|
@@ -344,7 +341,7 @@ Todos os 19 fascículos têm destino no jogo: **10 viram nível** (o nível 9 ju
 
 **Pool:** `PAUSA, CANAL_OFICIAL, BOM_DEMAIS, CONFERIR_LINK, NAO_CLICO, LIGO_PRA_PESSOA, CONFERIR_RECEBEDOR, PESQUISAR, SEGUNDA_OPINIAO, DADOS_MINIMOS, SENHA_NINGUEM`
 
-**Mão inicial:** `PAUSA, CANAL_OFICIAL, BOM_DEMAIS, CONFERIR_LINK, LIGO_PRA_PESSOA, CONFERIR_RECEBEDOR, SEGUNDA_OPINIAO, PESQUISAR`
+**Mão inicial:** ~~`PAUSA, CANAL_OFICIAL, BOM_DEMAIS, CONFERIR_LINK, LIGO_PRA_PESSOA, CONFERIR_RECEBEDOR, SEGUNDA_OPINIAO, PESQUISAR`~~ (sem efeito desde 16/10/2026: não há mais loja nem mão inicial — §4.2). **Pool:** ver o JSON do nível, que agora tem todas as medidas do fascículo.
 
 **Recompensas oferecidas:** `P_PERFIL_FECHADO, P_LIMITES, P_GERENCIADOR`
 
@@ -419,7 +416,7 @@ Fonte das recomendações: `docs/fontes/banco-via-internet.md`. Regras do §9: t
 
 **Pool:** `PAUSA, CANAL_OFICIAL, NAO_CLICO, CONFERIR_LINK, CODIGO_E_MEU, SENHA_NINGUEM, DESLIGAR_LIGAR, LOJA_OFICIAL, NAO_ABRO_ANEXO, CONFERIR_RECEBEDOR, CONFERIR_DDA, DADOS_MINIMOS, BOM_DEMAIS, SEGUNDA_OPINIAO, PESQUISAR`
 
-**Mão inicial:** `CANAL_OFICIAL, PAUSA, CODIGO_E_MEU, SENHA_NINGUEM, NAO_CLICO, BOM_DEMAIS, LOJA_OFICIAL, CONFERIR_DDA`
+**Mão inicial:** ~~`CANAL_OFICIAL, PAUSA, CODIGO_E_MEU, SENHA_NINGUEM, NAO_CLICO, BOM_DEMAIS, LOJA_OFICIAL, CONFERIR_DDA`~~ (sem efeito desde 16/10/2026: não há mais loja nem mão inicial — §4.2). **Pool:** ver o JSON do nível, que agora tem todas as medidas do fascículo.
 
 **Recompensas:** `P_2FA, P_ATUALIZADO, P_DADOS_MINIMOS`
 
@@ -441,7 +438,7 @@ Regras (§9): tags ocultas, pressão 2–3 (chefe até 4), sem combos, IA aleato
 
 **Pool:** `PAUSA, BOM_DEMAIS, PESQUISAR, COMPARO_PRECOS, REPUTACAO_VENDEDOR, PAGAR_NA_PLATAFORMA, CONFERIR_RECEBEDOR, CONFIRO_NO_EXTRATO, CONFIRO_QR, CANAL_OFICIAL, NAO_CLICO, CONFERIR_LINK, LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, DADOS_MINIMOS, ARM_COMPROVANTE, ARM_PATROCINADO, ARM_RESPONDO`
 
-**Mão inicial:** `BOM_DEMAIS, PAUSA, PAGAR_NA_PLATAFORMA, CONFERIR_RECEBEDOR, CONFIRO_NO_EXTRATO, REPUTACAO_VENDEDOR, CANAL_OFICIAL, COMPARO_PRECOS`
+**Mão inicial:** ~~`BOM_DEMAIS, PAUSA, PAGAR_NA_PLATAFORMA, CONFERIR_RECEBEDOR, CONFIRO_NO_EXTRATO, REPUTACAO_VENDEDOR, CANAL_OFICIAL, COMPARO_PRECOS`~~ (sem efeito desde 16/10/2026: não há mais loja nem mão inicial — §4.2). **Pool:** ver o JSON do nível, que agora tem todas as medidas do fascículo.
 
 **Recompensas:** `P_LIMITES, P_DADOS_MINIMOS, P_REDE_SEGURA`
 
@@ -461,7 +458,7 @@ Regras (§9): tags ocultas, pressão 2–4 (chefe até 5), **com combos**, IA ad
 
 **Pool:** `PAUSA, CANAL_OFICIAL, LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, PERFIL_SUSPEITO, SO_ACEITO_CONHECIDOS, CHECO_OUTRAS_FONTES, AMOR_NAO_COBRA, VOZ_NAO_PROVA, CODIGO_E_MEU, DESLIGAR_LIGAR, DUAS_ETAPAS, NAO_CLICO, CONFERIR_LINK, DADOS_MINIMOS, SENHA_NINGUEM, PAGAR_NA_PLATAFORMA, BLOQUEAR_DENUNCIAR, ARM_SO_OLHAR, ARM_RESPONDO`
 
-**Mão inicial:** `LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, CODIGO_E_MEU, DESLIGAR_LIGAR, AMOR_NAO_COBRA, SO_ACEITO_CONHECIDOS, DADOS_MINIMOS, PAUSA`
+**Mão inicial:** ~~`LIGO_PRA_PESSOA, SEGUNDA_OPINIAO, CODIGO_E_MEU, DESLIGAR_LIGAR, AMOR_NAO_COBRA, SO_ACEITO_CONHECIDOS, DADOS_MINIMOS, PAUSA`~~ (sem efeito desde 16/10/2026: não há mais loja nem mão inicial — §4.2). **Pool:** ver o JSON do nível, que agora tem todas as medidas do fascículo.
 
 **Recompensas:** `P_PERFIL_FECHADO, P_2FA, P_GERENCIADOR`
 
@@ -481,7 +478,7 @@ Regras (§9): tags ocultas, pressão 3–4 (chefe até 5), **com combos**, IA ad
 
 **Pool:** `LOJA_OFICIAL, NAO_ABRO_ANEXO, ANTIVIRUS, FECHO_O_ALERTA, TENHO_BACKUP, DUAS_ETAPAS, NAO_CLICO, CONFERIR_LINK, PAUSA, CANAL_OFICIAL, CODIGO_E_MEU, DESLIGAR_LIGAR, SENHA_NINGUEM, PESQUISAR, SEGUNDA_OPINIAO, ARM_SO_OLHAR, ARM_LIGO_NUMERO_MSG`
 
-**Mão inicial:** `LOJA_OFICIAL, NAO_ABRO_ANEXO, ANTIVIRUS, FECHO_O_ALERTA, DUAS_ETAPAS, PAUSA, CANAL_OFICIAL, TENHO_BACKUP`
+**Mão inicial:** ~~`LOJA_OFICIAL, NAO_ABRO_ANEXO, ANTIVIRUS, FECHO_O_ALERTA, DUAS_ETAPAS, PAUSA, CANAL_OFICIAL, TENHO_BACKUP`~~ (sem efeito desde 16/10/2026: não há mais loja nem mão inicial — §4.2). **Pool:** ver o JSON do nível, que agora tem todas as medidas do fascículo.
 
 **Recompensas:** `P_BACKUP, P_ATUALIZADO, P_REDE_SEGURA`
 
@@ -547,11 +544,11 @@ MENU → MAPA → INTRO_CENARIO → VEZ_AMEACA → VEZ_JOGADOR → RESOLUCAO
                                    ▲                         │
                                    └──── (cenário segue) ────┘
 RESOLUCAO → (cenário decidido) → [CONTENCAO]* → RAIOX → (nível decidido?)
-   não → LOJA → INTRO_CENARIO
+   não → INTRO_CENARIO (próximo caso; sem loja desde 16/10/2026)
    sim → FIM_NIVEL → (vitória) RECOMPENSA → MAPA | (derrota) MAPA
 * CONTENCAO apenas na fase 3, quando o jogador perde o cenário.
 ```
-**Ações:** `INICIAR_NIVEL{nivelId, seed}`, `INICIAR_CENARIO`, `AMEACA_JOGA`, `USAR_DESCONFIOMETRO`, `DESMASCARAR`, `JOGAR_CARTA{cartaId}`, `CONTINUAR`, `ESCOLHER_CONTENCAO{opcao}`, `ESCOLHER_LOJA{ids[]}`, `TROCAR_NA_LOJA{sai, entra}`, `ESCOLHER_PROTECAO{id, substitui?}`, `VOLTAR_MAPA`.
+**Ações:** `INICIAR_NIVEL{nivelId, seed}`, `INICIAR_CENARIO`, `AMEACA_JOGA`, `USAR_DESCONFIOMETRO`, `DESMASCARAR`, `JOGAR_CARTA{cartaId}`, `CONTINUAR`, `ESCOLHER_CONTENCAO{opcao}`, `ESCOLHER_PROTECAO{id, substitui?}`, `VOLTAR_MAPA`.
 
 ### 12.4 Tipos de conteúdo
 ```ts
@@ -594,7 +591,7 @@ interface Nivel {
     combos: boolean; ia: 'roteiro'|'aleatoria'|'adaptativa';
     desmascarar: boolean; armadilhasNaLoja: boolean; rarasNaLoja: boolean;
   };
-  pool: string[]; maoInicial: string[];    // maoInicial.length === 8
+  pool: string[];                         // todas as medidas do nível (§4.2)
   cenarios: Cenario[];                     // exatamente 5; o 5º é o chefe
   recompensas: string[];                   // 3 ids de proteções
 }
@@ -619,8 +616,6 @@ interface Protecao {
 ### 12.6 `config.json` (valores iniciais)
 ```json
 {
-  "tamanhoMao": 8, "ofertaLoja": 5, "ofertaLojaLeituraPerfeita": 6, "trocasPorLoja": 1,
-  "maxCopias": 2, "pesosRaridade": { "comum": 60, "incomum": 30, "rara": 10 },
   "vazasParaVencerCenario": 2, "pontosParaVencerNivel": 3, "cenariosPorNivel": 5,
   "bonusContraParcial": 2, "empateFavorece": "ameaca", "pressaoBonusChefe": 1,
   "desconfiometroInicial": 3, "maxProtecoes": 3,
@@ -636,9 +631,9 @@ interface Protecao {
 O *build* falha se qualquer regra abaixo falhar.
 
 1. Todos os `id` são únicos em todo o conteúdo.
-2. Todas as referências apontam para algo que existe (`pool`, `maoInicial`, `recompensas`, `fonte`).
+2. Todas as referências apontam para algo que existe (`pool`, `tentacoes`, `recompensas`, `fonte`).
 3. Cada nível tem exatamente 5 cenários; cada cenário tem 3 vazas, nesta ordem: abordagem, escalada, pedido. Cada vaza tem 1 ou 2 opções.
-4. A `maoInicial` tem 8 cartas, todas contidas no `pool`.
+4. O `pool` contém **todas** as medidas (cartas não armadilha) cujo `fonte` está em `nivel.fontes`, e nenhuma armadilha.
 5. A pressão de cada carta da ameaça fica dentro de `[pressaoMin, pressaoMax]`. O 5º cenário pode ultrapassar o teto em `pressaoBonusChefe`.
 6. Se `combos: false`, toda carta da ameaça tem exatamente 1 tag.
 7. **Vencibilidade:** para cada carta da ameaça existe ao menos 1 carta não armadilha no `pool` que a vence pelo algoritmo do §4.5, sem contar proteções.
@@ -648,7 +643,7 @@ O *build* falha se qualquer regra abaixo falhar.
     - Todo domínio detectado (regex de hostname) termina em `.example`, `.test` ou `.invalid`.
     - Todo telefone detectado usa DDD `00`.
     - Nenhum termo da lista de bloqueio `scripts/marcas-bloqueadas.txt` aparece (bancos, varejistas, apps de mensagem, órgãos públicos reais etc.).
-11. Armadilhas têm o campo `mito` e só aparecem no `pool` de níveis com `armadilhasNaLoja: true`.
+11. Armadilhas têm o campo `mito` e só aparecem como tentação de cenário (§7.1).
 12. **Pendências:** o validador lista (como aviso, sem falhar) todas as cartas, cenários e Raio-X com `verificar: true`. A publicação final exige zero pendências.
 
 ---
@@ -686,6 +681,8 @@ O *build* falha se qualquer regra abaixo falhar.
 | 4–6 | 75–90% | 10–25% |
 | 7–9 | 65–85% | ≤ 15% |
 
+> **Sem loja (§4.2, 16/10/2026):** com 13–24 opções por vaza, os bots aleatório e atento deixam de ser referência útil (acertar no chute é raro). A referência passa a ser o bot **leitor**: usa as táticas quando visíveis (sempre no nível 1; com o Desconfiômetro nos demais) e, sem elas, escolhe ao acaso entre medidas que não são armadilha — um iniciante que lê as cartas mas não a mensagem. Resultado (2000 partidas): N1 100% · N2 65,3% · N3 73,6% · N4 62,9% · N5 27,4%; ótimo 100% em todos. Faixa-alvo provisória para o leitor: 60–80% nos níveis 2–4 e ≥ 25% no 5, a confirmar com testes com pessoas.
+
 > **Com as tentações (§7.1):** o bot aleatório não lê o nome das cartas e cai nelas, por isso, a partir do nível 2, a coluna "Bot aleatório" da tabela passa a valer para o bot **atento**. No nível 1 (tutorial) o próprio aleatório continua sendo a referência. Resultado em 15/10/2026 (2000 partidas): N1 aleatório 47,0% · N2 atento 24,1% · N3 atento 25,8% · N4 atento 12,8% · N5 atento 17,0%; o ótimo vence 100% em todos. O guloso (sempre a carta mais forte) cai quase sempre, porque as tentações têm força 3 — efeito pedagógico desejado. Para isso, as abordagens de 1.2, 1.3 e 1.4 voltaram para p1.
 
 Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Como o bot ótimo **enxerga as tags**, o resultado dele é um teto, e humanos ficarão abaixo. Se o bot ótimo ficar abaixo da faixa, o nível está injusto; se o aleatório ficar acima, o nível está fácil demais.
@@ -708,7 +705,7 @@ Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Co
    - As cartas se encontram e o motivo aparece em letras grandes ("CONTRA PERFEITO!", "FORÇA 3 > PRESSÃO 2", "ARMADILHA!").
    - No contra perfeito, os sinais da mensagem pulsam.
 6. **Raio-X:** a mensagem completa com os `sinais` grifados, "O que era", "Como agir" e o link para o fascículo oficial.
-7. **Loja:** 5 cartas, um contador "escolha N", o botão Trocar (1x) e a prévia do próximo caso.
+7. ~~Loja~~ (removida em 16/10/2026). Na mesa, as medidas aparecem numa **grade** ao lado da mensagem (abaixo, no celular), com a barra "Jogar" fixa no rodapé; teclas 1–9 e 0 para as dez primeiras e setas para navegar por todas.
 8. **Fim de nível:**
    - Na vitória: escolha da proteção, o Índice de Desconfiança e a tag em que você mais caiu.
    - Na derrota: o resumo e "Tentar de novo".
