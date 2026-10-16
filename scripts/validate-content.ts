@@ -92,6 +92,17 @@ export function validar(c: Conteudo, cfg: Config, bloqueio: string[]): Relatorio
         C, bloqueio, erros,
       );
       if (ce.raioX.verificar) avisos.push(`verificar: Raio-X de ${ce.id}`);
+      // Tentações: armadilhas que entram na mão só durante o caso.
+      const tent = ce.tentacoes ?? [];
+      if (tent.length > cfg.maxTentacoesPorCenario) err(`${C}: ${tent.length} tentações (máx. ${cfg.maxTentacoesPorCenario})`);
+      if (new Set(tent).size !== tent.length) err(`${C}: tentação repetida`);
+      if (cfg.tamanhoMao + tent.length > 10) err(`${C}: mão passaria de 10 cartas (atalhos 1–9 e 0)`);
+      for (const id of tent) {
+        const d = c.defesas[id];
+        if (!d) err(`${C}: tentação inexistente ${id}`);
+        else if (!d.armadilha || !d.mito) err(`${C}: tentação ${id} precisa ser armadilha com "mito"`);
+        else if (d.verificar) avisos.push(`verificar: tentação ${id} usada em ${ce.id}`);
+      }
 
       for (const v of ce.vazas) {
         if (v.opcoes.length < 1 || v.opcoes.length > 2) err(`${C}: vaza ${v.papel} com ${v.opcoes.length} opções`);

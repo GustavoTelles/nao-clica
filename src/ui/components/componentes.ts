@@ -11,6 +11,9 @@ const MASCARA = `
   <path class="racha" d="M60 20 L54 30 L63 36 L56 48 L60 56" fill="none" stroke="var(--fundo)" stroke-width="3"/>
 </svg>`;
 
+/** Atalho de teclado da posição na mão: 1–9 e 0 para a 10ª carta. */
+export const rotuloTecla = (n: number) => (n === 10 ? '0' : String(n));
+
 export function mascara(persona: string, rachada = false): HTMLElement {
   return h('div', { class: `mascara${rachada ? ' rachada' : ''}` },
     svg(MASCARA),
@@ -21,7 +24,7 @@ export function cartaDefesa(app: App, d: CartaDefesa, opts: { tecla?: number; se
   const raridade = d.raridade === 'rara' ? 'rara' : d.raridade === 'incomum' ? 'incomum' : 'comum';
   const conteudo = [
     h('div', { class: 'carta-topo' },
-      opts.tecla ? h('span', { class: 'tecla', 'aria-hidden': 'true' }, String(opts.tecla)) : null,
+      opts.tecla ? h('span', { class: 'tecla', 'aria-hidden': 'true' }, rotuloTecla(opts.tecla)) : null,
       h('span', { class: 'forca', title: `Força ${d.forca}` }, h('span', { class: 'sr' }, 'Força '), String(d.forca))),
     h('div', { class: 'carta-nome' }, d.nome),
     h('ul', { class: 'contra', 'aria-label': 'Anula' }, d.contra.map((t) => h('li', {}, rotuloTag(app, t)))),
@@ -34,7 +37,7 @@ export function cartaDefesa(app: App, d: CartaDefesa, opts: { tecla?: number; se
   if (!opts.onclick) return h('div', attrs, conteudo);
   return h('button', {
     ...attrs, type: 'button', onclick: opts.onclick, 'aria-pressed': opts.selecionada ? 'true' : 'false',
-    'aria-label': `${opts.tecla ? `${opts.tecla}: ` : ''}${d.nome}. Força ${d.forca}. Anula ${d.contra.map((t) => rotuloTag(app, t).replace(/^\S+\s/, '')).join(', ')}.`,
+    'aria-label': `${opts.tecla ? `${rotuloTecla(opts.tecla)}: ` : ''}${d.nome}. Força ${d.forca}. Anula ${d.contra.map((t) => rotuloTag(app, t).replace(/^\S+\s/, '')).join(', ')}.`,
   }, conteudo);
 }
 

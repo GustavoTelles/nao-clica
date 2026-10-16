@@ -5,7 +5,8 @@ import { inteiro } from '../src/engine/rng';
 import { ehContraPerfeito, resolverVaza } from '../src/engine/rules';
 import type { Acao, CartaDefesa, Estado, Tag } from '../src/engine/types';
 
-export type Bot = 'otimo' | 'guloso' | 'aleatorio';
+/** atento: joga ao acaso, mas lê o nome da carta e não cai em armadilhas (aproxima um iniciante humano). */
+export type Bot = 'otimo' | 'guloso' | 'aleatorio' | 'atento';
 
 const valor = (d: CartaDefesa) => d.contra.length + d.forca;
 
@@ -14,6 +15,12 @@ function escolherCarta(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string, num
   const defs = ctx.conteudo.defesas;
   const mao = p.mao;
   if (bot === 'aleatorio') { const [i, s] = inteiro(rng, mao.length); return [mao[i], s]; }
+  if (bot === 'atento') {
+    const seguras = mao.filter((id) => !defs[id].armadilha);
+    const opcoes = seguras.length ? seguras : mao;
+    const [i, s] = inteiro(rng, opcoes.length);
+    return [opcoes[i], s];
+  }
   if (bot === 'guloso') return [[...mao].sort((a, b) => defs[b].forca - defs[a].forca)[0], rng];
 
   // ótimo: vê as tags. Contra perfeito mais especializado; senão o mais barato que vence; senão sacrifica o de menor valor.
@@ -22,7 +29,9 @@ function escolherCarta(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string, num
   const perfeito = porValor.find((id) => ehContraPerfeito(A, defs[id]));
   if (perfeito) return [perfeito, rng];
   const vence = porValor.find((id) => resolverVaza(A, defs[id], { protecoes: [], config: ctx.config }).vencedor === 'defesa');
-  return [vence ?? porValor[0], rng];
+  // Sem saída: sacrifica uma tentação (ela sairia da mão no fim do caso de qualquer jeito).
+  const sacrificio = porValor.find((id) => defs[id].armadilha && p.tentacoes?.includes(id)) ?? porValor[0];
+  return [vence ?? sacrificio, rng];
 }
 
 function escolherLoja(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string[], number] {
@@ -34,7 +43,7 @@ function escolherLoja(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string[], nu
   let ordem = [...oferta];
   let s = rng;
 
-  if (bot === 'aleatorio') {
+  if (bot === 'aleatorio' || bot === 'atento') {
     for (let i = ordem.length - 1; i > 0; i--) { const [j, ns] = inteiro(s, i + 1); s = ns; [ordem[i], ordem[j]] = [ordem[j], ordem[i]]; }
   } else if (bot === 'guloso') {
     ordem.sort((a, b) => defs[b].forca - defs[a].forca);
@@ -47,6 +56,7 @@ function escolherLoja(bot: Bot, e: Estado, ctx: Ctx, rng: number): [string[], nu
     const nota = (id: string) => [...tags].filter((t) => !coberta(t, mao) && defs[id].contra.includes(t)).length * 10 + valor(defs[id]);
     ordem = ordem.sort((a, b) => nota(b) - nota(a));
   }
+  if (bot === 'atento' || bot === 'otimo') ordem = [...ordem.filter((id) => !defs[id].armadilha), ...ordem.filter((id) => defs[id].armadilha)];
   const ids: string[] = [];
   for (const id of ordem) {
     if (ids.length === precisa) break;
@@ -101,7 +111,7 @@ const partidas = Number(arg('partidas', '2000'));
 const niveis = arg('nivel', 'todos') === 'todos' ? conteudo.niveis.map((n) => n.ordem) : [Number(arg('nivel', '1'))];
 for (const n of niveis) {
   console.log(`\nNível ${n} — ${partidas} partidas por bot`);
-  for (const bot of ['otimo', 'guloso', 'aleatorio'] as Bot[]) {
+  for (const bot of ['otimo', 'guloso', 'aleatorio', 'atento'] as Bot[]) {
     const r = simular(n, bot, partidas);
     console.log(`  ${bot.padEnd(10)} vitória ${(100 * r.vitorias / r.partidas).toFixed(1).padStart(5)}%   índice médio ${r.indiceMedio.toFixed(0)}%`);
   }

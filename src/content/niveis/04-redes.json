@@ -154,6 +154,9 @@
       "matriz": [
         "BR-GP013",
         "BR-GP012"
+      ],
+      "tentacoes": [
+        "ARM_CODIGO_SUPORTE"
       ]
     },
     {
@@ -243,6 +246,9 @@
       "fonte": "F_EVITE_FRAUDES",
       "matriz": [
         "BR-GP014"
+      ],
+      "tentacoes": [
+        "ARM_ACEITO_PERFIL_NOVO"
       ]
     },
     {
@@ -332,6 +338,10 @@
       "fonte": "F_GOLPES",
       "matriz": [
         "BR-GP016"
+      ],
+      "tentacoes": [
+        "ARM_EMPRESTO_POR_AMOR",
+        "ARM_VOZ_E_PROVA"
       ]
     },
     {
@@ -421,6 +431,10 @@
       "fonte": "F_REDES_SOCIAIS",
       "matriz": [
         "BR-GP051"
+      ],
+      "tentacoes": [
+        "ARM_COMPARTILHO",
+        "ARM_CADASTRO_RAPIDO"
       ]
     },
     {
@@ -510,6 +524,10 @@
       "fonte": "F_REDES_SOCIAIS",
       "matriz": [
         "BR-GP012"
+      ],
+      "tentacoes": [
+        "ARM_CODIGO_SUPORTE",
+        "ARM_LOGO_OFICIAL"
       ]
     }
   ]

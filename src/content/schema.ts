@@ -42,6 +42,7 @@ export const CenarioSchema = z.object({
   }).optional(),
   fonte: z.string(),
   matriz: z.array(z.string().regex(/^BR-GP\d{3}$/)).optional(),
+  tentacoes: z.array(z.string()).optional(),
 });
 
 export const NivelSchema = z.object({

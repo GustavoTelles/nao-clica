@@ -24,6 +24,7 @@ export function telaFimNivel(app: App): Tela {
         h('strong', {}, `${indice}%`),
         h('span', { class: 'mini' }, `das vazas vencidas com contra perfeito · melhor: ${estado.progresso.melhorIndice[nivel.id] ?? indice}%`)),
       tag ? h('p', {}, `Você caiu mais em ${rotuloTag(app, tag)}. Fique de olho nessa tática.`) : h('p', {}, 'Você não caiu em nenhuma tática. Impecável!'),
+      h('p', {}, (p.stats.armadilhas ?? 0) === 0 ? 'Você não jogou nenhuma resposta errada. 👏' : `Você jogou ${p.stats.armadilhas} resposta(s) errada(s). Releia o "O que NÃO fazer" dos Raio-X.`),
       venceu
         ? h('p', {}, proximo ? `Próximo nível desbloqueado: ${proximo.titulo}.` : 'Você concluiu todos os níveis disponíveis por enquanto.')
         : h('p', {}, 'Golpistas são bons nisso — e você está aprendendo os truques deles. Tente de novo: suas proteções continuam com você.'),

@@ -142,6 +142,9 @@
       "fonte": "F_BANCO",
       "matriz": [
         "BR-GP001"
+      ],
+      "tentacoes": [
+        "ARM_LIGO_NUMERO_MSG"
       ]
     },
     {
@@ -226,6 +229,9 @@
       "fonte": "F_BANCO",
       "matriz": [
         "BR-GP044"
+      ],
+      "tentacoes": [
+        "ARM_PATROCINADO"
       ]
     },
     {
@@ -309,6 +315,10 @@
       "fonte": "F_BANCO",
       "matriz": [
         "BR-GP043"
+      ],
+      "tentacoes": [
+        "ARM_INSTALO_INDICADO",
+        "ARM_LOGO_OFICIAL"
       ]
     },
     {
@@ -394,6 +404,10 @@
       "fonte": "F_BANCO",
       "matriz": [
         "BR-GP004"
+      ],
+      "tentacoes": [
+        "ARM_ABRO_PRA_CONTESTAR",
+        "ARM_PIX_PEQUENO"
       ]
     },
     {
@@ -493,6 +507,10 @@
       "matriz": [
         "BR-GP001",
         "BR-GP014"
+      ],
+      "tentacoes": [
+        "ARM_CONFIRMO_DADOS",
+        "ARM_LOGO_OFICIAL"
       ]
     }
   ]

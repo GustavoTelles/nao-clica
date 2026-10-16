@@ -374,3 +374,16 @@ html.reduz-movimento body::after { display: none; }
 .intro .barra-jogo { justify-content: flex-start; text-align: left; }
 .btn-menu-inicial { min-height: 40px; padding: 6px 12px; font-size: .9rem; }
 @media (max-width: 759px) { .barra-jogo { padding-right: 52px; } }
+
+/* ---------- tentações (respostas erradas do caso) ---------- */
+.aviso-tentacoes { display: flex; gap: 10px; align-items: center; text-align: left; background: #2a1520; border: 2px solid var(--ameaca); border-radius: var(--raio); padding: 10px 12px; max-width: 460px; }
+.aviso-tentacoes p { margin: 0; font-size: .92rem; }
+.pontos { display: grid; gap: 4px; flex: none; }
+.ponto { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ameaca); }
+.ponto.on { background: var(--ameaca); }
+.nao-fazer { border-color: var(--ameaca); }
+.nao-fazer h2 { color: var(--ameaca); }
+.nao-fazer li { margin-bottom: 6px; }
+.caiu { color: var(--ameaca); font-weight: 700; }
+.certo { color: var(--defesa); }
+.licao p { margin: 0 0 6px; }

@@ -12,6 +12,17 @@ export function linkFasciculo(app: App, fonteId: string): HTMLElement {
     h('a', { href: f.url, target: '_blank', rel: 'noopener noreferrer' }, `📄 Fascículo "${f.titulo}" ↗`));
 }
 
+/** Mostra quantas respostas erradas a Máscara misturou na mão neste caso (cresce ao longo do nível). */
+function avisoTentacoes(n: number, max: number): HTMLElement | null {
+  if (n === 0) return null;
+  const pontos = Array.from({ length: max }, (_, i) => h('span', { class: `ponto${i < n ? ' on' : ''}` }));
+  return h('div', { class: 'aviso-tentacoes', role: 'note' },
+    h('div', { class: 'pontos', 'aria-hidden': 'true' }, pontos),
+    h('p', {}, h('b', {}, n === 1 ? '1 resposta errada' : `${n} respostas erradas`),
+      n === 1 ? ' entrou na sua mão neste caso.' : ' entraram na sua mão neste caso.',
+      ' Elas parecem boas, mas sempre perdem. Leia o nome de cada carta antes de jogar!'));
+}
+
 export function telaIntro(app: App): Tela {
   const p = app.estado.partida!;
   const nivel = nivelDe(app.ctx, p.nivelId)!;
@@ -27,10 +38,24 @@ export function telaIntro(app: App): Tela {
       h('p', { class: 'canal-tag' }, `Canal: ${NOME_CANAL[c.canal]}`),
       h('p', { class: 'contexto' }, c.contexto),
       chefe ? h('p', { class: 'alerta' }, 'Caso chefe: a pressão é mais alta.') : null,
+      avisoTentacoes(c.tentacoes?.length ?? 0, app.ctx.config.maxTentacoesPorCenario),
       h('p', { class: 'mini' }, 'A Máscara começa.'),
       botao('Começar ⏎', iniciar, { class: 'btn primario', 'data-foco': '' })),
     teclas: (e) => (e.key === 'Enter' ? (iniciar(), true) : false),
   };
+}
+
+function oQueNaoFazer(app: App, tentacoes: string[], jogadas: string[]): HTMLElement | null {
+  if (tentacoes.length === 0) return null;
+  return h('section', { class: 'bloco nao-fazer' },
+    h('h2', {}, 'O que NÃO fazer'),
+    h('ul', { class: 'acoes' }, tentacoes.map((id) => {
+      const d = app.ctx.conteudo.defesas[id];
+      const caiu = jogadas.includes(id);
+      return h('li', {},
+        h('b', {}, `✗ "${d.nome}"`), caiu ? h('span', { class: 'caiu' }, ' — você caiu nesta') : null,
+        h('br'), d.mito, ' ', h('span', { class: 'certo' }, `Em vez disso: ${d.licao}`));
+    })));
 }
 
 export function telaRaioX(app: App): Tela {
@@ -60,6 +85,7 @@ export function telaRaioX(app: App): Tela {
             h('p', { class: 'mini' }, 'Táticas: ', a.tags.map((t) => rotuloTag(app, t)).join(' · ')))))),
       h('section', { class: 'bloco' }, h('h2', {}, 'O que era'), h('p', {}, c.raioX.oQueEra)),
       h('section', { class: 'bloco' }, h('h2', {}, 'Como agir na vida real'), h('ul', { class: 'acoes' }, c.raioX.comoAgir.map((x) => h('li', {}, x)))),
+      oQueNaoFazer(app, c.tentacoes ?? [], p.vazas.map((v) => v.defesaId)),
       c.raioX.verificar ? h('p', { class: 'mini aviso' }, 'Conteúdo em revisão.') : null,
       c.matriz?.length ? h('p', { class: 'mini matriz' }, 'Matriz BR-Fraude: ', c.matriz.join(' · ')) : null,
       linkFasciculo(app, c.fonte),

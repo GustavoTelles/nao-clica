@@ -29,7 +29,8 @@ function resumoRegras(app: App): HTMLElement {
       h('li', {}, 'A ', h('b', {}, 'Máscara'), ' (o golpista) manda uma mensagem de golpe.'),
       h('li', {}, 'Você responde com ', h('b', {}, '1 carta'), ' da sua mão.'),
       h('li', {}, 'Você vence a rodada se a carta ', h('b', {}, 'anula todas as táticas'), ' da mensagem, ou se a ', h('b', {}, 'força'), ' dela for ', h('b', {}, 'maior'), ' que a pressão. Empate é da Máscara.'),
-      h('li', {}, 'Quem vence 2 rodadas leva o caso. Quem faz 3 pontos leva o nível.')),
+      h('li', {}, 'Quem vence 2 rodadas leva o caso. Quem faz 3 pontos leva o nível.'),
+      h('li', {}, h('b', {}, 'Cuidado com as respostas erradas: '), 'a cada caso a Máscara mistura na sua mão cartas que parecem boas (força 3!), mas são atitudes erradas. Elas sempre perdem. Quanto mais o nível avança, mais delas aparecem.')),
 
     h('div', { class: 'anatomia' },
       h('div', { class: 'anatomia-item' },
@@ -123,13 +124,14 @@ export function painelComoJogar(app: App): HTMLElement {
       h('li', {}, `Você responde com 1 das ${c.tamanhoMao} cartas de defesa da sua mão. Quem vencer 2 vazas leva o caso.`),
       h('li', {}, h('b', {}, 'Contra perfeito'), ': se sua carta anula todas as táticas da mensagem, você vence a vaza, não importa a pressão.'),
       h('li', {}, 'Sem contra perfeito, vale a força: sua carta precisa ter ', h('b', {}, 'força maior'), ' que a pressão da mensagem. Empate é da Máscara. Contra parcial (em mensagens com 2 táticas) soma +2.'),
+      h('li', {}, h('b', {}, 'Respostas erradas'), ': cada caso mistura na sua mão 1 ou 2 cartas de atitudes erradas (ex.: "Passo o código, é do suporte oficial"). Elas parecem fortes, mas sempre perdem, e saem da mão quando o caso termina. O Raio-X explica por que estão erradas.'),
       h('li', {}, `Cada nível tem 5 casos. Quem fizer ${c.pontosParaVencerNivel} pontos primeiro vence.`),
       h('li', {}, 'Entre os casos, a loja repõe sua mão. Ao vencer um nível, você ganha uma proteção permanente.'),
       h('li', {}, 'A partir do nível 2 as táticas ficam ocultas: leia a mensagem! O Desconfiômetro revela as táticas (3 cargas por nível).')),
     h('h2', { class: 'subtitulo' }, 'Táticas'),
     h('ul', { class: 'tags-legenda' }, app.ctx.conteudo.tags.map((t) => h('li', {}, h('strong', {}, rotuloTag(app, t.id)), ` — ${t.ideia}`))),
     h('h2', { class: 'subtitulo' }, 'Teclado'),
-    h('p', {}, '1–8 escolhe a carta · Enter joga/continua · D usa o Desconfiômetro · M liga/desliga a música · Esc volta.'));
+    h('p', {}, '1–9 e 0 escolhem a carta · Enter joga/continua · D usa o Desconfiômetro · M liga/desliga a música · Esc volta.'));
 }
 
 export function painelCreditos(app: App): HTMLElement {

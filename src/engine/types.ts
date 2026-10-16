@@ -42,6 +42,8 @@ export interface Cenario {
   fonte: string;
   /** Golpes da Matriz BR-Fraude que o cenário representa (ex.: ["BR-GP018"]). */
   matriz?: string[];
+  /** Tentações: armadilhas (respostas erradas típicas deste golpe) que entram na mão só durante o caso. */
+  tentacoes?: string[];
 }
 
 export interface RegrasNivel {
@@ -88,6 +90,7 @@ export interface Config {
   bonusContraParcial: number; empateFavorece: 'ameaca' | 'defesa'; pressaoBonusChefe: number;
   desconfiometroInicial: number; maxProtecoes: number;
   desmascarar: { valorCenario: number; iaFogeSePressaoMaxRestante: number };
+  maxTentacoesPorCenario: number;
 }
 
 // ---------- Resolução ----------
@@ -138,6 +141,8 @@ export interface Partida {
   mao: string[];
   descarte: string[];
   usadosUnicos: string[];
+  /** Tentações do caso atual ainda na mão (saem no fim do caso). Ausente em saves antigos. */
+  tentacoes?: string[];
   cartaAmeaca: CartaAmeaca | null;
   tagsReveladas: boolean;
   desconfiometro: number;
@@ -145,7 +150,7 @@ export interface Partida {
   bonusLeituraPerfeita: boolean;
   loja: Loja | null;
   historico: ResumoCenario[];
-  stats: { vazas: number; perfeitos: number; derrotasPorTag: Partial<Record<Tag, number>> };
+  stats: { vazas: number; perfeitos: number; derrotasPorTag: Partial<Record<Tag, number>>; armadilhas?: number };
   resultado: 'vitoria' | 'derrota' | null;
 }
 

@@ -89,8 +89,8 @@ export function telaMesa(app: App): Tela {
             h('div', {}, h('strong', {}, sel.nome), h('div', { class: 'mini' }, `Força ${sel.forca} · anula ${sel.contra.join(', ').toLowerCase()}`)),
             botao('Jogar ⏎', jogar, { class: 'btn primario', 'data-foco': '' }))
         : h('p', { class: 'mini' }, ocultas
-            ? 'Leia a mensagem: qual tática ela usa? Escolha uma carta (1–8) ou use o Desconfiômetro (D).'
-            : 'Escolha a carta que anula as táticas da mensagem (teclas 1–8, Enter joga).'))
+            ? 'Leia a mensagem: qual tática ela usa? Escolha uma carta (teclas 1–9 e 0) ou use o Desconfiômetro (D). Cuidado com as respostas erradas!'
+            : 'Escolha a carta que anula as táticas da mensagem (teclas 1–9 e 0, Enter joga). Leia o nome: há respostas erradas na mão!'))
       : null);
 
   const raiz = h('div', { class: `tela mesa fase-${fase.toLowerCase()}` }, topo, centro, detalhe, mao);
@@ -104,7 +104,9 @@ export function telaMesa(app: App): Tela {
         h('p', { class: 'mini' }, ganhou ? 'Vaza sua!' : 'Vaza da Máscara'),
         h('h2', { id: 'res-titulo', class: 'motivo' }, textoMotivo(ultima, app)),
         cartaDefesa(app, d, { compacta: true }),
-        h('p', { class: 'licao' }, d.armadilha ? `Mito: ${d.mito}` : d.licao),
+        d.armadilha
+          ? h('div', { class: 'licao' }, h('p', {}, h('b', {}, 'Resposta errada! '), d.mito), h('p', { class: 'certo' }, h('b', {}, 'Em vez disso: '), d.licao))
+          : h('p', { class: 'licao' }, d.licao),
         !ganhou && cartaAmeaca
           ? h('p', { class: 'mini' }, `A mensagem usava ${cartaAmeaca.tags.map((t) => rotuloTag(app, t)).join(' + ')}. Uma carta que anule isso vence com qualquer pressão.`)
           : null,
@@ -132,7 +134,7 @@ export function telaMesa(app: App): Tela {
     teclas: (e) => {
       if (fase === 'RESOLUCAO' && e.key === 'Enter') { app.dispatch({ tipo: 'CONTINUAR' }); return true; }
       if (fase !== 'VEZ_JOGADOR') return false;
-      if (/^[1-8]$/.test(e.key)) { selecionar(Number(e.key) - 1); return true; }
+      if (/^[0-9]$/.test(e.key)) { selecionar(e.key === '0' ? 9 : Number(e.key) - 1); return true; }
       if (e.key === 'Enter' && selecionada !== null) { jogar(); return true; }
       if (e.key.toLowerCase() === 'd' && !nivel.regras.tagsVisiveis) { desconfiar(); return true; }
       return false;

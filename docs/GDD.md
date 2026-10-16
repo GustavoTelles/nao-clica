@@ -94,7 +94,7 @@ Estas eram perguntas em aberto. O jogo usa os padrões abaixo, que podem ser alt
    - **Derrota:** aparece o resumo do nível e você pode tentar de novo. O nível reinicia com a mão inicial; as proteções conquistadas antes são mantidas.
 
 ### 4.2 Mão, descarte e loja
-- O tamanho da mão é **8**.
+- O tamanho da mão é **8** (mais as tentações do caso, §7.1: no máximo 10 durante o caso; atalhos 1–9 e 0).
 - Cada carta jogada vai para o **descarte** e não volta naquele nível.
 - **Loja** (entre os cenários do mesmo nível):
   - Mostra 5 cartas sorteadas do **pool** do nível. Os pesos são: comum 60, incomum 30, rara 10. Cartas raras só aparecem a partir do nível 2.
@@ -265,6 +265,21 @@ Lições que deixaram de ter `verificar` em 15/10/2026 (respaldo nos fascículos
 
 ## 7. Armadilhas (a partir do nível 3; `armadilhasNaLoja: true`)
 
+### 7.1 Tentações do caso (todos os níveis) — *regra adicionada em 15/10/2026*
+
+Cada cenário tem o campo `tentacoes`: 1 ou 2 armadilhas que representam **as respostas erradas típicas daquele golpe** (ex.: no clone de conta, "Passo o código, é do suporte oficial").
+
+- Em `INICIAR_CENARIO`, as tentações entram na mão em **posições sorteadas** pelo RNG (a mão vai a 9 ou 10 cartas).
+- Se jogadas, **sempre perdem** (motivo `armadilha`) e vão ao descarte. As que sobrarem **saem da mão** no fim do caso (`RESOLUCAO → RAIOX`), então não pesam na loja.
+- **Evolução:** em cada nível, os casos 1–2 trazem 1 tentação e os casos 3–5 trazem 2 (`config.maxTentacoesPorCenario = 2`).
+- A intro do caso avisa quantas respostas erradas entraram (pontos ●○). O Raio-X ganha a seção **"O que NÃO fazer"**, com o mito e a atitude certa de cada tentação, marcando "você caiu nesta". A resolução de uma armadilha mostra "Resposta errada!" + mito + "Em vez disso".
+- O fim de nível mostra quantas respostas erradas a pessoa jogou (`stats.armadilhas`).
+- Validador: tentações existem, são armadilhas com `mito`, no máximo `maxTentacoesPorCenario` por caso, sem repetição, e mão + tentações ≤ 10.
+
+Catálogo de tentações (24 novas, todas com fonte; mito e lição em `defesas.json`): `ARM_SALVO_NUMERO_NOVO, ARM_PIX_PEQUENO, ARM_VAGA_VALE, ARM_SABE_MEUS_DADOS, ARM_SENHA_PRA_VALIDAR, ARM_LOGO_OFICIAL, ARM_INSTALO_INDICADO, ARM_ABRO_PRA_CONTESTAR, ARM_CONFIRMO_DADOS, ARM_SITE_BONITO, ARM_NEGOCIO_POR_FORA, ARM_DEVOLVO_NOVO_PIX, ARM_SINAL_PEQUENO, ARM_CODIGO_SUPORTE, ARM_ACEITO_PERFIL_NOVO, ARM_FOTO_DE_PERFIL, ARM_EMPRESTO_POR_AMOR, ARM_VOZ_E_PROVA, ARM_COMPARTILHO, ARM_CADASTRO_RAPIDO, ARM_LIGO_SUPORTE_TELA, ARM_NAO_DESLIGO, ARM_LOGIN_PELO_LINK, ARM_PAGO_RESGATE`. As armadilhas antigas (`ARM_SO_OLHAR, ARM_LIGO_NUMERO_MSG, ARM_PATROCINADO, ARM_COMPROVANTE`) também são usadas como tentação; `ARM_CADEADO` não, por ainda estar com `verificar`.
+
+### 7.2 Armadilhas na loja
+
 Armadilhas são cartas que **parecem boas** e aparecem na loja sem marcação especial, no máximo 1 por oferta. Elas **sempre perdem a vaza**, e o Raio-X explica o mito por trás delas. Ensinar a desconfiar de "conselhos" errados também faz parte do jogo.
 
 | id | Nome na carta | Força exibida | Mito |
@@ -336,14 +351,14 @@ Todos os 19 fascículos têm destino no jogo: **10 viram nível** (o nível 9 ju
 | # | Título | Canal | Máscara (fictícia) | Abordagem | Escalada | Pedido |
 |---|---|---|---|---|---|---|
 | 1.1 | Você foi sorteado! | SMS | Central de Prêmios MegaSorte | RECOMPENSA p1 | URGENCIA p2 | LINK p2 |
-| 1.2 | Oi, troquei de número | Mensagem | "Sobrinha" | AFETO p2 | URGENCIA p2 | PIX p2 |
-| 1.3 | Sua encomenda está retida | SMS | Transportadora Rápido Já | CURIOSIDADE p2 | MEDO p2 | LINK p2 |
-| 1.4 | Vaga dos sonhos | Mensagem | Recrutadora da Talento+ | RECOMPENSA p2 | AUTORIDADE p2 | DADOS p2 |
+| 1.2 | Oi, troquei de número | Mensagem | "Sobrinha" | AFETO p1 | URGENCIA p2 | PIX p2 |
+| 1.3 | Sua encomenda está retida | SMS | Transportadora Rápido Já | CURIOSIDADE p1 | MEDO p2 | LINK p2 |
+| 1.4 | Vaga dos sonhos | Mensagem | Recrutadora da Talento+ | RECOMPENSA p1 | AUTORIDADE p2 | DADOS p2 |
 | 1.5 ★ | Acesso suspenso (chefe) | E-mail | Central de Segurança do Banco Horizonte | MEDO p2 | AUTORIDADE p2 | SENHA p3 |
 
 Todas as cartas do nível têm contra perfeito no pool, e a mão inicial já resolve o cenário 1.1.
 
-> **Balanceamento (15/10/2026):** as abordagens de 1.2, 1.3 e 1.4 subiram de p1 para p2. Com p1, o bot aleatório vencia 78% (alvo 40–60%); com p2, vence 53%.
+> **Balanceamento (15/10/2026):** as abordagens de 1.2, 1.3 e 1.4 subiram de p1 para p2. Com p1, o bot aleatório vencia 78% (alvo 40–60%); com p2, vence 53%. Depois das tentações (§7.1) elas voltaram para p1 (aleatório 26,6% → 47,0%).
 
 ### 10.1 Exemplo completo (`content/niveis/01-golpes.json`, trecho)
 
@@ -609,7 +624,8 @@ interface Protecao {
   "vazasParaVencerCenario": 2, "pontosParaVencerNivel": 3, "cenariosPorNivel": 5,
   "bonusContraParcial": 2, "empateFavorece": "ameaca", "pressaoBonusChefe": 1,
   "desconfiometroInicial": 3, "maxProtecoes": 3,
-  "desmascarar": { "valorCenario": 2, "iaFogeSePressaoMaxRestante": 2 }
+  "desmascarar": { "valorCenario": 2, "iaFogeSePressaoMaxRestante": 2 },
+  "maxTentacoesPorCenario": 2
 }
 ```
 
@@ -657,10 +673,11 @@ O *build* falha se qualquer regra abaixo falhar.
 - Save:
   - JSON corrompido ou ausente vira estado inicial, sem lançar erro.
 
-**Simulação (`npm run simulate -- --nivel 1 --partidas 2000`)** com três bots:
+**Simulação (`npm run simulate -- --nivel 1 --partidas 2000`)** com quatro bots:
 - **ótimo**, que vê as tags, joga o contra perfeito se tiver e, se não tiver, a maior força efetiva;
 - **guloso**, que joga sempre a carta de maior força;
-- **aleatório**.
+- **aleatório**;
+- **atento** (desde 15/10/2026): joga ao acaso, mas lê o nome da carta e nunca joga armadilhas — aproxima um iniciante humano.
 
 | Nível | Bot ótimo (vitória de nível) | Bot aleatório |
 |---|---|---|
@@ -668,6 +685,8 @@ O *build* falha se qualquer regra abaixo falhar.
 | 2–3 | 85–95% | 20–40% |
 | 4–6 | 75–90% | 10–25% |
 | 7–9 | 65–85% | ≤ 15% |
+
+> **Com as tentações (§7.1):** o bot aleatório não lê o nome das cartas e cai nelas, por isso, a partir do nível 2, a coluna "Bot aleatório" da tabela passa a valer para o bot **atento**. No nível 1 (tutorial) o próprio aleatório continua sendo a referência. Resultado em 15/10/2026 (2000 partidas): N1 aleatório 47,0% · N2 atento 24,1% · N3 atento 25,8% · N4 atento 12,8% · N5 atento 17,0%; o ótimo vence 100% em todos. O guloso (sempre a carta mais forte) cai quase sempre, porque as tentações têm força 3 — efeito pedagógico desejado. Para isso, as abordagens de 1.2, 1.3 e 1.4 voltaram para p1.
 
 Estas faixas são um ponto de partida, a ser ajustado com testes com pessoas. Como o bot ótimo **enxerga as tags**, o resultado dele é um teto, e humanos ficarão abaixo. Se o bot ótimo ficar abaixo da faixa, o nível está injusto; se o aleatório ficar acima, o nível está fácil demais.
 

@@ -1,5 +1,6 @@
 // Máquina de estados do jogo (GDD §12.3). reducer(estado, ação, ctx) → novo estado, sem efeitos colaterais.
 import { escolherOpcao } from './ai';
+import { inteiro } from './rng';
 import { resolverVaza } from './rules';
 import { candidatasLoja, contarCopias, gerarOferta, validarEscolha } from './shop';
 import type { Acao, Conteudo, Config, Estado, Nivel, Partida, Protecao, Tag } from './types';
@@ -42,6 +43,16 @@ export function ofertaRecompensa(estado: Estado, ctx: Ctx): string[] {
 }
 
 const erro = (estado: Estado, msg: string): Estado => ({ ...estado, erro: msg });
+
+/** Tira da mão uma cópia de cada tentação que não foi jogada. */
+export function semTentacoes(mao: string[], tentacoes: string[] = []): string[] {
+  const resto = [...mao];
+  for (const id of tentacoes) {
+    const i = resto.lastIndexOf(id);
+    if (i >= 0) resto.splice(i, 1);
+  }
+  return resto;
+}
 
 export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
   const s: Estado = { ...estado, erro: undefined };
@@ -93,7 +104,16 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
   switch (acao.tipo) {
     case 'INICIAR_CENARIO': {
       if (s.fase !== 'INTRO_CENARIO') return erro(s, 'Fora de hora.');
-      return { ...s, fase: 'VEZ_AMEACA', partida: { ...p, vazaIdx: 0, vazas: [], cartaAmeaca: null } };
+      // Tentações do caso entram em posições sorteadas da mão, para não ficarem sempre no fim.
+      const tentacoes = (cenario.tentacoes ?? []).slice(0, config.maxTentacoesPorCenario).filter((id) => conteudo.defesas[id]);
+      const mao = [...p.mao];
+      let rng = p.rng;
+      for (const id of tentacoes) {
+        const [pos, r] = inteiro(rng, mao.length + 1);
+        rng = r;
+        mao.splice(pos, 0, id);
+      }
+      return { ...s, fase: 'VEZ_AMEACA', partida: { ...p, rng, mao, tentacoes, vazaIdx: 0, vazas: [], cartaAmeaca: null } };
     }
 
     case 'AMEACA_JOGA': {
@@ -122,6 +142,9 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
       });
       const mao = [...p.mao];
       mao.splice(i, 1);
+      const tentacoes = [...(p.tentacoes ?? [])];
+      const t = tentacoes.indexOf(acao.cartaId);
+      if (t >= 0) tentacoes.splice(t, 1);
       const usosProtecao = { ...p.usosProtecao };
       if (res.protecaoUsada) usosProtecao[res.protecaoUsada] -= 1;
       const derrotasPorTag = { ...p.stats.derrotasPorTag };
@@ -129,13 +152,14 @@ export function reducer(estado: Estado, acao: Acao, ctx: Ctx): Estado {
       return {
         ...s, fase: 'RESOLUCAO',
         partida: {
-          ...p, mao, descarte: [...p.descarte, acao.cartaId],
+          ...p, mao, tentacoes, descarte: [...p.descarte, acao.cartaId],
           usadosUnicos: defesa.usoUnicoPorNivel ? [...p.usadosUnicos, defesa.id] : p.usadosUnicos,
           usosProtecao, vazas: [...p.vazas, res],
           stats: {
             vazas: p.stats.vazas + 1,
             perfeitos: p.stats.perfeitos + (res.motivo === 'contra_perfeito' ? 1 : 0),
             derrotasPorTag,
+            armadilhas: (p.stats.armadilhas ?? 0) + (res.motivo === 'armadilha' ? 1 : 0),
           },
         },
       };
@@ -219,7 +243,7 @@ function continuar(s: Estado, p: Partida, nivel: Nivel, ctx: Ctx): Estado {
     return {
       ...s, fase: 'RAIOX',
       partida: {
-        ...p, placar, usosProtecao, cartaAmeaca: null,
+        ...p, placar, usosProtecao, cartaAmeaca: null, mao: semTentacoes(p.mao, p.tentacoes), tentacoes: [],
         bonusLeituraPerfeita: p.bonusLeituraPerfeita || leituraPerfeita,
         desconfiometro: p.desconfiometro + (leituraPerfeita ? 1 : 0),
         historico: [...p.historico, { cenarioId: cenario.id, vencedor, pontos, anulado, leituraPerfeita }],

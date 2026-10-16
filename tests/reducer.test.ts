@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { estadoInicial, reducer } from '../src/engine/reducer';
+import { estadoInicial, reducer, type Ctx } from '../src/engine/reducer';
 import { ehContraPerfeito } from '../src/engine/rules';
 import type { Acao, Estado } from '../src/engine/types';
 import { cfg, conteudo, ctx } from './helpers';
@@ -138,5 +138,53 @@ describe('pausa', () => {
     e = run(e, { tipo: 'RETOMAR' });
     expect(e.fase).toBe('VEZ_JOGADOR');
     expect(e.retomar).toBeUndefined();
+  });
+});
+
+describe('tentações (respostas erradas do caso)', () => {
+  // Cópia do conteúdo com 2 tentações no 1º caso do nível 1.
+  const comTentacoes = (): Ctx => {
+    const c = structuredClone(conteudo);
+    c.niveis[0].cenarios[0].tentacoes = ['ARM_SO_OLHAR', 'ARM_RESPONDO'];
+    return { conteudo: c, config: cfg };
+  };
+  const rodar = (cx: Ctx, e: Estado, ...acoes: Acao[]) => acoes.reduce((s, a) => {
+    const r = reducer(s, a, cx);
+    if (r.erro) throw new Error(`${a.tipo}: ${r.erro}`);
+    return r;
+  }, e);
+
+  it('entram na mão no início do caso e saem no fim, se não forem jogadas', () => {
+    const cx = comTentacoes();
+    let e = rodar(cx, estadoInicial(cx.conteudo), { tipo: 'INICIAR_NIVEL', nivelId: 'N1_GOLPES', seed: 4 }, { tipo: 'INICIAR_CENARIO' });
+    expect(e.partida!.mao).toHaveLength(10);
+    expect(e.partida!.mao).toEqual(expect.arrayContaining(['ARM_SO_OLHAR', 'ARM_RESPONDO']));
+    expect(e.partida!.tentacoes).toEqual(['ARM_SO_OLHAR', 'ARM_RESPONDO']);
+    for (let i = 0; i < 2; i++) {
+      e = rodar(cx, e, { tipo: 'AMEACA_JOGA' });
+      const boa = e.partida!.mao.find((id) => ehContraPerfeito(e.partida!.cartaAmeaca!, cx.conteudo.defesas[id]))!;
+      e = rodar(cx, e, { tipo: 'JOGAR_CARTA', cartaId: boa }, { tipo: 'CONTINUAR' });
+    }
+    expect(e.fase).toBe('RAIOX');
+    expect(e.partida!.mao).toHaveLength(6);
+    expect(e.partida!.mao.some((id) => cx.conteudo.defesas[id].armadilha)).toBe(false);
+    expect(e.partida!.tentacoes).toEqual([]);
+  });
+
+  it('tentação jogada sempre perde, vai ao descarte e conta nas estatísticas', () => {
+    const cx = comTentacoes();
+    let e = rodar(cx, estadoInicial(cx.conteudo), { tipo: 'INICIAR_NIVEL', nivelId: 'N1_GOLPES', seed: 4 }, { tipo: 'INICIAR_CENARIO' }, { tipo: 'AMEACA_JOGA' });
+    e = rodar(cx, e, { tipo: 'JOGAR_CARTA', cartaId: 'ARM_SO_OLHAR' });
+    const r = e.partida!.vazas[0];
+    expect(r).toMatchObject({ vencedor: 'ameaca', motivo: 'armadilha' });
+    expect(e.partida!.tentacoes).toEqual(['ARM_RESPONDO']);
+    expect(e.partida!.stats.armadilhas).toBe(1);
+    expect(e.partida!.descarte).toContain('ARM_SO_OLHAR');
+  });
+
+  it('posições sorteadas são determinísticas pela semente', () => {
+    const cx = comTentacoes();
+    const mao = (seed: number) => rodar(cx, estadoInicial(cx.conteudo), { tipo: 'INICIAR_NIVEL', nivelId: 'N1_GOLPES', seed }, { tipo: 'INICIAR_CENARIO' }).partida!.mao;
+    expect(mao(9)).toEqual(mao(9));
   });
 });

@@ -263,7 +263,7 @@
     ],
     "forca": 3,
     "raridade": "comum",
-    "licao": "Use só contatos que você já tinha ou que estão no site oficial.",
+    "licao": "Ligue só para contatos que você já tinha ou que estão no site oficial.",
     "fonte": "F_GOLPES",
     "armadilha": true,
     "mito": "O número que veio na mensagem é do próprio golpista."
@@ -290,7 +290,7 @@
     ],
     "forca": 3,
     "raridade": "comum",
-    "licao": "Na dúvida, não abra.",
+    "licao": "Não abra links recebidos; se quiser checar, acesse o serviço digitando o endereço ou pelo app oficial.",
     "fonte": "F_CODIGOS",
     "armadilha": true,
     "mito": "Links maliciosos levam a páginas que tentam infectar o aparelho logo ao abrir. Na dúvida, não clique."
@@ -303,7 +303,7 @@
     ],
     "forca": 3,
     "raridade": "comum",
-    "licao": "Encerre o contato.",
+    "licao": "Não responda: bloqueie e denuncie o contato.",
     "fonte": "F_GOLPES",
     "armadilha": true,
     "mito": "Manter a conversa dá ao golpista mais chances de convencer você."
@@ -477,5 +477,317 @@
     "fonte": "F_COMERCIO",
     "armadilha": true,
     "mito": "Golpistas pagam anúncios para aparecer no topo da busca. Patrocinado não quer dizer oficial."
+  },
+  {
+    "id": "ARM_SALVO_NUMERO_NOVO",
+    "nome": "Salvo o número novo e ajudo",
+    "contra": [
+      "AFETO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Ligue para o número antigo da pessoa antes de qualquer coisa.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Número novo com foto de conhecido é o golpe do falso parente. Não salve o número sem antes confirmar com a pessoa pelo contato de sempre."
+  },
+  {
+    "id": "ARM_PIX_PEQUENO",
+    "nome": "É pouco dinheiro, pago logo",
+    "contra": [
+      "PIX"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Confira a cobrança pelo site ou app oficial de quem vendeu.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Taxa pequena é isca: além de pagar, você pode ter o cartão clonado e os dados usados em outras fraudes."
+  },
+  {
+    "id": "ARM_VAGA_VALE",
+    "nome": "Mando os documentos, a vaga é ótima",
+    "contra": [
+      "RECOMPENSA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Pesquise a empresa e relatos de golpes parecidos antes de enviar qualquer dado.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "mito": "Dinheiro fácil e oportunidade que você não procurou são sinais de golpe. Documento e selfie nas mãos erradas viram contas e empréstimos no seu nome."
+  },
+  {
+    "id": "ARM_SABE_MEUS_DADOS",
+    "nome": "Sabem meu nome e meu CPF, então é verdade",
+    "contra": [
+      "AUTORIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Confirme a história com a organização por um contato oficial ou já conhecido.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "mito": "Golpistas usam dados vazados e públicos para parecer verdadeiros. Saber seus dados não prova nada."
+  },
+  {
+    "id": "ARM_SENHA_PRA_VALIDAR",
+    "nome": "Informo a senha só pra validar a identidade",
+    "contra": [
+      "SENHA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Encerre o contato e procure o banco pelo canal oficial.",
+    "fonte": "F_BANCO",
+    "armadilha": true,
+    "mito": "Bancos não pedem senha, token nem código por ligação, mensagem ou e-mail. Quem pede quer entrar na sua conta."
+  },
+  {
+    "id": "ARM_LOGO_OFICIAL",
+    "nome": "Tem o logo e o nome da empresa, é oficial",
+    "contra": [
+      "AUTORIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Busque o perfil ou o contato na página oficial da empresa.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Logo, nome, selo e número de protocolo são fáceis de copiar. Perfis e páginas falsas imitam empresas conhecidas."
+  },
+  {
+    "id": "ARM_INSTALO_INDICADO",
+    "nome": "Instalo o app que o atendente indicou",
+    "contra": [
+      "APP_ANEXO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Use só a loja oficial e confira o nome do app e do desenvolvedor.",
+    "fonte": "F_CODIGOS",
+    "armadilha": true,
+    "mito": "Nunca instale aplicativo recebido por mensagem, link ou indicado por quem ligou: pode dar acesso remoto ao seu aparelho."
+  },
+  {
+    "id": "ARM_ABRO_PRA_CONTESTAR",
+    "nome": "Abro o anexo pra contestar a cobrança",
+    "contra": [
+      "MEDO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Confira a cobrança pelos canais oficiais; na dúvida, não abra.",
+    "fonte": "F_CODIGOS",
+    "armadilha": true,
+    "mito": "O susto com a cobrança é justamente o que faz você abrir o anexo, que pode instalar malware."
+  },
+  {
+    "id": "ARM_CONFIRMO_DADOS",
+    "nome": "Confirmo só meus dados pra ver se é verdade",
+    "contra": [
+      "DADOS"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Não passe dados a quem entrou em contato; procure você o canal oficial.",
+    "fonte": "F_BANCO",
+    "armadilha": true,
+    "mito": "Instituições só pedem dados para confirmar sua identidade quando é você quem as procura pelo canal oficial."
+  },
+  {
+    "id": "ARM_SITE_BONITO",
+    "nome": "Site bonito e cheio de avaliações, é confiável",
+    "contra": [
+      "RECOMPENSA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Pesquise a reputação em sites de reclamação e compare o preço em outras lojas.",
+    "fonte": "F_COMERCIO",
+    "armadilha": true,
+    "mito": "Lojas falsas copiam o visual de lojas reais e exibem avaliações inventadas."
+  },
+  {
+    "id": "ARM_NEGOCIO_POR_FORA",
+    "nome": "Fecho direto com o vendedor, sai mais barato",
+    "contra": [
+      "RECOMPENSA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Faça toda a compra e o pagamento dentro da plataforma.",
+    "fonte": "F_COMERCIO",
+    "armadilha": true,
+    "mito": "Negociando fora da plataforma você perde os recursos de segurança que ela oferece."
+  },
+  {
+    "id": "ARM_DEVOLVO_NOVO_PIX",
+    "nome": "Devolvo o Pix fazendo um Pix novo",
+    "contra": [
+      "PIX"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Confirme no extrato e use a opção de devolução do app.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Se o dinheiro não volta para a conta de origem, o golpista pode pedir o estorno pelo MED e você acaba devolvendo duas vezes."
+  },
+  {
+    "id": "ARM_SINAL_PEQUENO",
+    "nome": "Pago só o sinal pra garantir",
+    "contra": [
+      "URGENCIA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Antes de pagar, confira quem recebe e a reputação do anunciante; na dúvida, não pague.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "A pressa para pagar o sinal é parte do golpe. Qualquer valor pago a quem não é confiável está perdido."
+  },
+  {
+    "id": "ARM_CODIGO_SUPORTE",
+    "nome": "Passo o código, é do suporte oficial",
+    "contra": [
+      "CODIGO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Não passe senhas nem códigos de verificação para ninguém.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Ninguém de verdade precisa do seu código de verificação, nem o suporte. O código é a chave da sua conta."
+  },
+  {
+    "id": "ARM_ACEITO_PERFIL_NOVO",
+    "nome": "Aceito o perfil novo, já somos amigos",
+    "contra": [
+      "CURIOSIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Verifique a identidade antes de aceitar: fale com a pessoa pelo perfil antigo ou por outro meio.",
+    "fonte": "F_REDES_SOCIAIS",
+    "armadilha": true,
+    "mito": "Perfil novo de alguém que você já tem pode ser um clone feito com as fotos da pessoa."
+  },
+  {
+    "id": "ARM_FOTO_DE_PERFIL",
+    "nome": "A foto é dela, então é ela",
+    "contra": [
+      "AFETO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Converse com a pessoa pelo contato de sempre antes de acreditar.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Golpistas usam fotos tiradas das redes sociais para se passar por amigos e familiares."
+  },
+  {
+    "id": "ARM_EMPRESTO_POR_AMOR",
+    "nome": "Ajudo, prometeu devolver em dobro",
+    "contra": [
+      "AFETO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Conte a história a alguém de confiança e não transfira.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Promessa de devolver em dobro é isca. Desconfie de qualquer pedido de dinheiro, mesmo de quem diz gostar de você."
+  },
+  {
+    "id": "ARM_VOZ_E_PROVA",
+    "nome": "Mandou áudio com a voz dele, então é ele",
+    "contra": [
+      "AUTORIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Ligue para a pessoa por um contato que você já conhecia.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "mito": "Golpistas imitam voz e rosto com inteligência artificial para pedir dinheiro."
+  },
+  {
+    "id": "ARM_COMPARTILHO",
+    "nome": "Repasso no grupo pra avisar todo mundo",
+    "contra": [
+      "CURIOSIDADE"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Busque a informação em outras fontes antes de acreditar ou repassar.",
+    "fonte": "F_REDES_SOCIAIS",
+    "armadilha": true,
+    "mito": "Nas redes circulam informações falsas e maliciosas; repassar sem checar espalha a isca para mais gente."
+  },
+  {
+    "id": "ARM_CADASTRO_RAPIDO",
+    "nome": "Me cadastro rápido antes que acabe",
+    "contra": [
+      "URGENCIA"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Pare, pense e confirme o benefício nos canais oficiais.",
+    "fonte": "F_GOLPES",
+    "armadilha": true,
+    "mito": "Prazo curto é tática para você agir sem pensar. Benefícios de verdade se confirmam nos canais oficiais."
+  },
+  {
+    "id": "ARM_LIGO_SUPORTE_TELA",
+    "nome": "Ligo pro suporte que apareceu na tela",
+    "contra": [
+      "MEDO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Feche a página e use o antivírus que você já tem.",
+    "fonte": "F_COMERCIO",
+    "armadilha": true,
+    "mito": "O número do alerta é dos golpistas. Não ligue para números enviados em mensagens ou avisos suspeitos."
+  },
+  {
+    "id": "ARM_NAO_DESLIGO",
+    "nome": "Não desligo, senão o bloqueio não é feito",
+    "contra": [
+      "MEDO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Encerre a ligação e ligue você mesmo para o canal oficial.",
+    "fonte": "F_BANCO",
+    "armadilha": true,
+    "mito": "Pode desligar! Manter você na linha é como o golpista controla a situação."
+  },
+  {
+    "id": "ARM_LOGIN_PELO_LINK",
+    "nome": "Entro pelo link do e-mail, é mais rápido",
+    "contra": [
+      "LINK"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Digite o endereço no navegador ou use o app oficial.",
+    "fonte": "F_EVITE_FRAUDES",
+    "armadilha": true,
+    "mito": "Páginas falsas de login capturam usuário e senha. O link pode levar a uma cópia perfeita do site."
+  },
+  {
+    "id": "ARM_PAGO_RESGATE",
+    "nome": "Pago o resgate pra recuperar os arquivos",
+    "contra": [
+      "MEDO"
+    ],
+    "forca": 3,
+    "raridade": "comum",
+    "licao": "Faça backups periódicos e automáticos.",
+    "fonte": "F_CODIGOS",
+    "armadilha": true,
+    "mito": "Pagar alimenta o golpe e não é a forma segura de recuperar dados: quem permite recuperá-los é o backup."
   }
 ]
